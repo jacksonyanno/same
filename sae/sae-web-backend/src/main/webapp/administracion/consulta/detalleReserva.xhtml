@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{consultaReservaDatosMBean.beforePhaseDetalleReserva}"
+	beforePhaseListener="#{consultaReservaDatosMBean.beforePhaseDetalleReserva}">
+
+
+	<h:form style="margin: 0px;">
+		<table style="border: none;" cellpadding="0" cellspacing="0">
+			<tr>
+				<td><rich:panel id="resultadosBusqueda"
+					style=" width : 515px; text-align: left;" bodyClass="formulario" headerClass="formularioCabezal">
+					<f:facet name="header">
+						<h:outputText value="#{text['query.detalleReserva.data_reserve']}" />
+					</f:facet>
+					<h:panelGrid columns="2" styleClass="Texto"
+							columnClasses="formularioEtiqueta, formularioCampo">
+
+						<h:outputText value="#{text['view.general.date']}: " />
+						<h:inputText style=" width : 81px;" readonly="true"
+							value="#{consultaReservaDatosMBean.consReservaDatosSessionMBean.disponibilidad.fecha}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="#{consultaReservaDatosMBean.timeZone}" locale="es" />
+						</h:inputText>
+						<h:outputText value="#{text['view.general.hour']}: " />
+						<h:inputText style=" width : 44px;" readonly="true"
+							value="#{consultaReservaDatosMBean.consReservaDatosSessionMBean.disponibilidad.horaInicio}">
+							<f:convertDateTime type="time" pattern="HH:mm"
+								timeZone="#{consultaReservaDatosMBean.timeZone}" />
+						</h:inputText>
+
+						<h:outputText value="#{text['entity.reserva.number']}:" />
+						<h:panelGroup>
+							<h:inputText styleClass="headerText"
+								value="#{consultaReservaDatosMBean.consReservaDatosSessionMBean.reservaDatos.numero}"
+								style=" width : 46px;" readonly="true"></h:inputText>
+							<rich:spacer width="40px"/>
+							<h:outputText value="(Id: #{consultaReservaDatosMBean.consReservaDatosSessionMBean.reservaDatos.id})"/>
+						</h:panelGroup>
+
+						<h:outputText value="#{text['entity.reserva.state']}:" />
+						<h:inputText styleClass="headerText"
+							value="#{consultaReservaDatosMBean.consReservaDatosSessionMBean.reservaDatos.estadoDescripcion}"
+							style=" width : 85px;" readonly="true"></h:inputText>
+						<h:outputText value="Observaciones:" />
+						<h:inputText
+							value="#{consultaReservaDatosMBean.consReservaDatosSessionMBean.reservaDatos.observaciones}"
+							style=" width : 314px;" readonly="true"></h:inputText>
+
+						<h:outputText value="#{text['entity.reserva.creation_date']}:" />
+						<h:inputText style=" width : 81px;" readonly="true"
+							value="#{consultaReservaDatosMBean.consReservaDatosSessionMBean.reservaDatos.fechaCreacion}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="#{consultaReservaDatosMBean.timeZone}" locale="es" />
+						</h:inputText>
+
+						<h:outputText value=""></h:outputText>
+						<h:outputText value=""></h:outputText>
+						<h:outputText value=""></h:outputText>
+						<h:outputText value=""></h:outputText>
+						<h:outputText value=""></h:outputText>
+					</h:panelGrid>
+					<h:panelGrid columns="1" binding="#{consultaReservaDatosMBean.campos}"
+					cellpadding="0" cellspacing="0" styleClass="Texto"
+							columnClasses="formularioEtiqueta, formularioCampo">
+				</h:panelGrid>
+				</rich:panel></td>
+			</tr>
+			<tr>
+				<td align="center"><a4j:commandButton value="#{text['query.detalleReserva.cancel_reserve']}"
+					actionListener="#{consultaReservaDatosMBean.cancelarReserva}"
+					reRender="pantalla"
+					disabled="#{consultaReservaDatosMBean.confirmarDeshabilitado}"
+					></a4j:commandButton></td>
+			</tr>
+
+		</table>
+
+		<a4j:commandLink value="#{text['button.goback']}" action="atras" reRender="pantalla"
+			ajaxSingle="true"></a4j:commandLink>
+	</h:form>
+
+</f:view>
+</html>

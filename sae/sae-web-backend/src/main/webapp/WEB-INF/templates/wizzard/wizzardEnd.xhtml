@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<ui:component>
+
+	<h:panelGroup layout="block" rendered="#{wizzard.state.isEnd}">
+
+		<div style="padding-top: 40px; padding-bottom: 40px;">
+			<div class="alert alert-success" role="alert">
+				<strong style="font-size: 2em;">#{text['wizzard.end.title']}</strong>
+				<div style="font-size: 1.5em;">#{text['wizzard.end.description']}</div>
+			</div>
+		</div>
+		
+		<div style="text-align: center;" >
+
+			<a4j:commandButton styleClass="btn btn-default"
+					value="#{text['wizzard.button.new']}"
+					reRender="wizzardContent"
+					actionListener="#{wizzard.newWizzard}" 
+			/>
+			
+			<span style="padding-left: 40px">
+				<h:commandButton styleClass="btn btn-primary"
+						value="#{text['wizzard.button.booking']}"
+						action="#{wizzard.gotToBookingPage}"
+						onclick="Richfaces.hideModalPanel('wizzardModal');"
+				/>
+			</span>
+			
+		</div>
+
+
+	</h:panelGroup>
+
+</ui:component>
+
+</html>

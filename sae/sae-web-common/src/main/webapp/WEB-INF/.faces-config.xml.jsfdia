@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="sesion_expirada::#error#sesionExpirada.xhtml" NAME="output"
+    PATH="/error/sesionExpirada.xhtml"
+    TARGET="rules:#error#sesionExpirada.xhtml" TITLE="sesion_expirada" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="error::#error#error.xhtml" NAME="output1"
+    PATH="/error/error.xhtml" TARGET="rules:#error#error.xhtml"
+    TITLE="error" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="agenda_invalida::#error#agendaInvalida.xhtml" NAME="output2"
+    PATH="/error/agendaInvalida.xhtml"
+    TARGET="rules:#error#agendaInvalida.xhtml" TITLE="agenda_invalida" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="estado_invalido::#error#estadoInvalido.xhtml" NAME="output3"
+    PATH="/error/estadoInvalido.xhtml"
+    TARGET="rules:#error#estadoInvalido.xhtml" TITLE="estado_invalido" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="periodo_invalido::#error#periodoInvalido.xhtml" NAME="output4"
+    PATH="/error/periodoInvalido.xhtml"
+    TARGET="rules:#error#periodoInvalido.xhtml" TITLE="periodo_invalido" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#error#sesionExpirada.xhtml"
+  PATH="/error/sesionExpirada.xhtml" SHAPE="304,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#error#error.xhtml" PATH="/error/error.xhtml"
+  SHAPE="304,273,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#error#periodoInvalido.xhtml"
+  PATH="/error/periodoInvalido.xhtml" SHAPE="304,609,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#error#agendaInvalida.xhtml"
+  PATH="/error/agendaInvalida.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#error#estadoInvalido.xhtml"
+  PATH="/error/estadoInvalido.xhtml" SHAPE="304,497,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

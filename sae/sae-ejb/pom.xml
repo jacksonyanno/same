@@ -1,0 +1,232 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>sae</artifactId>
+		<groupId>com.sagant.sae</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>sae-ejb</artifactId>
+	<packaging>ejb</packaging>
+	<name>sae-ejb</name>
+	<url>http://maven.apache.org</url>
+
+
+	<properties>
+
+	</properties>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<!-- org.jboss.wsf.spi.annotation : dependency of jboss-ejb3-ext-api -->
+		<!-- TODO: Es para que compilen los web services internos web -> ejb hay 
+			que ver si eso camina en eap o wildfly o si hay que regenerar -->
+		<dependency>
+			<groupId>org.jboss.ws</groupId>
+			<artifactId>jbossws-spi</artifactId>
+			<!-- version>1.0.6.GA</version -->
+			<version>1.1.2.GA</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+
+		<!-- First declare the APIs we depend on and need for compilation. All 
+			of them are provided by JBoss AS 7 -->
+
+		<!-- Import the CDI API, we use provided scope as the API is included in 
+			JBoss AS 7 -->
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Import the Common Annotations API (JSR-250), we use provided scope 
+			as the API is included in JBoss AS 7 -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.annotation</groupId>
+			<artifactId>jboss-annotations-api_1.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- dependency> <groupId>org.jboss.spec.javax.servlet</groupId> <artifactId>jboss-servlet-api_3.0_spec</artifactId> 
+			<scope>provided</scope> </dependency -->
+
+
+		<!-- Import the JAX-RS API, we use provided scope as the API is included 
+			in JBoss AS 7 <dependency> <groupId>org.jboss.spec.javax.ws.rs</groupId> 
+			<artifactId>jboss-jaxrs-api_1.1_spec</artifactId> <scope>provided</scope> 
+			</dependency -->
+
+		<!-- Import the JPA API, we use provided scope as the API is included in 
+			JBoss AS 7 -->
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Import the EJB API, we use provided scope as the API is included in 
+			JBoss AS 7 -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- JSR-303 (Bean Validation) Implementation -->
+		<!-- Provides portable constraints such as @Email -->
+		<!-- Hibernate Validator is shipped in JBoss AS 7 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Import the JSF API, we use provided scope as the API is included in 
+			JBoss AS 7 <dependency> <groupId>org.jboss.spec.javax.faces</groupId> <artifactId>jboss-jsf-api_2.1_spec</artifactId> 
+			<scope>provided</scope> </dependency -->
+
+		<!--Import dependencies to hibernate packages(eg. hibernate-core) depending 
+			on features you want to use like Hibernate Session used in the quickstart -->
+		<!--please note that scope is provided as these jars are shipped with as7 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<!-- La versión que viene con JBoss EAP 6.1.0.GA es la 4.2.0.Final pero 
+				el bom del jboss as 7 es la 4.1.1.Final que igual funca :) -->
+			<!-- version>4.2.0.Final</version -->
+			<exclusions>
+				<exclusion>
+					<groupId>dom4j</groupId>
+					<artifactId>dom4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+		</dependency>
+
+
+	</dependencies>
+
+
+	<build>
+		<finalName>${artifactId}</finalName>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+
+				<configuration>
+					<generateClient>true</generateClient>
+
+					<clientIncludes>
+						<clientInclude>uy/gub/imm/sae/business/api/**</clientInclude>
+						<clientInclude>uy/gub/imm/sae/common/**</clientInclude>
+						<clientInclude>uy/gub/imm/sae/entity/**</clientInclude>
+						<clientInclude>META-INF/ErrorMsg.properties</clientInclude>
+						<clientInclude>com/sagant/same/business/api/**</clientInclude>
+					</clientIncludes>
+
+					<clientExcludes>
+						<clientExclude>uy/gub/imm/sae/common/profile/**</clientExclude>
+					</clientExcludes>
+
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											build-helper-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.8,)
+										</versionRange>
+										<goals>
+											<goal>add-source</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+
+	<profiles>
+
+		<profile>
+			<id>custom</id>
+			<activation>
+				<file>
+					<exists>../active-profiles/custom.marker</exists>
+				</file>
+			</activation>
+
+			<build>
+				<plugins>
+					<plugin>
+						<!-- Activo este plugin configurado en el pom parent para que se agreguen 
+							las clases el java-custom cuando el perfil custom este activado -->
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
+</project>

@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{datoASolicitarMBean.beforePhaseModificarConsultar}"
+	beforePhaseListener="#{datoASolicitarMBean.beforePhaseModificarConsultar}">
+
+	<ui:include
+		src="/administracion/datoASolicitar/disenioFormulario.xhtml" />
+
+	<h:form>
+
+		<table style="border: none;" cellpadding="0" cellspacing="0"
+			align="left">
+			<tr>
+				<td align="center">
+					<rich:dataTable
+					value="#{datoASSessionMBean.datosASolicitar}" var="row" columns="8"
+					binding="#{datoASolicitarMBean.camposDataTableModificar}"
+					id="tablaDatosSolicitarMod" rows="6"
+					columnsWidth="100, 200, 80, 80, 80, 80, 40, 40">
+
+					<rich:column style="text-align:left;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.field.name']}"></h:outputText>
+						</f:facet>
+						<h:outputText value="#{row.nombre}"></h:outputText>
+					</rich:column>
+					<rich:column style="text-align:left;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.field.label']}"></h:outputText>
+						</f:facet>
+						<h:outputText value="#{row.etiqueta}"></h:outputText>
+					</rich:column>
+
+					<rich:column style="text-align:left;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.field.data_type']}"></h:outputText>
+						</f:facet>
+						<h:outputText value="#{row.tipo.getDescripcion(i18n.locale)}"></h:outputText>
+					</rich:column>
+
+					<rich:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.field.required']}"></h:outputText>
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{row.requerido}"
+							readonly="true" disabled="true"></h:selectBooleanCheckbox>
+					</rich:column>
+					
+					<rich:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.field.key']}"></h:outputText>
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{row.esClave}"
+							readonly="true" disabled="true"></h:selectBooleanCheckbox>
+					</rich:column>
+
+					<rich:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.field.show_in_report']}"></h:outputText>
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{row.incluirEnReporte}"
+							readonly="true" disabled="true"></h:selectBooleanCheckbox>
+					</rich:column>
+
+					<rich:column style="text-align:left;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.group']}"></h:outputText>
+						</f:facet>
+						<h:outputText value="#{row.agrupacionDato.orden}"></h:outputText>
+					</rich:column>
+
+					<rich:column style="text-align:center;">
+						<f:facet name="header">
+						</f:facet>
+						<a4j:commandLink id="modificarLink" reRender="pantalla"
+							actionListener="#{datoASolicitarMBean.seleccionarDato}"
+							action="modificar">
+							<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/edit.gif"
+								style="border:0" height="16" width="16" />
+						</a4j:commandLink>
+						<rich:toolTip for="modificarLink" value="#{text['formulario.field.update.tooltip']}" />
+					</rich:column>
+					<f:facet name="footer">
+						<h:panelGroup>
+							<table>
+								<tr>
+									<td width="400px"><rich:datascroller align="left"
+										maxPages="5" id="scTablaModDAS" for="tablaDatosSolicitarMod"
+										page="#{datoASSessionMBean.pagDatoASUpd}" /></td>
+									<td width="100px" align="right"><ui:include
+										src="/administracion/datoASolicitar/verDisenioFormulario.xhtml" />
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+					</f:facet>
+				</rich:dataTable></td>
+			</tr>
+		</table>
+
+
+	</h:form>
+</f:view>

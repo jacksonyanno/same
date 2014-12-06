@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{datoASolicitarMBean.beforePhaseCrear}"
+	beforePhaseListener="#{datoASolicitarMBean.beforePhaseCrear}">
+
+
+	<ui:include
+		src="/administracion/datoASolicitar/disenioFormulario.xhtml" />
+
+	<h:form style="margin: 0px;">
+
+
+			<table cellpadding="0" cellspacing="0" align="left">
+				<tr>
+					<td valign="bottom"
+						style="padding-bottom: 10px; padding-right: 80px;"><a4j:commandLink
+						value="Volver" action="volver" reRender="pantalla"
+						ajaxSingle="true"></a4j:commandLink></td>
+					<td align="center">
+
+		<rich:panel  bodyClass="formulario"
+			headerClass="formularioCabezal">					
+					<h:panelGrid columns="2" cellpadding="0"
+						cellspacing="5" style="padding-top: 0px;" styleClass="Texto"
+						columnClasses="formularioEtiqueta, formularioCampo">
+						<h:outputText value="#{text['entity.agenda']}:"></h:outputText>
+						<h:inputText value="#{sessionMBean.agendaMarcada.descripcion}"
+							readonly="true"></h:inputText>
+						<h:outputText value="#{text['entity.recurso']}:"></h:outputText>
+						<h:inputText value="#{sessionMBean.recursoMarcado.descripcion}"
+							readonly="true"></h:inputText>
+
+						<h:outputText value="#{text['entity.formulario.field.name']}:"></h:outputText>
+						<h:inputText id="VName"
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.nombre}"
+							maxlength="50" required="true">
+							<f:validator validatorId="datoSolicitarNombreValidator" />
+						</h:inputText>
+						<h:outputText value=""></h:outputText>
+						<rich:message for="VName" ajaxRendered="true"
+							errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+
+					<h:outputText value="#{text['formulario.field.design.title']}"
+						style="font-size: 13px; font-weight: bold;"
+						styleClass="borde-abajo"></h:outputText>
+					<rich:spacer height="40" />
+
+						<h:outputText value="#{text['entity.formulario.field.label']}:"></h:outputText>
+						<h:inputText
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.etiqueta}"
+							maxlength="50"></h:inputText>
+						<h:outputText value="#{text['entity.formulario.field.ayuda']}:"></h:outputText>
+						<h:inputText
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.textoAyuda}"
+							maxlength="100"></h:inputText>
+
+						<h:outputText value="#{text['entity.formulario.field.data_type']}:"></h:outputText>
+						<h:selectOneMenu
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.tipo}" >
+							<f:selectItems value="#{datoASolicitarMBean.listaTipos}" />
+						</h:selectOneMenu>
+
+
+						<h:outputText value="#{text['entity.formulario.field.length']}:"></h:outputText>
+						<h:inputText id="VLargo"
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.largo}"
+							maxlength="5"></h:inputText>
+						<h:outputText value=" "></h:outputText>
+						<rich:message for="VLargo" ajaxRendered="true"
+							errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+
+						<h:outputText value="#{text['entity.formulario.field.required']}:"></h:outputText>
+						<h:selectBooleanCheckbox
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.requerido}"></h:selectBooleanCheckbox>
+						<h:outputText value="#{text['entity.formulario.field.key']}:"></h:outputText>
+						<h:selectBooleanCheckbox
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.esClave}"></h:selectBooleanCheckbox>
+
+						<h:outputText value="#{text['entity.formulario.group']}:"></h:outputText>
+						<h:selectOneListbox size="1"
+							value="#{datoASolicitarMBean.agrupacionDatoId}">
+							<f:selectItems value="#{datoASolicitarMBean.listaAgrupaciones}" />
+						</h:selectOneListbox>
+
+						<h:outputText value="#{text['entity.formulario.field.row']}:"></h:outputText>
+						<h:inputText id="VFila"
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.fila}"
+							maxlength="5"></h:inputText>
+						<h:outputText value=" "></h:outputText>
+						<rich:message for="VFila" ajaxRendered="true"
+							errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+						<h:outputText value="#{text['entity.formulario.field.col']}:"></h:outputText>
+						<h:inputText id="VColum"
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.columna}"
+							maxlength="5"></h:inputText>
+						<h:outputText value=" "></h:outputText>
+						<rich:message for="VColum" ajaxRendered="true"
+							errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+
+					<h:outputText value="#{text['formulario.field.report.title']}"
+						style="font-size: 13px; font-weight: bold; "
+						styleClass="borde-abajo"></h:outputText>
+					<rich:spacer height="40" />
+
+						<h:outputText value="#{text['entity.formulario.field.show_in_report']}:"></h:outputText>
+						<h:selectBooleanCheckbox
+							value="#{datoASolicitarMBean.datoASolicitarNuevo.incluirEnReporte}"></h:selectBooleanCheckbox>
+
+					<h:outputText value="#{text['entity.formulario.field.show_in_report_width']}:"></h:outputText>
+					<h:inputText id="VAncho"
+						value="#{datoASolicitarMBean.datoASolicitarNuevo.anchoDespliegue}"
+						maxlength="3"></h:inputText>
+					<h:outputText value=" "></h:outputText>
+					<rich:message for="VAncho" ajaxRendered="true"
+						errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+						
+						
+					<h:outputText value="#{text['formulario.field.display.title']}"
+						style="font-size: 13px; font-weight: bold; "
+						styleClass="borde-abajo"></h:outputText>
+					<rich:spacer height="40" />
+
+					<h:outputText value="#{text['entity.formulario.field.show_in_display']}:"></h:outputText>
+					<h:selectBooleanCheckbox
+						value="#{datoASolicitarMBean.datoASolicitarNuevo.incluirEnLlamador}"></h:selectBooleanCheckbox>
+						
+					<h:outputText value="#{text['entity.formulario.field.show_in_display_length']}:"></h:outputText>
+					<h:inputText id="largoEnLlamador"
+						value="#{datoASolicitarMBean.datoASolicitarNuevo.largoEnLlamador}"
+						maxlength="3"></h:inputText>
+					<h:outputText value=" "></h:outputText>
+					<rich:message for="largoEnLlamador" ajaxRendered="true"
+						errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+						
+					<h:outputText value="#{text['entity.formulario.field.show_in_display_order']}:"></h:outputText>
+					<h:inputText id="ordenEnLlamador"
+						value="#{datoASolicitarMBean.datoASolicitarNuevo.ordenEnLlamador}"
+						maxlength="2"></h:inputText>
+					<h:outputText value=" "></h:outputText>
+					<rich:message for="ordenEnLlamador" ajaxRendered="true"
+						errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+						
+						
+						
+						
+						
+						
+					<h:outputText value=" "></h:outputText>
+					<h:panelGroup>
+						<a4j:commandButton value="#{text['button.save']}"
+							actionListener="#{datoASolicitarMBean.crearDato}"
+							reRender="pantalla, mostrarAgendaRecurso"></a4j:commandButton>
+						<a4j:commandButton value="#{text['button.cancel']}"	immediate="true"
+							ajaxSingle="true" reRender="pantalla"></a4j:commandButton>
+
+							<ui:include
+								src="/administracion/datoASolicitar/verDisenioFormulario.xhtml" />
+						</h:panelGroup>
+					</h:panelGrid>
+					</rich:panel>
+					</td>
+				</tr>
+			</table>
+
+	</h:form>
+</f:view>
+</html>

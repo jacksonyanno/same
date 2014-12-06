@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<h:form style="margin: 0px;" id="formLanguageSelection">
+		<div id="languageSelection">
+		
+				<label>
+				<h:selectOneMenu 
+					value="#{i18n.language}" 
+					onchange="submit()" 
+					title="#{text['message.language_selection.tooltip']}"
+					styleClass="form-control">
+					<f:selectItems value="#{i18n.languages}" />
+				</h:selectOneMenu>
+				</label>
+		</div>
+	</h:form>
+
+</ui:component>

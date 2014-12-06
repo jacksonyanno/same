@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+      
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+<ui:composition template="/templates/base.xhtml">
+	<ui:param name="parametroBean" value="#{dummyMBean}" />
+	<ui:define name="titulo"><h:outputText value="#{saeLabels['aplicacion_nombre']}"></h:outputText></ui:define>
+
+	<ui:define name="menu">
+		<ui:include src="/administracion/procesando.xhtml" />
+		<ui:include src="/administracion/menuTitulo.xhtml" />		
+	</ui:define>
+	<ui:define name="css">
+	</ui:define>
+	<ui:define name="js">
+	</ui:define>
+	<ui:define name="script">
+		<style type="text/css">
+		
+			.clearfix:after {
+			    content: ".";
+			    display: block;
+			    height: 0;
+			    clear: both;
+			    visibility: hidden;
+		    }
+		
+			.clearfix {display: inline-block;}  /* for IE/Mac */
+		
+		</style><!-- main stylesheet ends, CC with new stylesheet below... -->
+		
+		<!--[if IE]>
+		<style type="text/css">
+			.clearfix {
+		    	zoom: 1;     	/* triggers hasLayout */
+			    display: block; /* resets display for IE/Win */
+		    }					/* Only IE can see inside the conditional comment
+		    					   and read this CSS rule. Don't ever use a normal HTML
+		    					   comment inside the CC or it will close prematurely. 
+		    					 */
+		</style>
+		<![endif]-->
+		
+	</ui:define>
+	
+	<ui:define name="cuerpo">
+	
+		<style type="text/css">
+			.izq {
+				
+			}
+			.der {
+				width: 100%;
+			}
+		</style>
+	 
+	 	<h:panelGroup layout="block" id="pageBody">
+	 		
+	 		<f:subview id="wizard" rendered="#{dashboard.isActive('WIZARD')}">
+ 				<ui:include src="/WEB-INF/templates/wizzard/wizard.xhtml" />
+	 		</f:subview>
+	 		
+			<h:panelGrid columns="2" columnClasses="izq, der" rowClasses="arriba" cellpadding="0" cellspacing="0" rendered="#{!dashboard.isActive('WIZARD') and !dashboard.isActive('BOOKING')}">
+				<h:form id="formMenu" style="margin: 0px; padding: 0;">
+				<fieldset class="pantallaFieldset" style="height:370px">
+						
+					<rich:panelBar id="menuLateral" width="145" height="320" style="margin:4px;" styleClass="miPanelBar panel panel-default" selectedPanel="Reservas" >
+			
+						<rich:panelBarItem id="Datos_a_solicitar" label="#{text['menu.formulario.title']}" headerClass="panel-header" headerClassActive="panel-header" contentClass="panel-body" rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR || rolesJSFMBean.RA_AE_PLANIFICADOR}">
+							<ui:include src="/administracion/datoASolicitar/menu.xhtml" />
+						</rich:panelBarItem>
+						
+						<rich:panelBarItem id="Datos_autocompletados" label="#{text['menu.acciones.autocompletar.title']}" headerClass="panel-header" headerClassActive="panel-header" contentClass="panel-body" rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}">
+							<ui:include src="/administracion/datoAutocompletar/menu.xhtml" />	
+						</rich:panelBarItem>
+		
+						<rich:panelBarItem id="Validaciones" label="#{text['menu.acciones.validar.title']}" headerClass="panel-header" headerClassActive="panel-header" contentClass="panel-body" rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR }">
+							<ui:include src="/administracion/validaciones/menu.xhtml" />
+						</rich:panelBarItem>
+						
+						<rich:panelBarItem id="Acciones" label="#{text['menu.acciones.notificar.title']}" headerClass="panel-header" headerClassActive="panel-header" contentClass="panel-body" rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR }">
+							<ui:include src="/administracion/acciones/menu.xhtml" />
+						</rich:panelBarItem>
+					
+						<rich:panelBarItem id="Disponibilidades" label="#{text['menu.disponibilidades.title']}" headerClass="panel-header" headerClassActive="panel-header" contentClass="panel-body" rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR ||rolesJSFMBean.RA_AE_PLANIFICADOR || rolesJSFMBean.RA_AE_FATENCION}">
+			  				<ui:include src="/administracion/disponibilidad/menu.xhtml" />				
+						</rich:panelBarItem>
+						
+						<rich:panelBarItem id="Reservas" label="#{text['menu.reservas.title']}" headerClass="panel-header" headerClassActive="panel-header" contentClass="panel-body" rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR ||rolesJSFMBean.RA_AE_PLANIFICADOR ||rolesJSFMBean.RA_AE_FCALL_CENTER || rolesJSFMBean.RA_AE_FATENCION}">
+							<ui:include src="/administracion/reserva/menu.xhtml" />
+						</rich:panelBarItem>
+						
+						<rich:panelBarItem id="Llamador" label="#{text['menu.llamador.title']}" headerClass="panel-header" headerClassActive="panel-header" contentClass="panel-body" rendered="#{(rolesJSFMBean.RA_AE_ADMINISTRADOR ||rolesJSFMBean.RA_AE_PLANIFICADOR || rolesJSFMBean.RA_AE_FATENCION) and sessionMBean.mostrarLlamador}">
+							<ui:include src="/administracion/llamador/menu.xhtml" />
+						</rich:panelBarItem>
+					
+						<rich:panelBarItem id="Consultas" label="#{text['menu.consultas.title']}" headerClass="panel-header" headerClassActive="panel-header" contentClass="panel-body" rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR ||rolesJSFMBean.RA_AE_PLANIFICADOR ||rolesJSFMBean.RA_AE_FCALL_CENTER || rolesJSFMBean.RA_AE_FATENCION}">
+							<ui:include src="/administracion/consulta/menu.xhtml" />	
+						</rich:panelBarItem>
+						
+					</rich:panelBar>
+				</fieldset>		
+				</h:form>
+							
+				<h:panelGrid columns="1" style="text-align:left; background-color: white; width:100%" 
+								 columnClasses="izquierda" rowClasses="arriba" 
+								 cellpadding="0" cellspacing="0">
+					<a4j:outputPanel id="pantalla">
+						<h:panelGroup style="background-color: white;" layout="block">
+					<fieldset class="pantallaFieldset"  style="min-height:380px">
+						<legend class="pantallaLegend"><h:outputText value="#{sessionMBean.pantallaTitulo}" /></legend>
+						<table cellpadding="0" cellspacing="0" class="pantallaSize" border="0">
+						<tr><td class="pantallaContenido">
+				    		<a4j:include id="display" viewId="#{sessionMBean.viewId}" ></a4j:include>
+				    	</td></tr>
+				    	<tr><td class="pantallaMensaje">
+					    	<rich:message for="pantalla" 
+					    				  ajaxRendered="true"
+					    				  errorClass="mensajeError"
+					    				  infoClass="mensajeInfo"/>
+						</td></tr>			    	
+						</table>			    	
+				    </fieldset>
+	    
+			    		</h:panelGroup>
+			    	</a4j:outputPanel>
+	    		</h:panelGrid>
+	
+		    </h:panelGrid>
+
+	 	</h:panelGroup>
+		
+	    
+	
+	</ui:define>
+</ui:composition>
+</body>
+
+</html>

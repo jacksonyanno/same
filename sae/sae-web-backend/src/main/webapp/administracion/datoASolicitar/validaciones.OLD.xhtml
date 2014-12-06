@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{validacionAsignacionMBean.beforePhase}"
+	beforePhaseListener="#{validacionAsignacionMBean.beforePhase}">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+	<h:form>
+
+		<table style="border: none;" cellpadding="0" cellspacing="0"
+			align="left">
+			<tr>
+				<td valign="bottom" style="padding-bottom: 10px; padding-right: 20px;"><a4j:commandLink
+					value="Volver" action="volver" reRender="pantalla"
+					ajaxSingle="true"></a4j:commandLink></td>
+				<td align="center">
+				
+					<h:panelGrid columns="1">
+				
+					<rich:dataTable
+					value="#{validacionAsignacionMBean.validacionesDelRecurso}" var="row" columns="3"
+					binding="#{validacionAsignacionMBean.validacionesDelRecursoTable}"
+					id="tablaValidacionesDelRecurso" rows="5"
+					>
+
+					<f:facet name="header">
+						<h:outputText value="Validaciones del Recurso" />
+					</f:facet>
+					
+					<rich:column style="text-align:left;">
+						<f:facet name="header">
+							<h:outputText value="Nombre"></h:outputText>
+						</f:facet>
+						<h:outputText value="#{row.validacion.nombre}"></h:outputText>
+						<rich:toolTip value="#{row.validacion.descripcion}"></rich:toolTip>
+					</rich:column>
+
+					<rich:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="Orden de ejecución"></h:outputText>
+						</f:facet>
+						<h:outputText value="#{row.ordenEjecucion}"></h:outputText>
+					</rich:column>
+
+					<rich:column style="text-align:center;">
+						<a4j:commandLink id="modificarLink" reRender="panelEdicion, pantalla"
+							actionListener="#{validacionAsignacionMBean.editarValidacionDelRecurso}"
+						>
+							<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/edit.gif"
+								style="border:0" height="16" width="16" />
+							<rich:toolTip value="Editar la validacion del recurso" />
+						</a4j:commandLink>
+						
+					</rich:column>
+					
+					<f:facet name="footer">
+						<h:panelGroup>
+							<table>
+								<tr>
+									<td width="400px"><rich:datascroller align="left"
+										maxPages="5" id="scTablaModDAS" for="tablaValidacionesDelRecurso"
+										page="#{validacionAsignacionSessionMBean.validacionesDelRecursoTablePageIndex}" /></td>
+									<td width="100px" align="right">
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+					</f:facet>
+				</rich:dataTable>
+				
+
+				<rich:spacer height="5px"></rich:spacer>
+								
+				<rich:panel header="Crear validación para el recurso" id="panelEdicion" rendered="#{validacionAsignacionSessionMBean.modoEdicion}">
+				
+					<h:panelGrid columns="2">
+						<h:outputText value="Validación:" />
+						<h:selectOneMenu value="#{validacionAsignacionMBean.validacionId}">
+							<f:selectItems value="#{validacionAsignacionMBean.validacionesItems}" />
+						</h:selectOneMenu>
+						<h:outputText value="Orden de ejecución:" />
+						<h:inputText value="#{validacionAsignacionMBean.validacionOrdenEjecucion}">
+							<f:convertNumber maxFractionDigits="0"/>
+						</h:inputText>
+						
+						<h:outputText value="Parámetros:" />
+						<rich:spacer></rich:spacer>
+					</h:panelGrid>
+								
+					<h:panelGrid columns="3">
+						<h:outputText value="Datos a solicitar:" />
+						<h:outputText value="Parámetros:" />
+						<h:outputText value="Asignación:" />
+						<h:selectOneListbox value="#{validacionAsignacionMBean.datoASolicitarId}" >
+							<f:selectItems value="#{validacionAsignacionMBean.datosASolicitarDelRecursoItems}" />
+						</h:selectOneListbox>
+						<h:selectOneListbox value="#{validacionAsignacionMBean.parametroId}" >
+							<f:selectItems value="#{validacionAsignacionMBean.parametrosDeLaValidacionItems}" />
+						</h:selectOneListbox>
+					
+					</h:panelGrid>
+								
+				</rich:panel>
+				
+				
+				
+				</h:panelGrid>
+				
+				
+				</td>
+			</tr>
+		</table>
+
+
+	</h:form>
+</f:view>

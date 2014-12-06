@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<name>sae</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.sagant.sae</groupId>
+	<artifactId>sae</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<url>http://sagant.com</url>
+
+	<modules>
+		<module>sae-ear-service</module>
+		<module>sae-ejb</module>
+		<module>sae-web-backend</module>
+		<module>sae-web-frontend</module>
+		<module>sae-web-common</module>
+	</modules>
+
+	<properties>
+		<!-- Explicitly declaring the source encoding eliminates the following 
+			message: -->
+		<!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
+			resources, i.e. build is platform dependent! -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- JBoss dependency versions -->
+
+		<version.org.jboss.as.plugins.maven.plugin>7.4.Final</version.org.jboss.as.plugins.maven.plugin>
+
+		<!-- Define the version of the JBoss BOMs we want to import to specify 
+			tested stacks. -->
+		<version.org.jboss.bom>1.0.4.Final</version.org.jboss.bom>
+		<version.org.jboss.as>7.2.0.Final</version.org.jboss.as>
+
+
+		<same.build.security.domain.jndi>SD-SAME</same.build.security.domain.jndi>
+		<!-- LA SAQUE DEL build.properites para aquí porque la uso en los pom ademas de como filtro en resources -->
+		<build.sae.backoffice.contextroot>same-admin</build.sae.backoffice.contextroot>
+		<!-- contextroot de la aplicacion web del frontend (reserva web de SAME) -->
+		<build.sae.frontend.contextroot>same</build.sae.frontend.contextroot>
+		<!-- contextroot en el que seran publicados los Web Services de la capa de servicios -->
+		<build.sae.service.ws.contextroot>sae-ws</build.sae.service.ws.contextroot>
+		<!-- LA SAQUE DEL build.properites para aquí porque la uso en el pom del ear para jboss as 7 ademas de como filtro en resources -->
+		<build.sae.service.ejb.jndi_base>sae</build.sae.service.ejb.jndi_base>
+
+		<build.sae.service.datasource>java:/same-ds</build.sae.service.datasource>
+	
+		<!-- clase que implementa un bean manejado de sesion para la capa web que da soporte a i18n en jsf1.2 -->	
+		<build.same.i18n.web.mbean.class>com.sagant.same.i18n.CurrentLocaleMBean</build.same.i18n.web.mbean.class>
+		<!-- clase que implementa la carga del archivo text_*.properties en codificacion UTF-8 -->	
+		<build.same.i18n.text.class>com.sagant.same.i18n.Text</build.same.i18n.text.class>
+
+
+		<build.sae.locator.contexto.no.autenticado.frontend.impl>com.sagant.sae.utils.LookupAnonimoLocalBusinessLocatorJboss7</build.sae.locator.contexto.no.autenticado.frontend.impl>
+		<build.sae.locator.contexto.no.autenticado.backend.impl>com.sagant.sae.utils.LookupAnonimoLocalBusinessLocatorJboss7</build.sae.locator.contexto.no.autenticado.backend.impl>
+
+		<build.sae.service.ejb.jndi_agendar_reservas_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AgendarReservasBean!uy.gub.imm.sae.business.api.AgendarReservasRemote</build.sae.service.ejb.jndi_agendar_reservas_bean>
+		<build.sae.service.ejb.jndi_recursos_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//RecursosBean!uy.gub.imm.sae.business.api.RecursosRemote</build.sae.service.ejb.jndi_recursos_bean>
+		<build.sae.service.ejb.jndi_depurar_reservas_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//DepurarReservasBean!uy.gub.imm.sae.business.api.DepurarReservasRemote</build.sae.service.ejb.jndi_depurar_reservas_bean>
+
+		<!--JBOSSAS7: Estas propiedades son necesarias solo para jboss as 7, pues tengo 
+			que hacer lookup xq no anda las ref a ejb en el descriptor jboss-web.xml -->
+		<build.sae.service.ejb.jndi_agenda_general_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AgendaGeneralBean!uy.gub.imm.sae.business.api.AgendaGeneralRemote</build.sae.service.ejb.jndi_agenda_general_bean>
+		<build.sae.service.ejb.jndi_agendas_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AgendasBean!uy.gub.imm.sae.business.api.AgendasRemote</build.sae.service.ejb.jndi_agendas_bean>
+		<build.sae.service.ejb.jndi_acciones_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AccionesBean!uy.gub.imm.sae.business.api.AccionesRemote</build.sae.service.ejb.jndi_acciones_bean>
+		<build.sae.service.ejb.jndi_autocompletados_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AutocompletadosBean!uy.gub.imm.sae.business.api.AutocompletadosRemote</build.sae.service.ejb.jndi_autocompletados_bean>
+		<build.sae.service.ejb.jndi_consultas_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//ConsultasBean!uy.gub.imm.sae.business.api.ConsultasRemote</build.sae.service.ejb.jndi_consultas_bean>
+		<build.sae.service.ejb.jndi_disponibilidades_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//DisponibilidadesBean!uy.gub.imm.sae.business.api.DisponibilidadesRemote</build.sae.service.ejb.jndi_disponibilidades_bean>
+		<build.sae.service.ejb.jndi_llamadas_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//LlamadasBean!uy.gub.imm.sae.business.api.LlamadasRemote</build.sae.service.ejb.jndi_llamadas_bean>
+		<build.sae.service.ejb.jndi_validaciones_bean>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//ValidacionesBean!uy.gub.imm.sae.business.api.ValidacionesRemote</build.sae.service.ejb.jndi_validaciones_bean>
+
+		<build.sae.build.classifier>as7</build.sae.build.classifier>
+
+
+
+
+	</properties>
+
+
+	<repositories>
+		<!-- Todos los repos de jboss estan en: https://repository.jboss.org/nexus -->
+		<repository>
+			<id>jboss-releases</id>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+		</repository>
+		<repository>
+			<id>jboss-thirdparty-releases</id>
+			<url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
+		</repository>
+		<repository>
+			<id>jboss-deprecated</id>
+			<url>https://repository.jboss.org/nexus/content/repositories/deprecated</url>
+		</repository>
+
+
+
+	</repositories>
+
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>com.sagant.sae</groupId>
+				<artifactId>sae-service</artifactId>
+				<version>${project.version}</version>
+				<type>ear</type>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sagant.sae</groupId>
+				<artifactId>sae-ejb</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sagant.sae</groupId>
+				<artifactId>sae-ejb</artifactId>
+				<version>${project.version}</version>
+				<type>ejb-client</type>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sagant.sae</groupId>
+				<artifactId>sae-backend</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sagant.sae</groupId>
+				<artifactId>sae-frontend</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+
+			<!-- Dependo para construir por overlay -->
+			<dependency>
+				<groupId>com.sagant.sae</groupId>
+				<artifactId>sae-web-common</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+
+			<!-- Dependo para compilar los wars -->
+			<dependency>
+				<groupId>com.sagant.sae</groupId>
+				<artifactId>sae-web-common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+				<classifier>utils</classifier>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<!--version>3.8.1</version -->
+				<!--version>4.9</version -->
+				<version>4.11</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.14</version>
+				<scope>provided</scope>
+			</dependency>
+
+
+
+			<!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill 
+				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
+				of artifacts. We use this here so that we always get the correct versions 
+				of artifacts. Here we use the jboss-javaee-6.0-with-hibernate stack (you 
+				can read this as the JBoss stack of the Java EE Web Profile 6 APIs with extras 
+				from the Hibernate family of projects) -->
+			<dependency>
+				<groupId>org.jboss.bom</groupId>
+				<artifactId>jboss-javaee-6.0-with-hibernate</artifactId>
+				<version>${version.org.jboss.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.as</groupId>
+				<artifactId>jboss-as-parent</artifactId>
+				<version>7.1.1.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+
+		</dependencies>
+
+
+
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.8</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<encoding>ISO-8859-1</encoding>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ejb-plugin</artifactId>
+					<version>2.3</version>
+					<configuration>
+						<ejbVersion>3.1</ejbVersion>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<!-- No uso el 2.4 xq tiene un bug: no funcionan los filtros http://jira.codehaus.org/browse/MWAR-301 -->
+					<version>2.3</version>
+
+					<configuration>
+						<webResources combine.children="append">
+							<resource>
+								<directory>src/main/webapp</directory>
+								<filtering>true</filtering>
+								<includes>
+									<include>WEB-INF/**/*.xml</include>
+									<include>WEB-INF/**/*.properties</include>
+								</includes>
+							</resource>
+							<resource>
+								<directory>src/main/webapp</directory>
+								<filtering>false</filtering>
+								<includes>
+									<include>WEB-INF/**/*.json</include>
+								</includes>
+							</resource>
+						</webResources>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ear-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+
+
+			</plugins>
+		</pluginManagement>
+
+		<filters>
+			<filter>../build.properties</filter>
+		</filters>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/*.xml</exclude>
+					<exclude>**/*.properties</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+
+	</build>
+
+	<profiles>
+
+
+		<profile>
+			<id>custom</id>
+			<activation>
+				<file>
+					<exists>../active-profiles/custom.marker</exists>
+				</file>
+			</activation>
+
+			<properties>
+			</properties>
+
+			<build>
+				<pluginManagement>
+					<plugins>
+
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>build-helper-maven-plugin</artifactId>
+							<executions>
+								<execution>
+									<id>add-source</id>
+									<phase>generate-sources</phase>
+									<goals>
+										<goal>add-source</goal>
+									</goals>
+									<configuration>
+										<sources combine.children="append">
+											<source>src/main/java-custom</source>
+										</sources>
+									</configuration>
+								</execution>
+							</executions>
+						</plugin>
+
+
+						<plugin>
+							<artifactId>maven-war-plugin</artifactId>
+
+							<configuration>
+								<webResources combine.children="append">
+									<resource>
+										<directory>src/main/webapp-custom</directory>
+										<filtering>true</filtering>
+										<includes>
+											<include>WEB-INF/**/*.xml</include>
+											<include>WEB-INF/**/*.properties</include>
+										</includes>
+									</resource>
+									<resource>
+										<directory>src/main/webapp-custom</directory>
+										<filtering>false</filtering>
+										<excludes>
+											<exclude>WEB-INF/**/*.xml</exclude>
+											<exclude>WEB-INF/**/*.properties</exclude>
+										</excludes>
+									</resource>
+								</webResources>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+
+
+				<resources>
+					<resource>
+						<directory>src/main/resources-custom</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+					</resource>
+					<resource>
+						<directory>src/main/resources-custom</directory>
+						<filtering>false</filtering>
+						<excludes>
+							<exclude>**/*.xml</exclude>
+							<exclude>**/*.properties</exclude>
+						</excludes>
+					</resource>
+
+				</resources>
+
+			</build>
+
+		</profile>
+
+	</profiles>
+
+</project>

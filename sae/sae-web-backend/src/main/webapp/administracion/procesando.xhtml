@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+      
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+	<ui:component>
+		<style lang="text/css">
+			.procesando {
+				text-align: center; 
+				vertical-align: middle; 
+				padding: 0;
+			}
+			.procesando .rich-mpnl-mask-div {
+				filter:alpha(opacity=20);
+				opacity:0.2;	
+			}
+		</style>
+
+		<script type="text/javascript">
+		     var infoWindowAMShown = false;
+		     var infoWindowAMTimer;
+		     function showModalInfoWindow()
+		     {
+		          infoWindowAMTimer = setTimeout("if(!infoWindowAMShown){Richfaces.showModalPanel('procesandoModalBox');infoWindowAMShown=true;}", 500);
+		     }
+		     function hideModalInfoWindow()
+		     {
+		          if (infoWindowAMShown){
+		          	Richfaces.hideModalPanel('procesandoModalBox');
+		          	infoWindowAMShown=false;
+		          }
+		          else {
+		          	if(infoWindowAMTimer) {
+		          		clearTimeout(infoWindowAMTimer);
+		          	}
+		          }
+		     }
+		</script>
+
+
+		<rich:modalPanel 
+			id="procesandoModalBox" 
+			styleClass="procesando"
+			width="300" 
+			height="110" 
+			shadowOpacity="0.5" moveable="false" autosized="false"
+			zindex="2000">
+	
+			<table width="280" style="" cellpadding="10px">
+				<tr>
+					<td width="50%" height="90" style="vertical-align: middle; text-align: right;">
+						<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/loading.gif" alt="Procesando..." />
+					</td>
+					<td width="50%" height="90" valign="middle" style="vertical-align: middle; text-align: left;">
+						<h:outputFormat value="Procesando..." />
+					</td>
+				</tr>
+			</table>
+		</rich:modalPanel>
+	
+ 		<!--a4j:status onstart="showModalInfoWindow();" 
+		   			onstop= "hideModalInfoWindow();" >
+		</a4j:status-->
+
+	</ui:component>
+
+</html>

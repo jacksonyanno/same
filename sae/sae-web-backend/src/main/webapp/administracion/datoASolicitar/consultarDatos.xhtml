@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+	<!-- Se definen estilos para etiquetas y valores alineados a la izquierda -->
+	<style>
+.etiqueta_l {
+	text-align: left;
+}
+
+.valor_l {
+	text-align: left;
+}
+</style>
+
+
+	<ui:include
+		src="/administracion/datoASolicitar/disenioFormulario.xhtml" />
+
+	<table style="border: none;" cellpadding="0" cellspacing="0"
+		align="left">
+		<tr>
+			<td ><h:panelGrid columns="1"
+				rowClasses="arriba">
+				<h:form>
+					<rich:panel bodyClass="formulario" headerClass="formularioCabezal">
+						<h:panelGrid columns="2" cellpadding="0" cellspacing="5"
+							style="padding-top: 0px;" styleClass="Texto"
+							columnClasses="formularioEtiqueta, formularioCampo">
+
+							<h:outputLabel value="#{text['entity.agenda']}:"></h:outputLabel>
+							<h:inputText
+								value="#{datoASSessionMBean.datoSeleccionado.recurso.agenda.nombre}"
+								readonly="true"></h:inputText>
+							<h:outputLabel value="#{text['entity.recurso']}:"></h:outputLabel>
+							<h:inputText
+								value="#{datoASSessionMBean.datoSeleccionado.recurso.nombre}"
+								readonly="true"></h:inputText>
+							<h:outputLabel value="#{text['entity.formulario.field.name']}:"></h:outputLabel>
+							<h:inputText
+								value="#{datoASSessionMBean.datoSeleccionado.nombre}"
+								readonly="true"></h:inputText>
+							<h:outputText value="#{text['formulario.field.design.title']}"
+								style="font-size: 13px; font-weight: bold;"
+								styleClass="borde-abajo"></h:outputText>
+							<rich:spacer height="40" />
+							<h:outputLabel value="#{text['entity.formulario.field.label']}:"></h:outputLabel>
+							<h:inputText
+								value="#{datoASSessionMBean.datoSeleccionado.etiqueta}"
+								readonly="true"></h:inputText>
+							<h:outputLabel value="#{text['entity.formulario.field.ayuda']}:"></h:outputLabel>
+							<h:inputText
+								value="#{datoASSessionMBean.datoSeleccionado.textoAyuda}"
+								readonly="true"></h:inputText>
+							<h:outputLabel value="#{text['entity.formulario.field.data_type']}:"></h:outputLabel>
+							<h:inputText value="#{datoASSessionMBean.datoSeleccionado.tipo.getDescripcion(i18n.locale)}"
+								readonly="true"></h:inputText>
+							<h:outputLabel value="#{text['entity.formulario.field.length']}:"></h:outputLabel>
+							<h:inputText value="#{datoASSessionMBean.datoSeleccionado.largo}"
+								readonly="true"></h:inputText>
+							<h:outputLabel value="#{text['entity.formulario.field.required']}:"></h:outputLabel>
+							<h:selectBooleanCheckbox
+								value="#{datoASSessionMBean.datoSeleccionado.requerido}"
+								disabled="true" readonly="true"></h:selectBooleanCheckbox>
+							<h:outputLabel value="#{text['entity.formulario.field.key']}:"></h:outputLabel>
+							<h:selectBooleanCheckbox
+								value="#{datoASSessionMBean.datoSeleccionado.esClave}"
+								disabled="true" readonly="true"></h:selectBooleanCheckbox>
+							<h:outputLabel value="#{text['entity.formulario.group']}:"></h:outputLabel>
+							<h:inputText
+								value="#{datoASSessionMBean.datoSeleccionado.agrupacionDato.nombre}"
+								readonly="true"></h:inputText>
+							<h:outputLabel value="#{text['entity.formulario.field.row']}:"></h:outputLabel>
+							<h:inputText value="#{datoASSessionMBean.datoSeleccionado.fila}"
+								readonly="true"></h:inputText>
+							<h:outputLabel value="#{text['entity.formulario.field.col']}:"></h:outputLabel>
+							<h:inputText
+								value="#{datoASSessionMBean.datoSeleccionado.columna}"
+								readonly="true"></h:inputText>
+							<h:outputLabel value="#{text['entity.formulario.field.deleted_date']}:"></h:outputLabel>
+							<h:inputText
+								value="#{datoASSessionMBean.datoSeleccionado.fechaBaja}"
+								readonly="true">
+								<f:convertDateTime type="both" pattern="dd/MM/yyyy"
+									timeZone="#{coreMBean.timeZone}" />
+							</h:inputText>
+							<h:outputText value="#{text['formulario.field.report.title']}"
+								style="font-size: 13px; font-weight: bold;"
+								styleClass="borde-abajo"></h:outputText>
+							<rich:spacer height="40" />
+							<h:outputLabel value="#{text['entity.formulario.field.show_in_report']}:"></h:outputLabel>
+							<h:selectBooleanCheckbox
+								value="#{datoASSessionMBean.datoSeleccionado.incluirEnReporte}"
+								disabled="true" readonly="true"></h:selectBooleanCheckbox>
+							<h:outputLabel value="#{text['entity.formulario.field.show_in_report_width']}:"></h:outputLabel>
+							<h:inputText
+								value="#{datoASSessionMBean.datoSeleccionado.anchoDespliegue}"
+								readonly="true"></h:inputText>
+
+						
+							<h:outputText value="#{text['formulario.field.display.title']}"
+								style="font-size: 13px; font-weight: bold; "
+								styleClass="borde-abajo"></h:outputText>
+							<rich:spacer height="40" />
+		
+							<h:outputText value="#{text['entity.formulario.field.show_in_display']}:"></h:outputText>
+							<h:selectBooleanCheckbox
+								value="#{datoASSessionMBean.datoSeleccionado.incluirEnLlamador}"
+								disabled="true" readonly="true"></h:selectBooleanCheckbox>
+								
+							<h:outputText value="#{text['entity.formulario.field.show_in_display_length']}:"></h:outputText>
+							<h:inputText id="largoEnLlamador"
+								value="#{datoASSessionMBean.datoSeleccionado.largoEnLlamador}"
+								maxlength="3"
+								disabled="true" readonly="true"></h:inputText>
+								
+							<h:outputText value="#{text['entity.formulario.field.show_in_display_order']}:"></h:outputText>
+							<h:inputText id="ordenEnLlamador"
+								value="#{datoASSessionMBean.datoSeleccionado.ordenEnLlamador}"
+								maxlength="2"
+								disabled="true" readonly="true"></h:inputText>
+
+
+							<h:outputText value="" />
+							<h:panelGrid columns="2" columnClasses="abajo">
+								<ui:include
+									src="/administracion/datoASolicitar/verDisenioFormulario.xhtml" />
+								<rich:spacer height="40"></rich:spacer>
+							</h:panelGrid>
+
+						</h:panelGrid>
+					</rich:panel>
+
+				</h:form>
+				<h:form>
+					<rich:panel bodyClass="formulario" headerClass="formularioCabezal"
+						rendered="#{datoASSessionMBean.mostrarConsultarValor}"	>
+						<f:facet name="header">
+							<h:outputText value="#{text['formulario.field.list_value.title']}" />
+						</f:facet>
+
+						<rich:dataTable value="#{datoASSessionMBean.valoresDelDato}"
+							var="row" columns="5" id="tablaValores" rows="3"
+							rendered="#{datoASSessionMBean.mostrarConsultarValor}"
+							columnsWidth="160,210, 40">
+							<rich:column style="text-align:left;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.formulario.field.list_value.label']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.etiqueta}"></h:outputText>
+							</rich:column>
+							<rich:column style="text-align:left;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.formulario.field.list_value.value']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.valor}"></h:outputText>
+							</rich:column>
+							<rich:column style="text-align:center;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.formulario.field.list_value.valid_from_date']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.fechaDesde}">
+									<f:convertDateTime type="both" pattern="dd/MM/yyyy" timeZone="#{coreMBean.timeZone}"/>
+								</h:outputText>
+							</rich:column>
+							<rich:column style="text-align:center;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.formulario.field.list_value.valid_to_date']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.fechaHasta}">
+									<f:convertDateTime type="both" pattern="dd/MM/yyyy" timeZone="#{coreMBean.timeZone}"/>
+								</h:outputText>
+							</rich:column>
+							<rich:column style="text-align:center;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.formulario.field.list_value.order']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.orden}"></h:outputText>
+							</rich:column>
+							<f:facet name="footer">
+								<rich:datascroller align="left" maxPages="5" id="sc_valores"
+									for="tablaValores" page="#{datoASSessionMBean.pagValorRCons}" />
+							</f:facet>
+						</rich:dataTable>
+					</rich:panel>
+				</h:form>
+			</h:panelGrid></td>
+		</tr>
+	</table>
+</f:view>

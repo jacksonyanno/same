@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{consultaReservaDatosMBean.beforePhaseConsultarReservaDatos}"
+	beforePhaseListener="#{consultaReservaDatosMBean.beforePhaseConsultarReservaDatos}">
+
+
+	<h:form style="margin: 0px;">
+
+		<table style="border: none;" cellpadding="0" cellspacing="0">
+			<tr>
+				<td nowrap="nowrap"><rich:panel
+					header="#{text['query.consultarReservaDatos.header']}:"
+					style=" width : 515px;text-align: left;">
+					<h:panelGrid id="camposFiltro" columns="1"
+						binding="#{consultaReservaDatosMBean.filtroConsulta}" cellpadding="0"
+						cellspacing="0" styleClass="Texto"
+							columnClasses="formularioEtiqueta, formularioCampo">
+					</h:panelGrid>
+					<a4j:commandButton value="#{text['button.search']}"
+						actionListener="#{consultaReservaDatosMBean.buscarReservaDatos}"
+						reRender="resultadosBusqueda"></a4j:commandButton>
+					<rich:message for="VNroReserva" ajaxRendered="true"
+						errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+				</rich:panel></td>
+			</tr>
+			<tr style="height: 6px;">
+				<td><h:outputText value="" styleClass="headerText"></h:outputText>
+				</td>
+			</tr>
+			<tr>
+				<td><rich:panel id="resultadosBusqueda"
+					style=" width : 515px; text-align: left;" bodyClass="formulario" headerClass="formularioCabezal">
+					<f:facet name="header">
+						<h:outputText value="#{text['query.query_result']}" />
+					</f:facet>
+
+					<rich:dataTable
+						value="#{consultaReservaDatosMBean.consReservaDatosSessionMBean.listaReservas}"
+						binding="#{consultaReservaDatosMBean.reservasDataTable}" var="reserva"
+						columns="7" id="resultadoBusqueda" rows="3">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.reserva.plural']}"></h:outputText>
+						</f:facet>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.reserva.id']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{reserva.id}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.reserva.number']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{reserva.numero}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.reserva.creation_date']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{reserva.fechaCreacion}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"
+									timeZone="#{consultaReservaDatosMBean.timeZone}" locale="es" />
+							</h:outputText>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.reserva.state']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{reserva.estadoDescripcion}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.reserva.user_creation']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{reserva.ucrea}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.reserva.origen']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{reserva.origen}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{text['view.general.action']}"></h:outputText>
+							</f:facet>
+							<a4j:commandLink id="consultarLink" ajaxSingle="true" 
+								action="#{consultaReservaDatosMBean.verDetalleReserva}">
+								<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/find.gif"
+									style="border:0" height="16" width="16" />
+							</a4j:commandLink>
+							<rich:toolTip for="consultarLink" value="Ver detalle" />
+						</rich:column>
+						<f:facet name="footer">
+							<rich:datascroller align="left" maxPages="5"
+								id="scTablaConsReserva" for="resultadoBusqueda"
+								page="#{consultaReservaDatosMBean.consReservaDatosSessionMBean.datosReservaPage}" />
+						</f:facet>
+					</rich:dataTable>
+				</rich:panel></td>
+			</tr>
+
+		</table>
+
+		<a4j:commandLink value="Volver" action="#{consultaReservaDatosMBean.volverPagInicio}"  reRender="pantalla"
+			ajaxSingle="true"></a4j:commandLink>
+	</h:form>
+
+</f:view>
+</html>

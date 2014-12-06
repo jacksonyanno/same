@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      beforePhase="#{sessionMBean.beforePhaseSeleccionAgendaRecurso}"
+      beforePhaseListener="#{sessionMBean.beforePhaseSeleccionAgendaRecurso}"
+      >
+
+	<h:form style="margin: 0px; padding: 20px;" id="agendaSelectionForm">
+
+        <a4j:repeat value="#{agendaSelectionMBean.agendas}" var="agenda">
+			<div class="panel panel-default" style="text-align: left;">
+				<div class="panel-heading" style="padding-left: 50px; padding-right: 52px">
+					<h3 class="panel-title" style="font-weight: bolder;">
+					#{agenda.descripcion}
+					
+						<span class="dropdown pull-right" >
+							<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+									onclick="dropdownToggle('agendaSelectionForm-group-ddmenu-#{agenda.id}')"
+									style="border: none;"
+									id="agendaSelectionForm-group-ddbtn-#{agenda.id}">
+								<span class="glyphicon glyphicon-cog"/>
+							</button>
+							<ul class="dropdown-menu" role="menu" style="container: 'body'; text-align: left;" id="agendaSelectionForm-group-ddmenu-#{agenda.id}">
+							  	<li>
+							  		<a4j:commandLink action="#{agendaMBean.ver(agenda)}"
+							  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+										<span class="glyphicon glyphicon-search" style="padding-right: 10px"></span>
+										#{text['agendas.query.title']}
+									</a4j:commandLink>
+								</li>
+							  	<li>
+							  		<a4j:commandLink action="#{agendaMBean.modificar(agenda)}"
+							  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}"
+							  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+										<span class="glyphicon glyphicon-pencil" style="padding-right: 10px"></span>
+										#{text['agendas.update.title']}
+									</a4j:commandLink>
+								</li>
+							  	<li>
+									<!-- LO CAMBIO DE A4J a H porque en modificarTextos utilizo rich.editor y no funciona dentro de una accion ajax -->
+									<h:commandLink action="#{agendaMBean.modificarTextos(agenda)}"
+										rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}"
+							  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+										<span class="glyphicon glyphicon-font" style="padding-right: 10px"></span>
+										#{text['agendas.texts_update.title']}
+									</h:commandLink>										
+								</li>
+							  	<li>
+							  		<a4j:commandLink action="#{agendaMBean.eliminar(agenda)}"
+							  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}"
+							  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+										<span class="glyphicon glyphicon-remove" style="padding-right: 10px"></span>
+										#{text['agendas.delete.title']}
+									</a4j:commandLink>
+								</li>
+							  	<li>
+							  		<a4j:commandLink action="#{agendaMBean.copiar(agenda)}"
+							  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}"
+							  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+										<span class="glyphicon glyphicon-plus" style="padding-right: 10px"></span>
+										#{text['agendas.copy.title']}
+									</a4j:commandLink>
+								</li>
+								<li role="presentation" class="divider"></li>
+							  	<li>
+							  		<a4j:commandLink action="#{recursoMBean.crearEn(agenda)}"
+							  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}"
+							  			reRender="agendaSelectedButton, pantalla" style="margin-left: 20px; margin-right: 20px; text-align: left;"
+							  			role="button" styleClass="btn btn-primary same-btn-primary">											
+										<span class="glyphicon glyphicon-calendar" style="padding-right: 10px"></span>
+										#{text['recursos.create.title']}
+									</a4j:commandLink>
+								</li>
+							</ul>
+						</span>
+			
+					
+					</h3>
+				</div>
+				<div class="panel-body" style="padding-left: 50px; padding-right: 50px; padding-top: 30px; padding-bottom: 30px">
+	
+					<ul class="list-group">
+					 	<a4j:repeat value="#{agenda.recursos}" var="recurso">
+							<li class="list-group-item #{(agendaSelectionMBean.isSelected(recurso) ? 'same-agenda-options-selected' : '')}"
+								style="padding: 10px 2px 10px 15px;" onclick="clientRecurso#{recurso.id}.select()" 
+								onmouseover="highlightRecursoOn(#{recurso.id})"
+								onmouseout="highlightRecursoOff(#{recurso.id})"	
+								id="agendaSelectionForm-recurso-li-#{recurso.id}">
+									#{recurso.descripcion}
+									
+								<a4j:jsFunction name="selectRecurso#{recurso.id}OnServer" 
+										reRender="agendaSelectedButton, agendaSelectionForm"	
+										action="#{agendaSelectionMBean.select(recurso)}"
+										event="onclick">
+								</a4j:jsFunction>
+								<script type="text/javascript">
+									clientRecurso#{recurso.id} = {
+										enableSelect: true,
+										select: function(){
+											if(this.enableSelect) {
+												selectRecurso#{recurso.id}OnServer();
+											}
+											else {
+												this.enableSelect = true;
+											}
+										}
+									};
+								</script>
+
+																
+								<div class="dropdown pull-right" >
+									<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+											onclick="clientRecurso#{recurso.id}.enableSelect = false; dropdownToggle('agendaSelectionForm-recurso-ddmenu-#{recurso.id}')"
+											style="border: none;"
+											id="agendaSelectionForm-recurso-ddbtn-#{recurso.id}">
+										<span class="glyphicon glyphicon-cog"/>
+									</button>
+									<ul class="dropdown-menu" role="menu" style="container: 'body'; text-align: left;" id="agendaSelectionForm-recurso-ddmenu-#{recurso.id}">
+									  	<li>
+									  		<a4j:commandLink action="#{recursoMBean.ver(recurso)}"
+									  			onclick="clientRecurso#{recurso.id}.enableSelect = false;" 
+									  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+												<span class="glyphicon glyphicon-search" style="padding-right: 10px"></span>
+												#{text['recursos.query.title']}
+											</a4j:commandLink>
+										</li>
+									  	<li>
+									  		<a4j:commandLink action="#{recursoMBean.modificar(recurso)}"
+									  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}"
+									  			onclick="clientRecurso#{recurso.id}.enableSelect = false;" 
+									  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+												<span class="glyphicon glyphicon-pencil" style="padding-right: 10px"></span>
+												#{text['recursos.update.title']}
+											</a4j:commandLink>
+										</li>
+									  	<li>
+											<!-- LO CAMBIO DE A4J a H porque en modificarTextos utilizo rich.editor y no funciona dentro de una accion ajax -->
+											<h:commandLink action="#{recursoMBean.modificarTextos(recurso)}"
+												rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}"
+												onclick="clientRecurso#{recurso.id}.enableSelect = false;" 
+									  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+												<span class="glyphicon glyphicon-font" style="padding-right: 10px"></span>
+												#{text['recursos.texts_update.title']}
+											</h:commandLink>										
+										</li>
+									  	<li>
+									  		<a4j:commandLink action="#{recursoMBean.eliminar(recurso)}"
+									  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}"
+									  			onclick="clientRecurso#{recurso.id}.enableSelect = false;" 
+									  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+												<span class="glyphicon glyphicon-remove" style="padding-right: 10px"></span>
+												#{text['recursos.delete.title']}
+											</a4j:commandLink>
+										</li>
+									  	<li>
+									  		<a4j:commandLink action="#{recursoMBean.copiar(recurso)}"
+									  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR}"
+									  			onclick="clientRecurso#{recurso.id}.enableSelect = false;" 
+									  			reRender="agendaSelectedButton, pantalla" style="text-decoration: none;">											
+												<span class="glyphicon glyphicon-plus" style="padding-right: 10px"></span>
+												#{text['recursos.copy.title']}
+											</a4j:commandLink>
+										</li>
+									</ul>
+								</div>
+							</li>						
+						</a4j:repeat> 
+					</ul>
+	
+				</div>
+			</div>
+		</a4j:repeat>
+
+
+		<!-- CREACION DE GRUPO: SIMULA SER UN GRUPO CUYO NOMBRE SE PUEDE EDITAR, DICHA ACCION GENERA LA CREACION DE UN NUEVO GRUPO -->
+		<h:panelGroup layout="block" styleClass="panel panel-default" 
+			style="text-align: left; border-style:dashed; border-width:2px; border-color: #ebccd1;" 
+			id="createNewGroupPanel">
+			<div class="panel-heading" style="padding-left: 50px; padding-right: 52px; border-bottom-style: dashed; border-bottom-width:2px; border-bottom-color: #ebccd1; background-color: #f2dede;">
+				<h3 class="panel-title alert-danger" style="font-weight: bolder;">
+
+					<h:inputText value="#{agendaMBean.agendaNueva.descripcion}" rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR and sessionMBean.creandoGrupo}"
+								 validator="#{agendaSelectionMBean.groupDescriptionValidate}">
+					</h:inputText>
+
+					<span style="btn-group btn-group-sm">
+				  		<a4j:commandButton action="#{agendaMBean.crear}"
+				  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR and sessionMBean.creandoGrupo}"
+				  			reRender="agendaSelectedButton, pantalla"
+				  			role="button" styleClass="btn btn-primary btn-sm"
+				  			value="#{text['button.save']}"
+				  			onclick="buttonDisabled(this, this, '#{text['button.save.clicked']}')"
+			  				oncomplete="buttonEnabled(this, this, '#{text['button.save']}')">
+			  			</a4j:commandButton>
+				  							  														
+				  		<a4j:commandButton action="#{agendaMBean.cancelarCreandoGrupo}"
+				  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR and sessionMBean.creandoGrupo}"
+				  			reRender="createNewGroupPanel"
+				  			role="button" styleClass="btn btn-default btn-sm"
+				  			value="#{text['button.cancel']}"
+				  			immediate="true" />											
+						
+				  		<a4j:commandButton action="#{agendaMBean.cambioACreandoGrupo}"
+				  			rendered="#{rolesJSFMBean.RA_AE_ADMINISTRADOR and !sessionMBean.creandoGrupo}"
+				  			reRender="createNewGroupPanel"
+				  			role="button" styleClass="btn btn-primary btn-sm"											
+							value="#{text['agendas.create.title']}"
+				  			onclick="buttonDisabled(this, this, '#{text['agendas.create.title']}')"
+			  				oncomplete="buttonEnabled(this, this, '#{text['agendas.create.title']}')" />
+					</span>
+				</h3>
+				
+			</div>
+			<div class="panel-body" style="padding-left: 50px; padding-right: 50px; padding-top: 30px; padding-bottom: 30px">
+
+				<ul class="list-group">
+				</ul>
+
+			</div>
+		</h:panelGroup>
+
+
+	</h:form>
+</f:view>

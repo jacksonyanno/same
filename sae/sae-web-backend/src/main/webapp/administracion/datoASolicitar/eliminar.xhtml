@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{datoASolicitarMBean.beforePhaseEliminar}"
+	beforePhaseListener="#{datoASolicitarMBean.beforePhaseEliminar}">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+
+	<rich:modalPanel moveable="true" shadowOpacity="0.4" width="290"
+		autosized="false" height="110" id="eliminarDato" zindex="2000">
+
+		<f:facet name="header">
+			<h:outputText value="#{text['formulario.field.delete.modal.confirm.title']}" />
+		</f:facet>
+		<h:form id="elimRec">
+			<table style="border: none;" cellpadding="5" cellspacing="5"
+				align="center">
+				<tr>
+					<td nowrap="nowrap"><h:outputText
+						value="#{text['formulario.field.delete.modal.confirm.message']}"
+						styleClass="textoModal" /></td>
+				</tr>
+				<tr>
+					<td><h:panelGrid columns="2"
+						style="padding-top: 0px; align=center;">
+
+						<a4j:commandButton id="btn_eliminar"
+							reRender="tablaDatosSolicitarDel"
+							actionListener="#{datoASolicitarMBean.eliminarDato}" 
+							value="#{text['button.delete']}"
+							onclick="Richfaces.hideModalPanel('eliminarDato');"
+							style=" width : 79px;">
+						</a4j:commandButton>
+
+						<a4j:commandButton
+							onclick="Richfaces.hideModalPanel('eliminarDato');"
+							value="#{text['button.cancel']}">
+						</a4j:commandButton>
+					</h:panelGrid></td>
+				</tr>
+			</table>
+		</h:form>
+	</rich:modalPanel>
+
+	<ui:include
+		src="/administracion/datoASolicitar/disenioFormulario.xhtml" />
+
+	<h:form style="margin: 0px;">
+		<table style="border: none;" cellpadding="0" cellspacing="0"
+			align="left">
+			<tr>
+				<td align="center"><rich:dataTable
+					value="#{datoASSessionMBean.datosASolicitar}" var="row" columns="4"
+					binding="#{datoASolicitarMBean.camposDataTableBorrar}"
+					id="tablaDatosSolicitarDel" rows="6"
+					columnsWidth="100, 200, 80, 40">
+					<rich:column style="text-align:left;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.field.name']}"></h:outputText>
+						</f:facet>
+						<h:outputText value="#{row.nombre}"></h:outputText>
+					</rich:column>
+					<rich:column style="text-align:left;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.field.label']}"></h:outputText>
+						</f:facet>
+						<h:outputText value="#{row.etiqueta}"></h:outputText>
+					</rich:column>
+					<rich:column style="text-align:center;">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.formulario.field.required']}"></h:outputText>
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{row.requerido}"
+							readonly="true" disabled="true"></h:selectBooleanCheckbox>
+					</rich:column>
+
+					<rich:column style="text-align:center;">
+						<f:facet name="header">
+						</f:facet>
+						<a4j:commandLink id="modificarLink"
+							oncomplete="javascript:Richfaces.showModalPanel('eliminarDato');"
+							actionListener="#{datoASolicitarMBean.seleccionarDatoParaEliminar}">
+							<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/delete2.gif"
+								style="border:0" width="16" height="16" />
+						</a4j:commandLink>
+						<rich:toolTip for="modificarLink" value="#{text['formulario.field.delete.tooltip']}" />
+					</rich:column>
+
+					<f:facet name="footer">
+						<h:panelGroup>
+							<table>
+								<tr>
+									<td width="400px"><rich:datascroller align="left"
+										maxPages="5" id="scTablaDelDAS" for="tablaDatosSolicitarDel"
+										page="#{datoASSessionMBean.pagDatoASDel}" /></td>
+									<td width="100px" align="right"><ui:include
+										src="/administracion/datoASolicitar/verDisenioFormulario.xhtml" />
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+					</f:facet>
+				</rich:dataTable></td>
+			</tr>
+		</table>
+
+
+	</h:form>
+</f:view>

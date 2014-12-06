@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+
+<ui:composition template="/agendarReserva/Paso.template.xhtml">
+
+<ui:param name="soloCuerpo" value="#{sesionMBean.soloCuerpo}" />
+<ui:param name="parametroBean" value="#{paso2MBean}" />
+<ui:param name="agenda_nombre" value="#{paso2MBean.recursoDescripcion}" />
+<ui:param name="bodyId" value="paso2" />
+
+<ui:param name="paso_numero" value="2" />
+<ui:param name="paso_texto" value="#{text['reservaweb.step.2.title']}" />
+
+<ui:define name="descripcion">
+
+	<div class="pasoTexto">
+		<h:outputFormat escape="false" value="#{paso2MBean.descripcion}" />	
+		<h:outputFormat escape="false" value="#{paso2MBean.descripcionRecurso}" />
+	</div>
+
+</ui:define>
+
+<ui:define name="contenido">
+
+	<h:panelGrid columns="1">
+		<h:panelGroup id="recurso">
+			<h:outputFormat id="recurso-select-label" escape="false" value="#{paso2MBean.etiquetaDelRecurso}:" styleClass="pasoEtiqueta1"/>
+			<div id="step-selected-data">
+				#{paso2MBean.recursoDescripcion} -
+				<h:outputText value="#{paso2MBean.diaSeleccionado}" >
+					<f:convertDateTime type="date" pattern="dd '/' MM '/' yyyy" timeZone="#{coreMBean.timeZone}"/>
+				</h:outputText>
+			</div>
+		</h:panelGroup>
+		
+		<rich:spacer height="10px"></rich:spacer>
+
+		<h:panelGrid columns="3" columnClasses="arriba">
+		
+			<h:panelGroup layout="block" id="horas-matutina-container">
+				<rich:dataTable
+					id="tablaMatutina"  
+					binding="#{paso2MBean.tablaDispMatutina}"
+					value="#{paso2MBean.disponibilidadesMatutina}"
+					var="row" 
+					columnClasses="colDispHora, colDispEstado"
+					rowClasses="rowDisp"
+					columns="2"
+					rendered="#{paso2MBean.hayDisponibilidadesMatutina}"
+					>
+			
+					<f:facet name="header">
+						<h:panelGroup>
+							<h:outputText 	value="#{text['reservaweb.step.2.schedule.morning.title']}" styleClass="pasoTitulo3" />
+						</h:panelGroup>
+					</f:facet>
+			
+					<rich:column width="50px">
+						<h:outputText value="#{row.data.horaInicio}" styleClass="pasoTexto">
+							<f:convertDateTime type="time" pattern="HH:mm" timeZone="#{coreMBean.timeZone}"/>
+						</h:outputText>
+					</rich:column>
+		
+					<rich:column width="75px">
+						<h:outputText value="#{text['reservaweb.step.2.schedule.reserved.label']}"  rendered="#{(row.data.cupo > 0 ? false : true)}"  styleClass="textoDeshabilitado" />
+						<h:commandLink 	action="#{paso2MBean.reservarMatutina}"
+										id="linkReservarMatutina" 
+										value="#{text['reservaweb.step.2.schedule.book.label']}" 
+										styleClass="verde"
+					 			   		rendered="#{(row.data.cupo > 0 ? true : false)}" >
+						</h:commandLink>
+						<rich:toolTip for="linkReservarMatutina" 
+							value="#{(row.data.cupo == 1 ? text['reservaweb.step.2.schedule.time.available.singular.label'] : sae:messageFormat1(text['reservaweb.step.2.schedule.time.available.prural.label'], row.data.cupo))}"></rich:toolTip>
+					</rich:column>
+					
+				</rich:dataTable>
+			</h:panelGroup>
+		
+			<rich:spacer width="10px" />
+
+			<h:panelGroup layout="block" id="horas-vespertina-container">
+				<rich:dataTable  
+					id="tablaVespertina"  
+					binding="#{paso2MBean.tablaDispVespertina}"
+					value="#{paso2MBean.disponibilidadesVespertina}"
+					var="row" 
+					styleClass="tablaBorde"
+					columnClasses="colDispHora, colDispEstado"
+					rowClasses="rowDisp"
+					columns="2"
+					rendered="#{paso2MBean.hayDisponibilidadesVespertina}"
+					>
+			
+					<f:facet name="header">
+						<h:panelGroup>
+							<h:outputText 	value="#{text['reservaweb.step.2.schedule.afternoon.title']}" styleClass="pasoTitulo3" />
+						</h:panelGroup>
+					</f:facet>
+			
+					<rich:column width="50px">
+						<h:outputText value="#{row.data.horaInicio}" styleClass="pasoTexto">
+							<f:convertDateTime type="time" pattern="HH:mm" timeZone="#{coreMBean.timeZone}"/>
+						</h:outputText>
+					</rich:column>
+		
+					<rich:column width="75px">
+						<h:outputText value="#{text['reservaweb.step.2.schedule.reserved.label']}"  rendered="#{(row.data.cupo > 0 ? false : true)}"  styleClass="textoDeshabilitado" />
+						<h:commandLink	action="#{paso2MBean.reservarVespertina}" 
+										id="linkReservarVespertina" 
+										value="#{text['reservaweb.step.2.schedule.book.label']}" 
+										styleClass="verde"
+					 			   		rendered="#{(row.data.cupo > 0 ? true : false)}" >
+						</h:commandLink>
+						<rich:toolTip for="linkReservarVespertina" 
+							value="#{(row.data.cupo == 1 ? text['reservaweb.step.2.schedule.time.available.singular.label'] : sae:messageFormat1(text['reservaweb.step.2.schedule.time.available.prural.label'], row.data.cupo))}"></rich:toolTip>
+					</rich:column>
+	
+				</rich:dataTable>
+			</h:panelGroup>
+		</h:panelGrid>
+
+	</h:panelGrid>
+
+</ui:define>
+
+</ui:composition>
+
+</body>
+</html>      

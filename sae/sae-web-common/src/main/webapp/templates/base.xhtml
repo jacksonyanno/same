@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<f:view beforePhase="#{parametroBean.beforePhase}"
+	beforePhaseListener="#{parametroBean.beforePhase}"
+	locale="#{i18n.locale}">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<title>SAME | Reserva de Turnos</title>
+		
+		<link rel="shortcut icon" href="app/img/favicon.ico"/>
+		
+		
+		<a4j:loadStyle src="#{saeProperties['ui.style.organizacion.url']}" />
+		<a4j:loadStyle src="#{saeProperties['ui.style.organizacion.faces.url']}" />
+		<a4j:loadStyle src="#{saeProperties['ui.style.sae.url']}" />
+		
+		<!-- Bootstrap core CSS -->
+		<a4j:loadStyle src="/app/bootstrap/3.1.1/css/bootstrap.min.css" />
+		<a4j:loadStyle src="/app/css/agendate.css"/>
+
+		<a4j:loadStyle  src="/recursos/css/same.css"/>
+
+
+		<link href='https://fonts.googleapis.com/css?family=Duru+Sans' rel='stylesheet' type='text/css'/>
+		<ui:insert name="css" />
+
+	</head>
+
+	<body onload="#{onload}" class="body"
+		id="sae#{(empty bodyId ? '' : '-')}#{(empty bodyId ? '' : bodyId)}">
+
+		<ui:insert name="menu"/>
+
+		<div id="sae-cuerpo" class="container same-content">
+
+			<ui:insert name="cuerpo"><div style="text-align: center;">CUERPO</div></ui:insert>
+	
+		</div>
+
+		<div class="navbar navbar-default same-footer">
+			<div class="container">
+			   	<div class="navbar-header">
+			    	<a class="navbar-brand" href="/" style="height: 82px;">
+			    		<h:graphicImage value="/app/img/logo_same_blanco.png" alt="SAME"/>
+			    	</a>
+			   	</div>			    
+			    
+			    
+			    <p class="navbar-text navbar-right">
+			    	<h:outputText value="&#169;" escape="false"/> 2014 <a href="www.sagant.com" class="navbar-link">SAGANT</a>
+			    	SAME is a fork of <a class="navbar-link" href="http://www.agesic.gub.uy/innovaportal/v/2422/1/agesic/agenda_electronica_en_intendencia_de_montevideo.html">Sistema de Agenda Electronica</a> 
+			    </p>
+			</div>
+		</div>
+		
+		<ui:insert name="script">
+			<!-- <script></script>  -->		
+		</ui:insert>
+
+		<ui:insert name="js">
+			<!-- <a4j:loadScript src=""></a4j:loadScript> -->
+		</ui:insert>
+
+		<a4j:loadScript src="/recursos/js/same-utils.js"/>
+
+	</body>
+</f:view>
+</html>

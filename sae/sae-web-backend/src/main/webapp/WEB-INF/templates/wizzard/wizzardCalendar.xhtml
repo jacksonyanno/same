@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<ui:component>
+
+	<h:panelGroup 
+		layout="block" styleClass="form-horizontal" role="form" rendered="#{wizzard.state.isCalendar}"
+		style="margin-left: 20%; margin-right: 20%">
+		
+		<div class="form-group">
+				<label class="control-label col-sm-5" for="#{rich:clientId('serviceName')}">#{text['wizzard.calendar.service_name']}:</label>
+				<div class="col-sm-7">
+					<h:inputText 
+						styleClass="form-control" 
+						placeholder="#{text['wizzard.calendar.service_name.placeholder']}" 
+						id="serviceName" 
+						maxlength="50"
+						value="#{wizzard.calendar.serviceName}" />
+				</div>
+		</div>
+
+		<div class="form-group">
+				<label class="control-label col-sm-5" for="#{rich:clientId('openingFrom')}">#{text['wizzard.calendar.opening']}:</label>
+				<div class="col-sm-7">
+				  <div class="input-group" style="width: 6em;">
+				    <span class="input-group-addon">#{text['wizzard.calendar.opening.from.prefix']}</span>
+				    <h:inputText styleClass="form-control" id="openingFrom" placeholder="9:00" maxlength="5" style="min-width:6em"
+				    	value="#{wizzard.calendar.openingFrom}" converter="#{wizzard.calendar.timeConverter}">
+				    	<a4j:support event="onchange" ajaxSingle="true" reRender="horarioSemanal" actionListener="#{wizzard.calendar.refrescarTablaDisponibilidades}"/>
+				    </h:inputText>
+				    <span class="input-group-addon">#{text['wizzard.calendar.opening.to.prefix']}</span>
+				    <h:inputText styleClass="form-control" placeholder="17:00" maxlength="5" style="min-width:6em"
+				    	value="#{wizzard.calendar.openingTo}" converter="#{wizzard.calendar.timeConverter}">
+				    	<a4j:support event="onchange" ajaxSingle="true" reRender="horarioSemanal" actionListener="#{wizzard.calendar.refrescarTablaDisponibilidades}"/>
+				    </h:inputText>
+				    <span class="input-group-addon" >#{text['wizzard.calendar.opening.to.sufix']}</span>
+				  </div>
+				</div>
+		</div>
+		
+		
+		<div class="form-group">
+				<label class="control-label col-sm-5" for="#{rich:clientId('averageTime')}">#{text['wizzard.calendar.average_service_time']}:</label>
+				<div class="col-sm-7">
+				  <div class="input-group" style="width: 4em;">
+				    <h:inputText styleClass="form-control" id="averageTime" maxlength="3" style="min-width: 4em;"
+				    	value="#{wizzard.calendar.averageServiceTime}">
+				    	<a4j:support event="onchange" ajaxSingle="true" reRender="horarioSemanal" actionListener="#{wizzard.calendar.refrescarTablaDisponibilidades}"/>
+				    </h:inputText>
+				    <span class="input-group-addon">#{text['wizzard.calendar.average_service_time.unit']}</span>
+				  </div>
+				</div>
+		</div>
+
+
+		
+		<div class="form-group">
+			<rich:dataTable id="horarioSemanal"  
+					value="#{wizzard.calendar.hoursPattern}" var="horario" rowKeyVar="rowIndex" 
+					columnClasses="wizzardCalendarCell" rowClasses="wizzardCalendarRow" 
+					onmouseover="matrixMouseOut()" styleClass="wizzardCalendarMatrix">
+			
+				<f:facet name="header">
+					<label class="control-label">#{text['wizzard.calendar.desks_quantity']}</label>
+				</f:facet>
+				<rich:column width="70px">
+					<div>
+						<h:outputText value="#{horario[0]}">
+							<f:convertDateTime type="time" pattern="HH:mm" timeZone="#{coreMBean.timeZone}"/>
+						</h:outputText>
+					</div>
+				</rich:column>
+				
+				<rich:columns value="#{wizzard.calendar.weekdays}" var="dia" index="colIndex" width="100px" id="columnasDia">
+					<f:facet name="header">
+						<h:panelGroup layout="block">#{dia}</h:panelGroup>
+					</f:facet>
+					<div onmousedown="cellMouseDown(this, #{rowIndex}, #{colIndex})" onmouseover="cellMouseOver(this, #{rowIndex}, #{colIndex})" onmouseup="cellMouseUp(this, #{rowIndex}, #{colIndex})">#{horario[colIndex+1]}</div>
+				</rich:columns>
+				<f:facet name="footer">
+					<h:panelGroup  id="footer-panel">
+						<h:panelGroup>	
+							<h:selectOneMenu value="#{wizzard.calendar.valueMes}">
+								<a4j:support event="onchange" ajaxSingle="true" reRender="footer-panel" actionListener="#{wizzard.calendar.refrescarSeleccionPeriodo}"/>
+								<f:selectItems value="#{wizzard.calendar.opcionesMeses}" />
+							</h:selectOneMenu>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{wizzard.calendar.valueMes == 0}">
+							<h:outputText value="#{text['view.general.date_from']}:" styleClass="headerText"></h:outputText>
+							<rich:calendar datePattern="dd/MM/yyyy" showWeeksBar="false" locale="es" todayControlMode="hidden" value="#{wizzard.calendar.periodFrom}">
+								<a4j:support event="onchanged" ajaxSingle="true" reRender="footer-panel" actionListener="#{wizzard.calendar.validarInicioPeriodo}"/>
+							</rich:calendar>
+							
+							<h:outputText value="#{text['view.general.date_to']}:" styleClass="headerText"></h:outputText>
+							<rich:calendar datePattern="dd/MM/yyyy" showWeeksBar="false" locale="es" todayControlMode="hidden" value="#{wizzard.calendar.periodTo}" >
+								<a4j:support event="onchanged" ajaxSingle="true" reRender="footer-panel" actionListener="#{wizzard.calendar.validarFinPeriodo}"/>
+							</rich:calendar>
+						</h:panelGroup>
+					</h:panelGroup>
+				</f:facet>
+			</rich:dataTable>
+		</div>
+	
+	
+		<a4j:jsFunction	name="changeCuposOnServer" actionListener="#{wizzard.calendar.changeCupos}" reRender="horarioSemanal" id="changeCuposOnServerId">
+			<f:param name="rowFrom"/>
+			<f:param name="rowTo"/>
+			<f:param name="colFrom"/>
+			<f:param name="colTo"/>
+			<f:param name="cupos"/>
+		</a4j:jsFunction>
+	
+	</h:panelGroup>
+
+</ui:component>
+
+</html>

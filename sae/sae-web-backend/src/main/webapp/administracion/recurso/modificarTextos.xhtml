@@ -1,0 +1,73 @@
+<f:view
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:a4j="http://richfaces.org/a4j"
+     xmlns:rich="http://richfaces.org/rich"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+
+     beforePhase="#{textoRecursoMBean.beforePhaseModifTexto}"
+	 beforePhaseListener="#{textoRecursoMBean.beforePhaseModifTexto}"
+>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+	<h:form  >
+
+		<rich:tabPanel switchType="client" selectedTab="paso2"  contentClass="immTabPanelContent" > 
+		
+			<rich:tab label="#{text['entity.recurso.textos.paso2']}" style="text-align: center;" id="paso2">
+				<rich:editor 
+		   			width="590" height="300" 
+		   			viewMode="visual"
+		   			theme="advanced" 
+		   			value="#{textoRecursoMBean.textoRec.textoPaso2}"
+		   		>
+		   			
+		       	</rich:editor> 
+			</rich:tab>
+		
+			<rich:tab label="#{text['entity.recurso.textos.paso3']}" style="text-align: center;" id="paso3">
+		
+				<rich:editor 
+		   			width="590" height="300" 
+		   			viewMode="visual"
+		   			theme="advanced" 
+		   			value="#{textoRecursoMBean.textoRec.textoPaso3}"
+		       	></rich:editor>
+			</rich:tab>
+		
+			<rich:tab label="#{text['entity.recurso.textos.llamador.title']}" style="height: 330px" id="textoLlamador">
+			
+				<h:panelGrid columns="2" columnClasses="formularioEtiqueta, formularioCampo">
+					<h:outputText value="#{text['entity.recurso.textos.llamador.columna_datos']}:"></h:outputText>
+					<h:inputText  value="#{textoRecursoMBean.textoRec.tituloCiudadanoEnLlamador}" maxlength="30" size="40"></h:inputText>
+					<h:outputText value="#{text['entity.recurso.textos.llamador.columna_puesto']}:"></h:outputText>
+					<h:inputText value="#{textoRecursoMBean.textoRec.tituloPuestoEnLlamador}" maxlength="30" size="40"></h:inputText>
+				</h:panelGrid>
+			
+			</rich:tab>
+			
+			<rich:tab label="#{text['entity.recurso.textos.ticket.title']}" style="height: 330px" id="textoTicket">
+			
+				<h:panelGrid columns="2" columnClasses="formularioEtiquetaTicket, formularioCampoTicket">
+					<h:outputText value="#{text['entity.recurso.textos.ticket.label1']}:"></h:outputText>
+					<h:inputText  value="#{textoRecursoMBean.textoRec.ticketEtiquetaUno}" maxlength="15" size="20"></h:inputText>
+					<h:outputText value="#{text['entity.recurso.textos.ticket.value1']}:"></h:outputText>
+					<h:inputText value="#{textoRecursoMBean.textoRec.valorEtiquetaUno}" maxlength="30" size="30"></h:inputText>
+					
+					<h:outputText value="#{text['entity.recurso.textos.ticket.label2']}:"></h:outputText>
+					<h:inputText  value="#{textoRecursoMBean.textoRec.ticketEtiquetaDos}" maxlength="15" size="20"></h:inputText>
+					<h:outputText value="#{text['entity.recurso.textos.ticket.value2']}:"></h:outputText>
+					<h:inputText value="#{textoRecursoMBean.textoRec.valorEtiquetaDos}" maxlength="30" size="30"></h:inputText>
+				</h:panelGrid>
+			
+			</rich:tab>
+		</rich:tabPanel>
+		
+			
+		<a4j:commandButton value="#{text['button.save']}"  actionListener="#{textoRecursoMBean.guardar}" reRender="pantalla" />
+		<a4j:commandButton value="#{text['button.cancel']}"	actionListener="#{textoRecursoMBean.cancelar}" reRender="pantalla" />
+		
+	</h:form>
+</f:view>

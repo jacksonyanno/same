@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+    beforePhase="#{disponibilidadMBean.beforePhaseConsultar}"
+    beforePhaseListener="#{disponibilidadMBean.beforePhaseConsultar}"
+    >
+
+	<h:form style="margin: 0px;">
+			
+		<table style="border: none;" cellpadding="0" cellspacing="0"
+			align="center" >
+			<tr>
+				<td nowrap="nowrap">
+					<rich:panel bodyClass="formulario" headerClass="formularioCabezal" style=" width : 515px;">
+						<table style="border: none;" cellpadding="0" cellspacing="0"
+							align="center">
+							<tr>
+								<td nowrap="nowrap"><h:panelGrid columns="5"
+									style="padding-top: 0px;" styleClass="Texto"
+									columnClasses="formularioEtiqueta, formularioCampo">
+									<h:outputText value="#{text['view.general.date_from']}:"></h:outputText>
+									<rich:calendar value="#{dispSessionMBean.fechaDesde}" locale="es" todayControlMode="hidden"
+										datePattern="dd/MM/yyyy" showWeeksBar="false"></rich:calendar>
+
+									<h:outputText value="#{text['view.general.date_to']}:"></h:outputText>
+									<rich:calendar value="#{dispSessionMBean.fechaHasta}" locale="es" todayControlMode="hidden"
+										datePattern="dd/MM/yyyy" showWeeksBar="false"></rich:calendar>
+
+									<a4j:commandButton value="#{text['button.query']}"
+										actionListener="#{disponibilidadMBean.obtenerCuposCons}"
+										reRender="pantalla"></a4j:commandButton>
+
+								</h:panelGrid></td>
+							</tr>
+						</table>
+
+					</rich:panel></td>
+			</tr>
+
+			<tr>
+				<td nowrap="nowrap">
+					<rich:panel bodyClass="formulario" headerClass="formularioCabezal" style=" width : 515px;">
+
+		<rich:dataTable value="#{dispSessionMBean.cuposPorDia}" var="row"
+			columns="3" binding="#{disponibilidadMBean.cuposDataTable}"
+			id="tablaCupos" rows="5"  align="center">
+			<f:facet name="header">
+				<h:outputText value="#{text['disponibilidades.query.result.title']}"></h:outputText>
+			</f:facet>
+			<rich:column>
+				<f:facet name="header">
+					<h:outputText value="#{text['entity.disponibilidad.date']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{row.data.dia}">
+					<f:convertDateTime type="both" pattern="dd/MM/yyyy" timeZone="#{coreMBean.timeZone}" />
+				</h:outputText>
+			</rich:column>
+			<rich:column>
+				<f:facet name="header">
+					<h:outputText value="#{text['entity.disponibilidad.cupos']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{row.data.cupoDisponible}"></h:outputText>
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+				</f:facet>
+				<a4j:commandLink id="consultarLink" ajaxSingle="true" 
+					action="#{disponibilidadMBean.configurarDisponibilidadesDelDia}"
+					reRender="pantalla">
+					<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/find.gif" style="border:0" height="16" width="16"/>
+            	</a4j:commandLink>
+ 				<rich:toolTip for="consultarLink" value="#{text['disponibilidades.query.result.ver_detalle.title']}"/>
+ 				
+			</rich:column>
+				<f:facet name="footer">
+					<rich:datascroller align="left" maxPages="5" id="scTablaCupos" for="tablaCupos" page="#{dispSessionMBean.pagCupo}"/>
+				</f:facet>
+		</rich:dataTable>
+		</rich:panel>
+
+		</td>
+		</tr>
+		</table>
+	</h:form>
+</f:view>

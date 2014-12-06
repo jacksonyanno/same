@@ -1,0 +1,46 @@
+@CHARSET "ISO-8859-1";
+body {
+    color: black;
+    background-color: white;
+}   		
+.outerbox {
+	border: solid 1px #ececed; 
+}
+
+
+.headerbox {
+	border-left: solid 5px #008BD0;   
+}
+
+
+.headertext {
+	font-weight: bold;
+	font-family: sans-serif;
+	color: #58585a; 
+}
+
+.llamadas{
+	border: 0;
+}
+table.llamadas thead th {
+	border:0;
+	border-top: solid 2px #000000;
+	background-color: #f6f6f6;
+	font-weight: bold;
+}
+table.llamadas tbody tr td {
+	border:0;
+	border-top: solid 2px #dedfe0;
+	font-weight: bold;
+}
+table.llamadas tbody .hora {
+	color: #58585a; 
+}
+
+table.llamadas tbody .puesto {
+	color: #008BD0; 
+}
+
+.efectoVisual {
+	color: #008BD0; 
+}

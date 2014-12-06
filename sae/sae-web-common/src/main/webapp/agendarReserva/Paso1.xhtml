@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+
+<ui:composition template="/agendarReserva/Paso.template.xhtml">
+
+<ui:param name="soloCuerpo" value="#{paso1MBean.soloCuerpo}" />
+<ui:param name="parametroBean" value="#{paso1MBean}" />
+<ui:param name="agenda_nombre" value="#{paso1MBean.recursoDescripcion}" />
+<ui:param name="bodyId" value="paso1" />
+
+<ui:param name="paso_numero" value="1" />
+<ui:param name="paso_texto" value="#{text['reservaweb.step.1.title']}" />
+<ui:param name="mensaje_error" value="#{paso1MBean.mensajeError}" />
+
+<ui:define name="descripcion">
+	
+	<div class="pasoTexto">	
+		<h:outputFormat escape="false" value="#{paso1MBean.descripcion}"/>
+	</div>
+	<h:panelGroup id="infoRecurso">
+
+		<rich:spacer width="10px" rendered="#{paso1MBean.infoRecurso == null}"></rich:spacer>
+
+		<h:panelGroup rendered="#{paso1MBean.infoRecurso != null}">
+			<h:panelGrid columns="1" cellpadding="0" cellspacing="0">
+
+				<h:outputText value="#{text['reservaweb.recurso.info.title']}" styleClass="pasoTitulo3"/>
+
+				<rich:dataList value="#{paso1MBean.infoRecurso}" var="row" >
+					<h:outputText value="#{row.etiqueta}: "  styleClass="pasoEtiqueta1"/>
+					<h:outputText value="#{row.valor}" styleClass="pasoTexto" />
+				</rich:dataList>
+			</h:panelGrid>
+		</h:panelGroup>
+
+	</h:panelGroup>
+		
+</ui:define>
+
+<ui:define name="contenido">
+
+	<script language="javascript" type="text/javascript">
+	
+		A4J.AJAX.onExpired = function(loc,expiredMsg){
+			alert('SESSION EXPIRED');
+		};
+		
+	</script>
+
+	<h:panelGrid columns="1">
+		<h:panelGroup id="recurso">
+			<h:outputFormat id="recurso-select-label" rendered="#{not empty paso1MBean.etiquetaSeleccionDelRecurso}" escape="false" value="#{paso1MBean.etiquetaSeleccionDelRecurso} " styleClass="pasoEtiqueta1"/>
+			<h:outputText id="recurso-select" value="#{paso1MBean.recursoDescripcion}" styleClass="pasoTexto"/>
+		</h:panelGroup>
+		
+		<rich:spacer height="10px"></rich:spacer>
+
+		<h:panelGroup layout="block" id="calendario-container">
+			<rich:calendar 
+				id="calendario"
+				styleClass="saeCalendar" 
+				enableManualInput="false" showInput="false" popup="false"
+				mode="ajax" 
+				cellWidth="25px"
+				cellHeight="25px"
+				dataModel="#{paso1MBean.calendario}"
+				currentDate="#{paso1MBean.currentDate}"
+				value="#{paso1MBean.diaSeleccionado}"
+				showWeeksBar="false"
+				showApplyButton="false"
+				todayControlMode="hidden"
+	  		 	locale="#{i18n.locale}"
+			>
+				<f:facet name="footer">
+					<rich:spacer height="10px"></rich:spacer>
+				</f:facet>
+				
+				<a4j:support 
+					event="onchanged"
+					action="siguientePaso"
+				/>
+			</rich:calendar>
+		</h:panelGroup>
+	</h:panelGrid>
+</ui:define>
+
+</ui:composition>
+
+</body>
+</html>      

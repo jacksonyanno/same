@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web xmlns="http://www.jboss.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee http://www.jboss.org/j2ee/schema/jboss-web_7_1.xsd"
+	version="7.0">
+
+
+	<context-root>/${build.sae.frontend.contextroot}</context-root>
+
+	<!-- cuando es local de un ejb a otro: @EJB(beanInterface=InterfaceLocal.class) -->
+
+	<!-- ejb-local-ref> <ejb-ref-name>ejb/xxxBean</ejb-ref-name> <local-jndi-name>appEAR/xxxBean/local</local-jndi-name> 
+		</ejb-local-ref -->
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/AccionesBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AccionesBean!uy.gub.imm.sae.business.api.AccionesRemote</jndi-name>
+	</ejb-ref>
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/RecursosBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//RecursosBean!uy.gub.imm.sae.business.api.RecursosRemote</jndi-name>
+	</ejb-ref>
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/AgendaGeneralBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AgendaGeneralBean!uy.gub.imm.sae.business.api.AgendaGeneralRemote</jndi-name>
+	</ejb-ref>
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/AgendasBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AgendasBean!uy.gub.imm.sae.business.api.AgendasRemote</jndi-name>
+	</ejb-ref>
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/AutocompletadosBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AutocompletadosBean!uy.gub.imm.sae.business.api.AutocompletadosRemote</jndi-name>
+	</ejb-ref>
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/ConsultasBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//ConsultasBean!uy.gub.imm.sae.business.api.ConsultasRemote</jndi-name>
+	</ejb-ref>
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/AgendarReservasBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//AgendarReservasBean!uy.gub.imm.sae.business.api.AgendarReservasRemote</jndi-name>
+	</ejb-ref>
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/DisponibilidadesBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//DisponibilidadesBean!uy.gub.imm.sae.business.api.DisponibilidadesRemote</jndi-name>
+	</ejb-ref>
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/LlamadasBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//LlamadasBean!uy.gub.imm.sae.business.api.LlamadasRemote</jndi-name>
+	</ejb-ref>
+
+	<ejb-ref>
+		<ejb-ref-name>ejb/ValidacionesBean</ejb-ref-name>
+		<jndi-name>ejb:${build.sae.service.ejb.jndi_base}/sae-ejb//ValidacionesBean!uy.gub.imm.sae.business.api.ValidacionesRemote</jndi-name>
+	</ejb-ref>
+
+</jboss-web>

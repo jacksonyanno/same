@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{reservaMBean.beforePhaseDetalleReserva}"
+	beforePhaseListener="#{reservaMBean.beforePhaseDetalleReserva}">
+
+
+	<h:form style="margin: 0px;">
+		<table style="border: none;" cellpadding="0" cellspacing="0">
+			<tr>
+				<td><rich:panel id="resultadosBusqueda"
+					style=" width : 515px; text-align: left;" bodyClass="formulario" headerClass="formularioCabezal">
+					<f:facet name="header">
+						<h:outputText value="Datos de la Reserva" />
+					</f:facet>
+					<h:panelGrid columns="2" styleClass="Texto"
+							columnClasses="formularioEtiqueta, formularioCampo">
+
+						<h:outputText value="Fecha: " />
+						<h:inputText style=" width : 81px;" readonly="true"
+							value="#{reservaMBean.reservaSessionMBean.disponibilidad.fecha}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="#{reservaMBean.timeZone}" locale="es" />
+						</h:inputText>
+						<h:outputText value="Hora: " />
+						<h:inputText style=" width : 44px;" readonly="true"
+							value="#{reservaMBean.reservaSessionMBean.disponibilidad.horaInicio}">
+							<f:convertDateTime type="time" pattern="HH:mm"
+								timeZone="#{reservaMBean.timeZone}" />
+						</h:inputText>
+
+						<h:outputText value="Número:" />
+						<h:panelGroup>
+							<h:inputText styleClass="headerText"
+								value="#{reservaMBean.reservaSessionMBean.reservaDatos.numero}"
+								style=" width : 46px;" readonly="true"></h:inputText>
+							<rich:spacer width="40px"/>
+							<h:outputText value="(Id: #{reservaMBean.reservaSessionMBean.reservaDatos.id})"/>
+						</h:panelGroup>
+
+						<h:outputText value="Estado:" />
+						<h:inputText styleClass="headerText"
+							value="#{reservaMBean.reservaSessionMBean.reservaDatos.estadoDescripcion}"
+							style=" width : 85px;" readonly="true"></h:inputText>
+						<h:outputText value="Observaciones:" />
+						<h:inputText
+							value="#{reservaMBean.reservaSessionMBean.reservaDatos.observaciones}"
+							style=" width : 314px;" readonly="true"></h:inputText>
+
+						<h:outputText value="Fecha de Creación:" />
+						<h:inputText style=" width : 81px;" readonly="true"
+							value="#{reservaMBean.reservaSessionMBean.reservaDatos.fechaCreacion}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"
+								timeZone="#{reservaMBean.timeZone}" locale="es" />
+						</h:inputText>
+
+						<h:outputText value=""></h:outputText>
+						<h:outputText value=""></h:outputText>
+						<h:outputText value=""></h:outputText>
+						<h:outputText value=""></h:outputText>
+						<h:outputText value=""></h:outputText>
+					</h:panelGrid>
+					<h:panelGrid columns="1" binding="#{reservaMBean.campos}"
+					cellpadding="0" cellspacing="0" styleClass="Texto"
+							columnClasses="formularioEtiqueta, formularioCampo">
+				</h:panelGrid>
+				</rich:panel></td>
+			</tr>
+			<tr>
+				<td align="center"><a4j:commandButton value="Cancelar Reserva"
+					actionListener="#{reservaMBean.cancelarReserva}"
+					reRender="pantalla"
+					disabled="#{reservaMBean.confirmarDeshabilitado}"
+					></a4j:commandButton></td>
+			</tr>
+		</table>
+
+		<a4j:commandLink value="Volver" action="atras" reRender="pantalla"
+			ajaxSingle="true"></a4j:commandLink>
+	</h:form>
+
+</f:view>
+</html>

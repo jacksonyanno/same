@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{listaDeEsperaMBean.beforePhaseListaDeEspera}"
+	beforePhaseListener="#{listaDeEsperaMBean.beforePhaseListaDeEspera}">
+
+	<style>
+		.colSiguiente {
+			width: 80%;
+		}
+		.colEstados {
+			width: 5%;
+			text-align: right;
+		}
+		.tablaReservasCabezal {
+			width: 5%;
+		}
+		.mostrando {
+		}
+		.reservaUtilizada {
+			background-color: #{saeProperties['ui.organizacion.color']} /* Naranja IMM */
+		}
+		.reservaUtilizada a {
+			color: white;
+		}
+		.cabezalDatos {
+			text-align: left;
+			padding-left: 20px;
+		}
+		.cuerpoDatos {
+			text-align: left;
+			padding-left: 20px;
+		}
+		.hidelink {
+			cursor:pointer;
+			padding-right:1px;
+			padding-top:2px;
+			
+			
+		}
+		.tituloModal {
+			font-weight:bold;
+			font-size: 20px;
+		}
+	</style>
+
+
+	<script type="javascript">
+
+		function decorarModal (modal) {
+
+			/*Por alguna razón el clientHeight no devuelve la altura de la ventana, devuelve la altura del contenido de la pagina html.
+              por lo tanto no me sirve para este propisito, por lo cual lo dejo fijo*/ 
+			//modal.style.height = document.body.clientHeight * 0.8 + "px";
+  
+			modal.style.height = "300px";  
+
+			modal.style.width = document.body.clientWidth * 0.8 + "px";
+			modal.style.width = "800px";
+//			modal.parentNode.style.left =  document.body.clientWidth * 0.1 + "px";
+//			modal.parentNode.style.top =  document.body.clientHeight * 0.1 + "px";
+
+//			modal.style.overflow = "scroll";
+
+		}
+	</script>
+
+
+	<a4j:region>
+	    <h:form>
+	        <a4j:poll id="pollEspera" interval="300000"
+	         ignoreDupResponses="true"
+	         eventsQueue="listaDeEsperaQueue"/>
+	    </h:form>
+    </a4j:region>
+	    
+	<h:form style="margin: 0px;" id="form1">
+	
+		<a4j:outputPanel id="todo">
+		<table style="border: none;" cellpadding="0" cellspacing="0" align="center" id="tabla1" width="600px">
+			<tr>
+				<td align="left" style="vertical-align: middle; padding-bottom: 10px;">
+					<h:outputText value="#{text['llamador.lista_espera.num_position']}:" style="font-size: 15px;"/>
+					<rich:spacer width="10px"></rich:spacer>
+					<h:inputText  size="3" maxlength="3" style="font-size: 15px;font-weight: bold; width:30px; text-align:center;"
+						value="#{sessionMBean.puesto}">
+					</h:inputText>
+				</td>
+				<td align="left" style="padding-left: 20px; padding-bottom: 10px; padding-right: 20px;">
+					<a4j:commandButton 
+									value="#{text['llamador.lista_espera.next']}" 
+									ajaxSingle="false" 
+									actionListener="#{listaDeEsperaMBean.siguiente}"
+									reRender="todo"
+									style="background-color: #6cc22f; font-weight: bold; font-size: 20px;"
+									eventsQueue="listaDeEsperaQueue"
+									ignoreDupResponses="true"
+									image="#{saeProperties['ui.resource.base.url']}/recursos/images/siguiente.png"
+									rendered="#{!listaDeEsperaMBean.mostrarDatosSiguiente}"
+								>
+					</a4j:commandButton>
+					
+				</td>
+				
+				<td align="right"  style="vertical-align: middle; padding-bottom: 10px;">
+					<h:panelGroup rendered="#{!listaDeEsperaMBean.mostrarDatosSiguiente}">
+						<h:outputText value="#{text['llamador.lista_espera.showing']}:" style="font-size: 15px;"/>
+						<h:selectOneMenu value="#{listaDeEsperaSessionMBean.estadosSeleccionado}" style="width:180px;">
+							<a4j:support event="onchange" ajaxSingle="false" reRender="mensajeNoHayEnEspera,tablaReservas"
+								actionListener="#{listaDeEsperaMBean.cambiaSeleccionEstados}"
+								eventsQueue="listaDeEsperaQueue" />
+							
+							<f:selectItems value="#{listaDeEsperaMBean.itemsEstado}"/>
+
+							<f:converter converterId="estadosConverter"/>
+						</h:selectOneMenu>
+						
+						<rich:spacer width="5px"/>
+						
+						<a4j:commandLink ajaxSingle="false" reRender="todo" value="Refrescar"
+								actionListener="#{listaDeEsperaMBean.refrescar}"
+								eventsQueue="listaDeEsperaQueue" />
+						
+					</h:panelGroup>
+				</td>				
+			</tr>
+
+
+			<tr>
+				<td colspan="3">
+						<rich:panel rendered="#{listaDeEsperaMBean.mostrarDatosSiguiente}">
+							<f:facet name="header">
+				
+								<h:panelGrid columns="2" columnClasses="izquierda, derecha" width="100%">
+									<h:panelGroup>
+										<h:outputText value="#{listaDeEsperaMBean.siguienteReservaDisponibilidad.fecha}" styleClass="tituloModal">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" timeZone="#{coreMBean.timeZone}" locale="es"/>
+										</h:outputText>
+										<rich:spacer width="15px"></rich:spacer>
+										<h:outputText value="#{listaDeEsperaMBean.siguienteReservaDisponibilidad.horaInicio}" styleClass="tituloModal">
+											<f:convertDateTime type="time" pattern="HH:mm"   timeZone="#{coreMBean.timeZone}"/>
+										</h:outputText>
+										<rich:spacer width="15px"></rich:spacer>
+										<h:outputText value="Nº" styleClass="tituloModal"/>
+										<rich:spacer width="5px"></rich:spacer>
+										<h:outputText value="#{listaDeEsperaSessionMBean.siguienteReserva.numero}" styleClass="tituloModal"/>
+									</h:panelGroup>
+									
+						            <h:panelGroup>
+						            
+
+						            
+						               	<a4j:commandButton
+						            		value="#{text['llamador.lista_espera.button.asistio']}"
+						            		ajaxSingle="false"
+						            		actionListener="#{listaDeEsperaMBean.asistio}"
+						            		eventsQueue="listaDeEsperaQueue"
+						            		 
+						            		reRender="todo">
+						            		<rich:toolTip value="#{text['llamador.lista_espera.button.asistio.tooltip']}"></rich:toolTip>
+	            						</a4j:commandButton>
+						            
+						               	<a4j:commandButton
+						            		value="#{text['llamador.lista_espera.button.falto']}"
+						            		ajaxSingle="false"
+						            		actionListener="#{listaDeEsperaMBean.falto}"
+						            		eventsQueue="listaDeEsperaQueue"
+						            		reRender="todo">
+						            		<rich:toolTip value="#{text['llamador.lista_espera.button.falto.tooltip']}"></rich:toolTip>
+	            						</a4j:commandButton>
+						            
+						            </h:panelGroup>
+									
+								</h:panelGrid>
+							</f:facet>
+			
+							<h:panelGrid columns="1" cellpadding="0" cellspacing="0" id="siguienteBody">
+				
+								<h:panelGrid id="camposDin"  columns="1" binding="#{listaDeEsperaMBean.camposSiguienteReserva}"
+									cellpadding="0" cellspacing="0" styleClass="Texto"
+									columnClasses="formularioEtiqueta, formularioCampo">
+								</h:panelGrid>
+								
+							</h:panelGrid>
+						</rich:panel>
+						
+						<a4j:outputPanel id="mensajeNoHayEnEspera">
+							<h:outputText value="#{text['llamador.lista_espera.people_no_waiting']}"
+								rendered="#{!listaDeEsperaMBean.mostrarDatosSiguiente and empty listaDeEsperaSessionMBean.horarios}" />
+						</a4j:outputPanel>
+				</td>
+			</tr>
+
+
+
+			<tr><td colspan="3">
+	
+
+				<a4j:outputPanel id="tablaReservas">
+					<rich:dataTable
+						rendered="#{!listaDeEsperaMBean.mostrarDatosSiguiente}"
+						value="#{listaDeEsperaSessionMBean.horarios}"
+						var="horario"
+						headerClass="tablaReservasCabezal"
+						binding="#{listaDeEsperaMBean.tablaReservas}"
+						width="600px"
+					>
+						<rich:column 
+							binding="#{listaDeEsperaMBean.columnaHoraListaDeEspera}"
+							style="text-align: left;" >
+							<h:outputText value="#{horario.hora}" style="font-weight: bolder; font-size: 25px;">
+								<f:convertDateTime type="time" dateStyle="medium"
+									pattern="HH:mm" timeZone="#{coreMBean.timeZone}" />
+							</h:outputText>
+						</rich:column>
+	
+						<rich:subTable
+							binding="#{listaDeEsperaMBean.subTablaListaDeEspera}"
+							value="#{horario.listaEspera}"
+							var="espera"
+						>
+							
+							<rich:column width="50px" styleClass="#{(espera.reserva.estado == 'U' ? 'reservaUtilizada' : '')}">
+								<f:facet name="header">
+									<h:outputText value="Nº" style="font-weight: bolder; font-size: 15px;" />
+								</f:facet>
+								
+								
+								<h:outputText 
+									value="#{espera.reserva.numero}" 
+									style="font-weight: bolder; font-size: 15px;" 
+									rendered="#{espera.reserva.estado != 'U'}" />
+								
+								<a4j:commandLink 
+									value="#{espera.reserva.numero}" 
+									style="font-weight: bolder; font-size: 15px;" 
+									rendered="#{espera.reserva.estado == 'U'}"
+									actionListener="#{listaDeEsperaMBean.llamar}"
+									eventsQueue="listaDeEsperaQueue"
+									reRender="todo"
+									ignoreDupResponses="true"
+									ajaxSingle="false" 
+								>
+	
+									<rich:toolTip >
+										<h:outputText value="Volver a llamar" style="color: black;"/>
+									</rich:toolTip>
+								</a4j:commandLink>
+							
+								
+								
+							</rich:column>
+							
+							<rich:columns value="#{listaDeEsperaMBean.definicionColumnas}" var="col" index="i" 
+								headerClass="cabezalDatos"
+								styleClass="cuerpoDatos #{(espera.reserva.estado == 'U' ? 'reservaUtilizada' : '')}"
+							>
+								<f:facet name="header">
+									<h:outputText value="#{col.nombre}" />
+								</f:facet>
+								
+								<h:outputText value="#{espera.datos[i]}" style="font-weight: bold; font-size: 12px;"/>	
+							</rich:columns>
+	
+							<rich:column 
+									styleClass="#{(espera.reserva.estado == 'U' ? 'reservaUtilizada' : '')}"
+									width="50px"
+									rendered="#{ ! listaDeEsperaSessionMBean.refrescarListaDeEspera}"
+							>
+								<f:facet name="header">
+									<h:outputText value="#{listaDeEsperaMBean.nombreColumnaPuesto}" />
+								</f:facet>
+							
+								<h:outputText value="#{espera.reserva.puestoLlamada}" rendered="#{espera.reserva.puestoLlamada != null}"/>
+							</rich:column>
+	
+						</rich:subTable>				
+					</rich:dataTable>
+				</a4j:outputPanel>
+			</td></tr>
+		</table>
+		</a4j:outputPanel>
+	</h:form>
+
+</f:view>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      beforePhase="#{disponibilidadMBean.beforePhaseModifCupo}"
+      beforePhaseListener="#{disponibilidadMBean.beforePhaseModifCupo}"
+      >
+
+<h:form style="margin: 0px;">
+	<table style="border: none;" cellpadding="0" cellspacing="0" align="center">
+	
+
+	<tr><td nowrap="nowrap">
+	<rich:panel bodyClass="formulario" headerClass="formularioCabezal" 
+	style=" width : 515px;">
+	
+		<h:panelGrid columns="3">
+				<h:outputText value="#{text['entity.disponibilidad.date']}:"></h:outputText>
+				<rich:calendar value="#{dispSessionMBean.fechaModifCupo}" locale="es" todayControlMode="hidden"
+						datePattern="dd/MM/yyyy" showWeeksBar="false"></rich:calendar>
+				
+				<a4j:commandButton value="#{text['button.query']}"
+					actionListener="#{disponibilidadMBean.obtenerCuposModif}"
+					reRender="pantalla"></a4j:commandButton>
+
+		</h:panelGrid>
+			</rich:panel>
+	</td></tr>	
+	<tr align="center">
+	<td>
+	<rich:panel bodyClass="formulario" headerClass="formularioCabezal"	style=" width : 515px;">
+	
+	<h:panelGrid columns="2" columnClasses="arriba">
+	
+		<rich:dataTable id="tablaMatutina" 	binding="#{disponibilidadMBean.tablaDispMatutinaModif}"
+			value="#{dispSessionMBean.disponibilidadesDelDiaMatutinaModif}" 	var="rowMM" 	width="185px"
+			columnClasses="colDisp" rowClasses="rowDisp" 	columns="4" >
+	
+			<f:facet name="header">
+				<h:panelGroup>
+					<h:outputText value="#{text['disponibilidades.morning']}"></h:outputText>
+				</h:panelGroup>
+			</f:facet>
+	
+			<rich:column width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['entity.disponibilidad.time_begin']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{rowMM.data.horaInicio}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="#{coreMBean.timeZone}"/>
+				</h:outputText>
+			</rich:column>
+
+			<rich:column  width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['entity.disponibilidad.cupos']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{rowMM.data.cupo}" rendered="#{(rowMM.data.cupo > 0 ? true  : false)}" styleClass="verde"></h:outputText>
+				<h:outputText value="#{rowMM.data.cupo}" rendered="#{(rowMM.data.cupo > 0 ? false  : true)}" styleClass="rojo"></h:outputText>
+			</rich:column>
+
+			<rich:column  width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['disponibilidades.cant_reservas']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{rowMM.data.cantReservas}" ></h:outputText>
+			</rich:column>
+			
+			<rich:column>
+				<f:facet name="header">
+					<h:outputText value="#{text['view.general.action']}"></h:outputText>
+				</f:facet>
+
+				<a4j:commandLink id="modificarCupoMatLink" ajaxSingle="true" reRender="tablaMatutina, ap_modifDisp, modifDisp"
+					actionListener="#{disponibilidadMBean.seleccionarCupoMat}">
+					<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/edit.gif" style="border:0" />
+				</a4j:commandLink>
+				<rich:toolTip for="modificarCupoMatLink" value="Modificar Cupo" />
+
+			</rich:column>
+			
+		</rich:dataTable>
+	
+		<rich:dataTable  id="tablaVespertina"  binding="#{disponibilidadMBean.tablaDispVespertinaModif}" 	
+		value="#{dispSessionMBean.disponibilidadesDelDiaVespertinaModif}"
+			var="rowVM" width="185px" columnClasses="colDisp"	rowClasses="rowDisp"	columns="4">
+	
+			<f:facet name="header">
+				<h:panelGroup>
+					<h:outputText value="#{text['disponibilidades.evening']}"></h:outputText>
+				</h:panelGroup>
+			</f:facet>
+	
+			<rich:column width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['entity.disponibilidad.time_begin']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{rowVM.data.horaInicio}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="#{coreMBean.timeZone}"/>
+				</h:outputText>
+			</rich:column>
+
+			<rich:column  width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['entity.disponibilidad.cupos']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{rowVM.data.cupo}" rendered="#{(rowVM.data.cupoDisponible > 0 ? true  : false)}" styleClass="verde"></h:outputText>
+				<h:outputText value="#{rowVM.data.cupo}" rendered="#{(rowVM.data.cupoDisponible > 0 ? false  : true)}" styleClass="rojo"></h:outputText>
+			</rich:column>
+
+			<rich:column  width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['disponibilidades.cant_reservas']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{rowVM.data.cantReservas}" ></h:outputText>
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					<h:outputText value="#{text['view.general.action']}"></h:outputText>
+				</f:facet>
+
+				<a4j:commandLink id="modificarCupoVespLink" ajaxSingle="true"
+					actionListener="#{disponibilidadMBean.seleccionarCupoVesp}"
+					reRender="tablaVespertina, ap_modifDisp, modifDisp">
+					<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/edit.gif" style="border:0" />
+				</a4j:commandLink>
+				<rich:toolTip for="modificarCupoVespLink" value="Modificar Cupo" />
+
+			</rich:column>
+			
+		</rich:dataTable>
+	</h:panelGrid>
+		</rich:panel>
+	</td>
+	</tr>
+
+	<tr>
+	<td>
+	<h:panelGroup>
+		<a4j:outputPanel id="ap_modifDisp" ajaxRendered="true">
+				<rich:panel id="modifDisp" 
+				rendered="#{dispSessionMBean.mostrarDisponibilidad}" bodyClass="formulario"
+				headerClass="formularioCabezal" styleClass="rich-panel-embebido">
+				<table style="border: none;" cellpadding="0" cellspacing="0" align="center">
+					<tr>
+						<td nowrap="nowrap">
+							<h:panelGrid columns="2"
+								style="padding-top: 0px;" styleClass="Texto"
+								columnClasses="formularioEtiqueta, formularioCampo">
+								<h:outputText value="#{text['entity.disponibilidad.time_begin']}:"></h:outputText>
+								<h:outputText value="#{disponibilidadMBean.dispAux.horaInicio}">
+									<f:convertDateTime type="time" pattern="HH:mm" timeZone="#{coreMBean.timeZone}"/>
+								</h:outputText>
+	
+								<h:outputText value="#{text['entity.disponibilidad.cupos']}:"></h:outputText>
+								<h:inputText id="cupo"
+									value="#{disponibilidadMBean.dispAux.cupo}" maxlength="5"></h:inputText>
+								<rich:message for="cupo" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+								<h:outputText value="#{text['disponibilidades.cupos.update_by_day.applay_to_all']}:"></h:outputText>
+								<h:selectBooleanCheckbox value="#{dispSessionMBean.modificarTodos}"></h:selectBooleanCheckbox>
+							</h:panelGrid>
+							<h:outputText value="#{text['disponibilidades.cupos.update_by_day.applay_to_all.tooltip']}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td align="center"><a4j:commandButton
+							value="#{text['disponibilidades.cupos.update.title']}"
+							actionListener="#{disponibilidadMBean.guardarModifDisp}"
+							reRender="pantalla"></a4j:commandButton> <a4j:commandButton
+							value="#{text['button.cancel']}"
+							actionListener="#{disponibilidadMBean.cancelarModifDisp}"
+							reRender="pantalla"></a4j:commandButton></td>
+					</tr>
+				</table>
+			</rich:panel>
+			</a4j:outputPanel>
+
+	</h:panelGroup>
+	</td>
+	</tr>
+
+	</table>
+
+</h:form>
+
+<h:form>	
+		<a4j:commandLink 
+			value="Volver" 
+			action="volver" 
+			reRender="pantalla"
+			ajaxSingle="true" 
+		></a4j:commandLink>
+</h:form>
+
+</f:view>

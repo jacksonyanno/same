@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+
+<style>
+.anchoMsgErr{
+	width:160px;
+	font-style:italic;
+}
+</style>
+
+	<rich:modalPanel moveable="true" shadowOpacity="0.4" width="310"
+		autosized="false" height="110" id="eliminarDato" zindex="2000">
+
+		<f:facet name="header">
+			<h:outputText value="#{text['recursos.info.modal.confirm.title']}" />
+		</f:facet>
+		<h:form id="elimRec">
+			<table style="border: none;" cellpadding="5" cellspacing="5"
+				align="center">
+				<tr>
+					<td nowrap="nowrap"><h:outputText
+						value="#{text['recursos.info.modal.confirm.message']}"
+						styleClass="textoModal" /></td>
+				</tr>
+				<tr>
+					<td><h:panelGrid columns="2"
+						style="padding-top: 0px; align=center;">
+
+						<a4j:commandButton id="btn_eliminar" reRender="tablaDatos"
+							actionListener="#{recursoMBean.eliminarDatoDelRecurso}"
+							value="#{text['button.delete']}"
+							oncomplete="Richfaces.hideModalPanel('eliminarDato');"
+							style=" width : 79px;">
+						</a4j:commandButton>
+
+						<a4j:commandButton
+							onclick="Richfaces.hideModalPanel('eliminarDato');"
+							value="#{text['button.cancel']}">
+						</a4j:commandButton>
+					</h:panelGrid></td>
+				</tr>
+			</table>
+		</h:form>
+	</rich:modalPanel>
+
+
+	<h:panelGrid columns="2">
+
+		<h:form style="margin: 0px;">
+
+			<table style="border: none;" cellpadding="0" cellspacing="0"
+				align="center">
+				<tr>
+					<td nowrap="nowrap"><rich:panel
+						header="#{text['recursos.update.title']}" bodyClass="formulario"
+						headerClass="formularioCabezal">
+
+						<table style="border: none;" cellpadding="0" cellspacing="0"
+							align="center" id="recurso">
+							<tr>
+								<td width="200"><h:panelGrid columns="2"
+									style="padding-top: 0px;" styleClass="Texto"
+									columnClasses="formularioEtiqueta, formularioCampo">
+									<h:outputText value="#{text['entity.recurso.name']}:"></h:outputText>
+									<h:inputText value="#{recursoMBean.recursoSeleccionado.nombre}"
+										maxlength="50"></h:inputText>
+									<h:outputText value="#{text['entity.recurso.description']}:"></h:outputText>
+									<h:inputText value="#{recursoMBean.recursoSeleccionado.descripcion}"
+										maxlength="50"></h:inputText>
+									<h:outputText value="#{text['entity.recurso.fecha_inicio']}:"></h:outputText>
+									<rich:calendar locale="es" todayControlMode="hidden"
+										value="#{recursoMBean.recursoSeleccionado.fechaInicio}"
+										datePattern="dd/MM/yyyy" showWeeksBar="false"></rich:calendar>
+									<h:outputText value="#{text['entity.recurso.fecha_fin']}:"></h:outputText>
+									<rich:calendar locale="es" todayControlMode="hidden"
+										value="#{recursoMBean.recursoSeleccionado.fechaFin}"
+										datePattern="dd/MM/yyyy" showWeeksBar="false"></rich:calendar>
+									<h:outputText value="#{text['entity.recurso.fecha_inicio_disponibilidad']}:"></h:outputText>
+									<rich:calendar locale="es" todayControlMode="hidden"
+										value="#{recursoMBean.recursoSeleccionado.fechaInicioDisp}"
+										datePattern="dd/MM/yyyy" showWeeksBar="false"></rich:calendar>
+									<h:outputText value="#{text['entity.recurso.fecha_fin_disponibilidad']}:"></h:outputText>
+									<rich:calendar locale="es" todayControlMode="hidden"
+										value="#{recursoMBean.recursoSeleccionado.fechaFinDisp}"
+										datePattern="dd/MM/yyyy" showWeeksBar="false"></rich:calendar>
+									
+									<h:outputText value="#{text['entity.recurso.inicio_ventana_intranet']}:"></h:outputText>
+									<h:inputText id="diasIVIntranet" value="#{recursoMBean.recursoSeleccionado.diasInicioVentanaIntranet}" maxlength="5"></h:inputText>
+									<h:outputText value=" "></h:outputText>
+									<rich:message for="diasIVIntranet" ajaxRendered="true"
+										errorClass="mensajeError" styleClass="anchoMsgErr" infoClass="mensajeInfo"></rich:message>
+									
+									<h:outputText value="#{text['entity.recurso.ventana_intranet']}:"></h:outputText>
+									<h:inputText id="diasVIntranet" value="#{recursoMBean.recursoSeleccionado.diasVentanaIntranet}" maxlength="5"></h:inputText>
+									<h:outputText value=" "></h:outputText>
+									<rich:message for="diasVIntranet" ajaxRendered="true"
+										errorClass="mensajeError" styleClass="anchoMsgErr" infoClass="mensajeInfo"></rich:message>
+									
+									<h:outputText value="#{text['entity.recurso.inicio_ventana_internet']}:"></h:outputText>
+									<h:inputText id="diasIVInternet" value="#{recursoMBean.recursoSeleccionado.diasInicioVentanaInternet}" maxlength="5"></h:inputText>
+									<h:outputText value=" "></h:outputText>
+									<rich:message for="diasIVInternet" ajaxRendered="true"
+										errorClass="mensajeError" styleClass="anchoMsgErr" infoClass="mensajeInfo"></rich:message>
+									
+									<h:outputText value="#{text['entity.recurso.ventana_internet']}:"></h:outputText>
+									<h:inputText id="diasVInternet" value="#{recursoMBean.recursoSeleccionado.diasVentanaInternet}" maxlength="5"></h:inputText>
+									<h:outputText value=" "></h:outputText>
+									<rich:message for="diasVInternet" ajaxRendered="true"
+										errorClass="mensajeError" styleClass="anchoMsgErr" infoClass="mensajeInfo"></rich:message>
+																			
+									<h:outputText value="#{text['entity.recurso.cupos_minimos']}:"></h:outputText>
+									<h:inputText id="VCuposMin"
+										value="#{recursoMBean.recursoSeleccionado.ventanaCuposMinimos}"
+										maxlength="5"></h:inputText>
+									<h:outputText value=" "></h:outputText>
+									<rich:message for="VCuposMin" ajaxRendered="true"
+										errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+
+									<h:outputText value="#{text['entity.recurso.max_dias_a_generar']}:"></h:outputText>
+									<h:inputText id="vDiasGen"
+										value="#{recursoMBean.recursoSeleccionado.cantDiasAGenerar}"
+										maxlength="5"></h:inputText>
+									<h:outputText value=" "></h:outputText>
+									<rich:message for="vDiasGen" ajaxRendered="true"
+										errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+										
+									<h:outputText value="#{text['entity.recurso.largo_lista_de_espera']}:"></h:outputText>
+									<h:inputText id="largoListaEspera"
+										value="#{recursoMBean.recursoSeleccionado.largoListaEspera}"
+										maxlength="5"></h:inputText>
+									<h:outputText value=" "></h:outputText>
+									<rich:message for="largoListaEspera" ajaxRendered="true"
+										errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+									
+									
+									<h:outputText value="#{text['entity.recurso.serie']}:"></h:outputText>
+									<h:inputText id="idSerie" value="#{recursoMBean.recursoSeleccionado.serie}" maxlength="3"></h:inputText>
+									<h:outputText value=" "></h:outputText>
+									<rich:message for="idSerie" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+									
+									<h:outputText value="#{text['entity.recurso.visible_en_internet']}:"></h:outputText>
+									<h:selectBooleanCheckbox value="#{recursoMBean.recursoSeleccionado.visibleInternet}" />
+									
+									<h:outputText value="#{text['entity.recurso.reserva_multiple']}:"></h:outputText>
+									<h:selectBooleanCheckbox
+										value="#{recursoMBean.recursoSeleccionado.reservaMultiple}"></h:selectBooleanCheckbox>
+
+									<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_llamador']}:"></h:outputText>
+									<h:selectBooleanCheckbox value="#{recursoMBean.recursoSeleccionado.mostrarNumeroEnLlamador}">
+									<rich:toolTip>
+										<h:panelGrid columns="1">
+										<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_llamador.tooltip']}" />
+										</h:panelGrid>
+									</rich:toolTip>
+									</h:selectBooleanCheckbox>
+										
+									<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_ticket']}:"></h:outputText>
+									<h:selectBooleanCheckbox value="#{recursoMBean.recursoSeleccionado.mostrarNumeroEnTicket}">
+									<rich:toolTip>
+										<h:panelGrid columns="1">
+										<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_ticket.tooltip']}" />
+										</h:panelGrid>
+									</rich:toolTip>
+									</h:selectBooleanCheckbox>	
+									
+									<h:outputText value="#{text['entity.recurso.sabado_es_habil']}:"></h:outputText>
+									<h:selectBooleanCheckbox value="#{recursoMBean.recursoSeleccionado.sabadoEsHabil}">
+									<rich:toolTip>
+										<h:panelGrid columns="1">
+										<h:outputText value="#{text['entity.recurso.sabado_es_habil.tooltip']}" />
+										</h:panelGrid>
+									</rich:toolTip>
+									</h:selectBooleanCheckbox>
+		
+								</h:panelGrid></td>
+							</tr>
+						</table>
+
+					</rich:panel></td>
+				</tr>
+
+				<tr>
+					<td align="center"><a4j:commandButton value="#{text['button.save']}"
+						action="#{recursoMBean.guardar}" reRender="pantalla, recurso"></a4j:commandButton>
+					<a4j:commandButton value="#{text['button.cancel']}" action="cancelar"
+						bypassUpdates="true" reRender="pantalla, recurso"></a4j:commandButton>
+					</td>
+				</tr>
+
+			</table>
+		</h:form>
+
+		<h:form>
+			<h:panelGrid columns="1">
+				<h:panelGroup>
+					<rich:dataTable value="#{sessionMBean.datosDelRecurso}" var="row"
+						columns="4" id="tablaDatos" rows="3"
+						binding="#{recursoMBean.datosDataTable}">
+						<f:facet name="header">
+							<h:outputText value="#{text['entity.recurso.info']}"></h:outputText>
+						</f:facet>
+						<rich:column width="10">
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.recurso.info.order']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{row.data.orden}"></h:outputText>
+						</rich:column>
+
+						<rich:column width="50">
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.recurso.info.label']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{row.data.etiqueta}"></h:outputText>
+						</rich:column>
+						<rich:column width="50">
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.recurso.info.value']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{row.data.valor}"></h:outputText>
+						</rich:column>
+
+						<rich:column>
+							<f:facet name="header">
+							</f:facet>
+
+							<a4j:commandLink id="modificarDatoLink" ajaxSingle="true"
+									actionListener="#{recursoMBean.seleccionarDato}"
+									reRender="tablaDatos, ap_modifDato, modifDato">
+								<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/edit.gif"
+									style="border:0" />
+							</a4j:commandLink>
+							<rich:toolTip for="modificarDatoLink" value="#{text['recursos.info.update.title']}" />
+
+							<a4j:commandLink id="eliminarDatoLink"
+								oncomplete="javascript:Richfaces.showModalPanel('eliminarDato');"
+								actionListener="#{recursoMBean.selecDatoEliminar}">
+								<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/delete2.gif"
+									style="border:0" width="16" height="16" />
+							</a4j:commandLink>
+
+							<rich:toolTip for="eliminarDatoLink" value="#{text['recursos.info.delete.title']}" />
+
+						</rich:column>
+						<f:facet name="footer">
+							<h:panelGrid columns="2">
+								<h:panelGroup>
+									<rich:datascroller align="left" maxPages="5" id="sc_datos"
+										for="tablaDatos" page="#{recursoSessionMBean.pagDatoRUpd}" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<a4j:commandLink id="agregarDatoLink" ajaxSingle="true"
+										actionListener="#{recursoMBean.mostrarDatoDelRecurso}"
+										reRender="tablaDatos, ap_modifDato, ap_agregarDato">
+										<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/create_doc.gif"
+											style="border:0" />
+									</a4j:commandLink>
+									<rich:toolTip for="agregarDatoLink" value="#{text['button.add']}" />
+								</h:panelGroup>
+							</h:panelGrid>
+						</f:facet>
+
+					</rich:dataTable>
+
+
+				</h:panelGroup>
+				<br />
+
+				<h:panelGroup>
+					<a4j:outputPanel id="ap_modifDato" ajaxRendered="true">
+
+						<rich:panel id="modifDato"
+							header="#{text['recursos.info.update.title']}"
+							rendered="#{sessionMBean.mostrarDato}" bodyClass="formulario"
+							headerClass="formularioCabezal" styleClass="rich-panel-embebido">
+							<table style="border: none;" cellpadding="0" cellspacing="0"
+								align="center">
+								<tr>
+									<td nowrap="nowrap"><h:panelGrid columns="2"
+										style="padding-top: 0px;" styleClass="Texto"
+										columnClasses="formularioEtiqueta, formularioCampo">
+
+										<h:outputText value="#{text['entity.recurso.info.label']}:"></h:outputText>
+										<h:inputText
+											value="#{sessionMBean.datoDelRecursoSeleccionado.etiqueta}"
+											maxlength="50"></h:inputText>
+										<h:outputText value="#{text['entity.recurso.info.value']}:"></h:outputText>
+										<h:inputText
+											value="#{sessionMBean.datoDelRecursoSeleccionado.valor}"
+											maxlength="100"></h:inputText>
+										<h:outputText value="#{text['entity.recurso.info.order']}:"></h:outputText>
+										<h:inputText id="VOrden"
+											value="#{sessionMBean.datoDelRecursoSeleccionado.orden}"
+											maxlength="5"></h:inputText>
+										<h:outputText value=" "></h:outputText>
+										<rich:message for="VOrden" ajaxRendered="true"
+											errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+
+									</h:panelGrid></td>
+								</tr>
+								<tr>
+									<td align="center"><a4j:commandButton value="#{text['button.save']}"
+										actionListener="#{recursoMBean.guardarModifDato}"
+										reRender="tablaDatos, modifDato"></a4j:commandButton> <a4j:commandButton
+										value="#{text['button.cancel']}"
+										actionListener="#{recursoMBean.cancelarModifDato}"
+										reRender="tablaDatos, modifDato"></a4j:commandButton></td>
+								</tr>
+							</table>
+						</rich:panel>
+
+					</a4j:outputPanel>
+
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<a4j:outputPanel id="ap_agregarDato" ajaxRendered="true">
+						<rich:panel header="#{text['recursos.info.create.title']}"
+							bodyClass="formulario" headerClass="formularioCabezal"
+							rendered="#{sessionMBean.mostrarAgregarDato}" id="agregarDato">
+							<table style="border: none;" cellpadding="0" cellspacing="0"
+								align="center">
+								<tr>
+									<td nowrap="nowrap"><h:panelGrid columns="2"
+										style="padding-top: 0px;" styleClass="Texto"
+										columnClasses="formularioEtiqueta, formularioCampo">
+
+										<h:outputText value="#{text['entity.recurso.info.label']}:"></h:outputText>
+										<h:inputText
+											value="#{recursoMBean.datoDelRecursoNuevo.etiqueta}"
+											maxlength="50"></h:inputText>
+										<h:outputText value="#{text['entity.recurso.info.value']}:"></h:outputText>
+										<h:inputText value="#{recursoMBean.datoDelRecursoNuevo.valor}"
+											maxlength="100"></h:inputText>
+										<h:outputText value="#{text['entity.recurso.info.order']}:"></h:outputText>
+										<h:inputText id="VOrdDato"
+											value="#{recursoMBean.datoDelRecursoNuevo.orden}"
+											maxlength="5"></h:inputText>
+										<h:outputText value=" "></h:outputText>
+										<rich:message for="VOrdDato" ajaxRendered="true"
+											errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+
+									</h:panelGrid></td>
+								</tr>
+								<tr>
+									<td align="center"><a4j:commandButton value="#{text['button.save']}"
+										actionListener="#{recursoMBean.agregarDatoDelRecurso}"
+										reRender="pantalla, tablaDatos, agregarDato"></a4j:commandButton>
+									<a4j:commandButton value="#{text['button.cancel']}"
+										actionListener="#{recursoMBean.cancelarAgregarDato}"
+										reRender="pantalla, tablaDatos, agregarDato"></a4j:commandButton>
+									</td>
+								</tr>
+							</table>
+						</rich:panel>
+					</a4j:outputPanel>
+				</h:panelGroup>
+			</h:panelGrid>
+		</h:form>
+
+	</h:panelGrid>
+
+</f:view>

@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:form id="menuTitleForm">
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	  <div class="container">
+	   <!-- Brand and toggle get grouped for better mobile display -->
+	   <div class="navbar-header">
+	     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#same-navbar-collapse-1">
+	       <span class="sr-only">Toggle navigation</span>
+	       <span class="icon-bar"></span>
+	       <span class="icon-bar"></span>
+	       <span class="icon-bar"></span>
+	     </button>
+	     <a class="navbar-brand" href="#" style="height: 82px;">
+	     	<h:graphicImage value="/app/img/logo_same.png" alt="same"/>
+	     </a>
+	   </div>
+	
+	   <!-- Collect the nav links, forms, and other content for toggling -->
+	   <div class="collapse navbar-collapse" id="same-navbar-collapse-1" style="padding-top: 32px;">
+	     <ul class="nav navbar-nav navbar-right">
+
+	       <li>
+	       
+				<a4j:commandLink
+					id="agendaSelectedButton"
+					action="#{dashboard.show('AGENDAS')}"
+					reRender="pageBody"
+					ajaxSingle="true"
+					ignoreDupResponses="true">
+					<span class="glyphicon glyphicon-calendar"></span>
+					#{(sessionMBean.agendaMarcada != null ? sessionMBean.agendaMarcada.descripcion : '')} / 
+					#{(sessionMBean.recursoMarcado != null ? sessionMBean.recursoMarcado.descripcion : '')}
+					
+					<f:setPropertyActionListener target="#{sessionMBean.viewId}" value="/administracion/seleccionAgendaRecurso.xhtml" />
+					
+				</a4j:commandLink>
+	       
+	       </li>
+
+	       <li>
+	       
+				<a4j:commandLink
+					action="#{dashboard.show('DASHBOARD')}"
+					reRender="pageBody"
+					ajaxSingle="true"
+					ignoreDupResponses="true"
+					title="#{text['menu.dashboard.title']}">
+					<span class="glyphicon glyphicon-th-large"></span>
+					<f:setPropertyActionListener target="#{sessionMBean.viewId}" value="/administracion/inicio.xhtml" />
+				</a4j:commandLink>
+	       
+	       </li>
+	       <li class="dropdown">
+	         <a href="#" class="dropdown-toggle" data-toggle="dropdown" 
+	         	onclick="dropdownToggle('user-ddmenu')">
+	         	<span class="glyphicon glyphicon-user"></span>
+	         	<span class="caret"></span>
+	         </a>
+	         <ul class="dropdown-menu" role="menu" id="user-ddmenu">
+	           
+	           <li><a href="#">#{request.userPrincipal.name}</a></li>
+
+	           <li>
+	           
+					<h:selectOneMenu 
+						value="#{i18n.language}" 
+						onchange="submit()" 
+						title="#{text['message.language_selection.tooltip']}"
+						styleClass="form-control">
+						<f:selectItems value="#{i18n.languages}" />
+					</h:selectOneMenu>
+	           
+	           </li>
+
+	           <li class="divider"></li>
+
+	           <li>
+	           
+					<a4j:commandLink id="linkCerrarSesion" reRender="pantalla"
+						ajaxSingle="true" ignoreDupResponses="true"
+						actionListener="#{loginSAEMBean.cerrarSesion}" >
+						
+						<span class="glyphicon glyphicon-off" style="padding-right: 10px"></span>
+						#{text['login.session.close']}							
+					</a4j:commandLink>
+					
+	           </li>
+	         </ul>
+	       </li>
+	     </ul>
+	   </div><!-- /.navbar-collapse -->
+	 </div><!-- /.container-fluid -->
+	</div>
+
+</h:form>
+
+</ui:component>

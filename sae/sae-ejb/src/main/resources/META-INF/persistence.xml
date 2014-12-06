@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence 
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+
+
+
+	<persistence-unit name="SAE-EJB" transaction-type="JTA">
+ 
+ 		<jta-data-source>${build.sae.service.datasource}</jta-data-source> 
+ 
+		<mapping-file>META-INF/orm.xml</mapping-file>
+		<class>uy.gub.imm.sae.entity.Agenda</class>
+		<class>uy.gub.imm.sae.entity.Recurso</class>
+		<class>uy.gub.imm.sae.entity.Disponibilidad</class>
+		<class>uy.gub.imm.sae.entity.Plantilla</class>
+		<class>uy.gub.imm.sae.entity.Reserva</class>
+		<class>uy.gub.imm.sae.entity.DatoDelRecurso</class>		
+		<class>uy.gub.imm.sae.entity.DatoASolicitar</class>
+		<class>uy.gub.imm.sae.entity.AgrupacionDato</class>		
+		<class>uy.gub.imm.sae.entity.DatoReserva</class>
+		<class>uy.gub.imm.sae.entity.Validacion</class>
+		<class>uy.gub.imm.sae.entity.ValidacionPorRecurso</class>		
+		<class>uy.gub.imm.sae.entity.ValidacionPorDato</class>
+		<class>uy.gub.imm.sae.entity.ValorPosible</class>										
+		<class>uy.gub.imm.sae.entity.DiasDeLaSemana</class>		
+		<class>uy.gub.imm.sae.entity.DiasDelMes</class>
+	    <class>uy.gub.imm.sae.entity.Meses</class>
+	    <class>uy.gub.imm.sae.entity.Anios</class>
+	    <class>uy.gub.imm.sae.entity.ParametroValidacion</class>	    	    
+	    <class>uy.gub.imm.sae.entity.TextoAgenda</class>	    	    
+	    <class>uy.gub.imm.sae.entity.TextoRecurso</class>	    
+	    <class>uy.gub.imm.sae.entity.Llamada</class>
+	    <class>uy.gub.imm.sae.entity.ServicioAutocompletar</class>
+	    <class>uy.gub.imm.sae.entity.ParametrosAutocompletar</class>
+	    <class>uy.gub.imm.sae.entity.ServicioPorRecurso</class>
+	    <class>uy.gub.imm.sae.entity.ServicioAutocompletarPorDato</class>
+	    <class>uy.gub.imm.sae.entity.Accion</class>
+		<class>uy.gub.imm.sae.entity.AccionPorRecurso</class>		
+		<class>uy.gub.imm.sae.entity.AccionPorDato</class>
+		<class>uy.gub.imm.sae.entity.ParametroAccion</class>	    
+	    <class>uy.gub.imm.sae.entity.Atencion</class>	
+	    <class>uy.gub.imm.sae.entity.ConstanteValidacion</class>
+	    <class>uy.gub.imm.sae.entity.ValorConstanteValidacionRecurso</class>    
+
+		<properties>
+			<!-- 
+			<property 	name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+			--> 
+			
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			
+            <property name="hibernate.format_sql" value="false"/>
+            <property name="hibernate.show_sql" value="false"/>
+            
+            <property 	name="hibernate.hbm2ddl.auto" 
+            			value="${build.sae.persistence.hibernate.hbm2ddl.auto}"/>
+            
+            <!-- value="validate"/> -->
+			<!-- value="update"/> -->
+			<!-- value="create"/> --> 
+			<!-- value="create-drop"/> -->
+			
+        </properties>
+	</persistence-unit>
+</persistence>

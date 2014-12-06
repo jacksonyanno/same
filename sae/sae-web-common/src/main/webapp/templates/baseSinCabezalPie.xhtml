@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<f:view
+	beforePhase="#{parametroBean.beforePhase}"
+	beforePhaseListener="#{parametroBean.beforePhase}"
+>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+		<a4j:loadStyle src="#{saeProperties['ui.style.organizacion.url']}"/>
+		<a4j:loadStyle src="#{saeProperties['ui.style.organizacion.faces.url']}"/>
+		<a4j:loadStyle src="#{saeProperties['ui.style.sae.url']}" />
+		
+		<!--
+			Ejemplo del contenido esperado para esta region 
+			<a4j:loadStyle src=""></a4j:loadStyle>
+		-->
+		<ui:insert name="css"/>
+	</head>	
+	<body onload="#{onload}" class="body">
+	<div style="font-size: 7pt;">				
+	
+		<table border="0" cellpadding='0' cellspacing='0' align="center">
+			<tr><td>
+				<table class="Cuerpo" border="0" cellpadding='0' cellspacing='0'>
+				<tr><td id="cuerpo" class="CuerpoMedioCentral">
+					<ui:insert name="cuerpo"><div style="text-align: center;">CUERPO</div></ui:insert>
+				</td></tr>
+				</table>
+			</td></tr>
+	
+		</table>
+	</div>
+	
+	<ui:insert name="script">
+		<!-- <script> </script>  -->
+	</ui:insert>
+	
+	<ui:insert name="js"> 
+		<!-- <a4j:loadScript src=""></a4j:loadScript> -->
+	</ui:insert>
+	</body>
+</f:view>
+</html>      

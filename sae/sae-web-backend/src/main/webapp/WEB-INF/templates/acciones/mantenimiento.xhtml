@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<!--
+Parametros que usa este componente 
+#{accionMantenimientoMBean.acciones} : acciones
+#{accionMantenimientoMBean.accionesTable}: accionesTable
+#{accionMantenimientoMBean.editar} : bean - editar
+#{accionMantenimientoMBean.eliminarAccion} bean - eliminarAccion
+#{accionMantenimientoSessionMBean.accionesTablePageIndex} - accionesTablePageIndex
+#{accionMantenimientoMBean.crear} : bean - crear
+#{accionMantenimientoSessionMBean.modoEdicion} : modoEdicion
+#{accionMantenimientoSessionMBean.modoCreacion} : modoCreacion
+#{accionMantenimientoSessionMBean.accion.*} : accion.*
+#{accionMantenimientoSessionMBean.accion.parametrosAccion} : parametros
+#{accionMantenimientoMBean.parametrosTable} : parametrosTable
+#{accionMantenimientoMBean.tiposDeDato} : tiposDeDato
+#{accionMantenimientoMBean.eliminarParametro} : eliminarParametro
+#{accionMantenimientoSessionMBean.parametrosTablePageIndex} - parametrosTablePageIndex 
+#{accionMantenimientoMBean.parametrosDataScroller} : parametrosDataScroller
+#{accionMantenimientoMBean.crearParametro} : crearParametro
+#{accionMantenimientoMBean.guardarEdicion} : guardarEdicion
+#{accionMantenimientoMBean.cancelarEdicion} : cancelarEdicion
+#{accionMantenimientoMBean.guardarCreacion} : guardarCreacion
+#{accionMantenimientoMBean.cancelarCreacion} : cancelarCreacion
+#{autocompletadoMantenimientoMBean.modo} : modos
+el tipo de accion: accionesTitle
+ -->
+ 
+	<h:form>
+
+		<table style="border: none;" cellpadding="0" cellspacing="0"
+			align="left">
+			<tr>		
+				<td align="center">
+					
+					<h:panelGrid columns="1">
+				
+						<rich:dataTable
+						value="#{acciones}" var="row" columns="4"
+						binding="#{accionesTable}"
+						id="tablaAcciones" rows="5"
+						>
+	
+							<f:facet name="header">
+								<h:outputText value="#{accionesTitle}" />
+							</f:facet>
+							
+							<rich:column style="text-align:left;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.action.name']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.nombre}"></h:outputText>
+								<rich:toolTip value="#{row.descripcion}"></rich:toolTip>
+							</rich:column>
+		
+							<rich:column style="text-align:left;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.action.jndi']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.servicio}"></h:outputText>
+							</rich:column>
+		
+							<rich:column style="text-align:left;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.action.host']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.host}"></h:outputText>
+							</rich:column>
+		
+							<rich:column style="text-align:center;" width="40px">
+								<a4j:commandLink id="modificarLink" reRender="panelAccion"
+									ajaxSingle="true"
+									actionListener="#{bean[editar]}"
+								>
+									<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/edit.gif"
+										style="border:0" height="16" width="16" />
+									<rich:toolTip value="#{text['actions.update.title']}" />
+								</a4j:commandLink>
+								
+								<rich:spacer width="5px"/>
+								
+								<a4j:commandLink reRender="tablaAcciones, panelAccion"
+									ajaxSingle="true"
+									actionListener="#{bean[eliminarAccion]}"
+								>
+									<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/delete2.gif"
+										style="border:0" height="16" width="16" />
+									<rich:toolTip value="#{text['actions.delete.title']} #{row.nombre}" />
+								</a4j:commandLink>
+							</rich:column>
+							
+							<f:facet name="footer">
+								<h:panelGroup>
+									<table>
+										<tr>
+											<td width="600px"><rich:datascroller align="left"
+												maxPages="5" id="scrollerTablaAcciones" for="tablaAcciones"
+												page="#{accionesTablePageIndex}" /></td>
+											<td width="100px" align="right">
+												<a4j:commandLink reRender="panelAccion"
+													ajaxSingle="true"
+													actionListener="#{bean[crear]}"
+												>
+													<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/create_doc.gif"
+														style="border:0" height="16" width="16" />
+													<rich:toolTip value="#{text['actions.create.title']}" />
+												</a4j:commandLink>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup>
+							</f:facet>
+					</rich:dataTable>
+				
+
+					<rich:spacer height="5px"></rich:spacer>
+								
+					<h:panelGroup id="panelAccion">
+						<rich:panel  
+							rendered="#{modoEdicion || modoCreacion}">
+							<f:facet name="header">
+								<h:panelGroup>
+									<h:outputText value="#{text['actions.create.title']}"  rendered="#{modoCreacion}"/>
+									<h:outputText value="#{text['actions.update.title']}Editando validación" rendered="#{modoEdicion}"/>
+								</h:panelGroup>
+							</f:facet>
+		
+							<h:panelGrid columns="2" columnClasses="derecha, izquierda">
+								
+								<h:outputText value="#{text['entity.action.name']}:" />
+								<h:inputText value="#{accion.nombre}" size="75"/>
+								<h:outputText value="#{text['entity.action.description']}:" />
+								<h:inputTextarea value="#{accion.descripcion}"
+												 cols="71" rows="5">
+								</h:inputTextarea>
+								<h:outputText value="#{text['entity.action.jndi']}:" />
+								<h:inputText value="#{accion.servicio}" size="75"/>
+								<h:outputText value="#{text['entity.action.host']}:" />
+								<h:inputText value="#{accion.host}" size="75"/>
+								<h:outputText value="#{text['entity.action.parameters']}:" />
+		
+								<rich:dataTable
+								value="#{parametros}" var="row" columns="4"
+								binding="#{parametrosTable}"
+								id="tablaParametros" rows="4" width="404px"
+								>
+			
+									<rich:column style="text-align:left;" width="234px">
+										<f:facet name="header">
+											<h:outputText value="#{text['entity.action.parameter.name']}"></h:outputText>
+										</f:facet>
+										<rich:inplaceInput value="#{row.nombre}" inputWidth="150px"></rich:inplaceInput>
+									</rich:column>
+				
+									<rich:column style="text-align:left;" width="120px">
+										<f:facet name="header">
+											<h:outputText value="#{text['entity.action.parameter.data_type']}"></h:outputText>
+										</f:facet>
+			
+										<h:selectOneMenu value="#{row.tipo}" style="width: 90px">
+											<f:selectItems value="#{tiposDeDato}"/>
+										</h:selectOneMenu>
+									</rich:column>
+				
+									<rich:column style="text-align:left;" width="30px">
+										<f:facet name="header">
+											<h:outputText value="#{(modos != null ? text['entity.action.parameter.mode'] : text['entity.action.parameter.length'])}"></h:outputText>
+										</f:facet>
+
+										<h:panelGroup>										
+											<rich:inplaceInput value="#{row.largo}" inputWidth="30px" rendered="#{modos == null}"></rich:inplaceInput>
+											
+											<h:selectOneMenu value="#{row.modo}" style="width: 90px" rendered="#{modos != null}">
+												<f:selectItems value="#{modos}"/>
+											</h:selectOneMenu>
+										</h:panelGroup>						
+										
+									</rich:column>
+				
+									<rich:column style="text-align:center;" width="20px">
+										<a4j:commandLink reRender="tablaParametros"
+											actionListener="#{bean[eliminarParametro]}"
+										>
+											<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/delete2.gif"
+												style="border:0" height="16" width="16" />
+										</a4j:commandLink>
+									</rich:column>
+									
+									<f:facet name="footer">
+										<h:panelGroup>
+											<table width="100%">
+												<tr>
+													<td width="80%"><rich:datascroller align="left"
+														maxPages="5" id="scrollerTablaParametros" for="tablaParametros"
+														page="#{parametrosTablePageIndex}" 
+														binding="#{parametrosDataScroller}"
+														/></td>
+													<td width="20%" align="right">
+														<a4j:commandLink reRender="tablaParametros"
+															actionListener="#{bean[crearParametro]}"
+														>
+															<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/create_doc.gif"
+																style="border:0" height="16" width="16" />
+														</a4j:commandLink>
+													</td>
+												</tr>
+												
+											</table>
+										</h:panelGroup>
+									</f:facet>
+								</rich:dataTable>
+								
+								<rich:spacer></rich:spacer>
+								
+								<h:panelGroup>
+									<a4j:commandButton 
+										value="#{text['button.save']}" 
+										actionListener="#{bean[guardarEdicion]}"
+										reRender="tablaAcciones, panelAccion"
+										rendered="#{modoEdicion}">
+									</a4j:commandButton>
+									<a4j:commandButton 
+										value="#{text['button.cancel']}" 
+										actionListener="#{bean[cancelarEdicion]}"
+										immediate="true"
+										reRender="tablaAcciones, panelAccion"
+										rendered="#{modoEdicion}">
+									</a4j:commandButton>
+									
+									<a4j:commandButton 
+										value="#{text['button.save']}" 
+										actionListener="#{bean[guardarCreacion]}"
+										reRender="pantalla,tablaAcciones"
+										rendered="#{modoCreacion}">
+									</a4j:commandButton>
+									<a4j:commandButton 
+										value="#{text['button.cancel']}" 
+										actionListener="#{bean[cancelarCreacion]}"
+										immediate="true"
+										reRender="pantalla"
+										rendered="#{modoCreacion}">
+									</a4j:commandButton>
+								</h:panelGroup>
+							</h:panelGrid>
+										
+						</rich:panel>
+					</h:panelGroup>
+				</h:panelGrid>
+				</td>
+			</tr>
+		</table>
+	</h:form>
+</ui:composition>

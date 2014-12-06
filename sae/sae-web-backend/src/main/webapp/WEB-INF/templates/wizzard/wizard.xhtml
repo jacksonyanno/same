@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<ui:component>
+
+
+		<h:form id="wizzardForm">
+		
+			<h:panelGroup layout="block" id="wizzardContent" styleClass="wizzardContent"  style="padding-left: 30px; padding-right: 30px" binding="#{wizzard.contentUI}">
+				<div class="page-header">
+					<h3>#{text['wizzard.title']}
+						<small>
+							<span class="glyphicon glyphicon-chevron-right" style="font-size: 0.7em;"/>
+							#{wizzard.stepTitle}
+						</small>
+						<span class="pull-right">
+	
+							<a4j:commandLink type="button" styleClass="btn btn-default wizzard-btn"
+								rendered="#{!wizzard.state.isBegin and !wizzard.state.isEnd}" actionListener="#{wizzard.back}" reRender="wizzardContent" 
+				  				onclick="buttonDisabled(this, this.childNodes[1], '#{text['button.clicked']}')"
+								oncomplete="buttonEnabled(this, this.childNodes[1], '#{text['wizzard.button.back']}');">
+							  <span class="glyphicon glyphicon-chevron-left"></span> #{text['wizzard.button.back']}
+							</a4j:commandLink>
+						
+							<a4j:commandLink type="button" styleClass="btn btn-primary wizzard-btn"  
+								rendered="#{!wizzard.state.isForm and !wizzard.state.isEnd}" actionListener="#{wizzard.next}" reRender="wizzardContent" 
+				  				onclick="buttonDisabled(this, this.childNodes[0], '#{text['button.clicked']}')"
+								oncomplete="buttonEnabled(this, this.childNodes[0], '#{text['wizzard.button.next']}');">
+							   #{text['wizzard.button.next']} <span class="glyphicon glyphicon-chevron-right"></span>
+							</a4j:commandLink>
+
+							<a4j:commandLink type="button" styleClass="btn btn-primary wizzard-btn-end" 
+								rendered="#{wizzard.state.isForm}" actionListener="#{wizzard.createNewAgenda}" reRender="wizzardContent, mostrarAgendaRecurso" 
+				  				onclick="buttonDisabled(this, this.childNodes[0], '#{text['button.clicked']}')"
+								oncomplete="buttonEnabled(this, this.childNodes[0], '#{text['wizzard.button.end']}');">
+							   #{text['wizzard.button.end']} <span class="glyphicon glyphicon-ok"></span>
+							</a4j:commandLink>
+
+						</span>
+					</h3>
+				</div>
+
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="#{wizzard.progress}"
+						aria-valuemin="0" aria-valuemax="100" style="width: #{wizzard.progress}%;">#{wizzard.progress}%</div>
+				</div>
+
+				<div class="wizzardStepContent">
+					<f:subview id="begin">
+						<ui:include src="/WEB-INF/templates/wizzard/wizzardBegin.xhtml" />
+					</f:subview>
+					<f:subview id="calendar">
+						<ui:include src="/WEB-INF/templates/wizzard/wizzardCalendar.xhtml" />
+					</f:subview>
+					<f:subview id="form">
+						<ui:include src="/WEB-INF/templates/wizzard/wizzardForm.xhtml" />
+					</f:subview>
+					<f:subview id="end">
+						<ui:include src="/WEB-INF/templates/wizzard/wizzardEnd.xhtml" />
+					</f:subview>
+				</div>
+
+				<div style="text-align: center; padding: 20px">
+					<rich:message for="#{wizzard.contentUI.id}" ajaxRendered="true" errorClass="alert alert-danger" infoClass="alert alert-info"/>
+				</div>
+			</h:panelGroup>
+		</h:form>
+
+</ui:component>
+
+
+</html>

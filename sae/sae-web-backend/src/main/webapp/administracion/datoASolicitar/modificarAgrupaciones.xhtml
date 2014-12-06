@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{agrupacionMBean.beforePhaseModificarAgrupaciones}"
+	beforePhaseListener="#{agrupacionMBean.beforePhaseModificarAgrupaciones}">
+
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+
+	<rich:modalPanel moveable="true" shadowOpacity="0.4" width="310"
+		autosized="false" height="110" id="eliminarAgrupacion" zindex="2000">
+
+		<f:facet name="header">
+			<h:outputText value="#{text['formulario.groups.delete.modal.confirm.title']}" />
+		</f:facet>
+		<h:form id="elimRec">
+			<table style="border: none;" cellpadding="5" cellspacing="5"
+				align="center">
+				<tr>
+					<td nowrap="nowrap"><h:outputText
+						value="#{text['formulario.groups.delete.modal.confirm.message']}"
+						styleClass="textoModal" /></td>
+				</tr>
+				<tr>
+					<td><h:panelGrid columns="2"
+						style="padding-top: 0px; align=center;">
+
+						<a4j:commandButton id="btn_eliminar" reRender="pantalla"
+							actionListener="#{agrupacionMBean.eliminarAgrupacion}"
+							value="#{text['button.delete']}"
+							onclick="Richfaces.hideModalPanel('eliminarAgrupacion');"
+							style=" width : 79px;">
+						</a4j:commandButton>
+
+						<a4j:commandButton
+							onclick="Richfaces.hideModalPanel('eliminarAgrupacion');"
+							value="#{text['button.cancel']}">
+						</a4j:commandButton>
+					</h:panelGrid></td>
+				</tr>
+			</table>
+		</h:form>
+	</rich:modalPanel>
+
+	<ui:include src="/administracion/datoASolicitar/disenioFormulario.xhtml" />
+	
+	<h:form style="margin: 0px;">
+
+		<table style="border: none;" cellpadding="0" cellspacing="0"
+			align="left">
+			<tr>
+				<td align="center">
+				
+				
+					<rich:dataTable
+						value="#{datoASSessionMBean.agrupaciones}" var="row" columns="3"
+						id="tablaAgrupacion" rows="4" columnsWidth="40, 200, 60"
+						binding="#{agrupacionMBean.agrupacionesDataTable}">
+
+						<rich:column style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.formulario.groups.order']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{row.orden}"></h:outputText>
+						</rich:column>
+	
+						<rich:column style="text-align:left;">
+							<f:facet name="header">
+								<h:outputText value="#{text['entity.formulario.groups.name']}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{row.nombre}"></h:outputText>
+						</rich:column>
+	
+						<rich:column style="text-align:center;">
+							<f:facet name="header">
+							</f:facet>
+							<a4j:commandLink id="modificarAgrupLink" ajaxSingle="true"
+								actionListener="#{agrupacionMBean.seleccionarAgrupacion}"
+								reRender="tablaAgrupacion">
+								<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/edit.gif"
+									style="border:0" height="16" width="16" />
+							</a4j:commandLink>
+							<rich:toolTip for="modificarAgrupLink"
+								value="#{text['formulario.groups.update.title']}" />
+							<rich:spacer width="5px"></rich:spacer>
+							<a4j:commandLink id="eliminarAgrupLink"
+								oncomplete="javascript:Richfaces.showModalPanel('eliminarAgrupacion');"
+								actionListener="#{agrupacionMBean.seleccionarAgrupacionParaEliminar}">
+								<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/delete2.gif"
+									style="border:0" width="16" height="16" />
+							</a4j:commandLink>
+	
+							<rich:toolTip for="eliminarAgrupLink" value="#{text['formulario.groups.delete.title']}" />
+						</rich:column>
+	
+	
+						<f:facet name="footer">
+							<h:panelGroup>
+								<table align="left">
+									<tr>
+										<td>
+											<rich:datascroller align="left"
+											maxPages="5" id="sc_agrupaciones" for="tablaAgrupacion"
+											page="#{datoASSessionMBean.pagDatoAgrupUpd}" />
+										</td> 
+										<td> 
+										<a4j:commandLink
+											id="agregarAgrupLink" ajaxSingle="true"
+											actionListener="#{agrupacionMBean.mostrarCrearAgrupacion}"
+											reRender="tablaAgrupacion">
+											<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/create_doc.gif"
+												style="border:0" height="16" width="16" />
+										</a4j:commandLink> <rich:toolTip for="agregarAgrupLink"
+											value="#{text['formulario.groups.create.title']}" />
+										</td>
+										<td nowrap="nowrap" width="150px" align="right"><ui:include
+											src="/administracion/datoASolicitar/verDisenioFormulario.xhtml" />
+										</td>
+									</tr>
+								</table>
+							</h:panelGroup>
+	
+	
+						</f:facet>
+
+					</rich:dataTable> 
+					
+					<rich:spacer height="10px"></rich:spacer> 
+					
+					<h:panelGroup>
+					
+						<a4j:outputPanel id="ap_modifAgrupacion" ajaxRendered="true">
+							<rich:panel id="modifAgrupacion"
+								header="#{text['formulario.groups.update.title']}"
+								rendered="#{sessionMBean.mostrarAgrupacion}"
+								bodyClass="formulario" headerClass="formularioCabezal"
+								styleClass="rich-panel-embebido">
+								<table style="border: none;" cellpadding="0" cellspacing="0"
+									align="center">
+									<tr>
+										<td ><h:panelGrid columns="2"
+											style="padding-top: 0px;" styleClass="Texto"
+											columnClasses="formularioEtiqueta, formularioCampo">
+	
+											<h:outputText value="#{text['entity.formulario.groups.name']}:"></h:outputText>
+											<h:inputText
+												value="#{datoASSessionMBean.agrupacionSeleccionada.nombre}"
+												maxlength="50" style="width: 200px"></h:inputText>
+											<h:outputText value="#{text['entity.formulario.groups.order']}:"></h:outputText>
+											<h:inputText id="VOrdAgrup"
+												value="#{datoASSessionMBean.agrupacionSeleccionada.orden}"
+												maxlength="5" style="width: 50px">
+											</h:inputText>
+											<h:outputText value=" "></h:outputText>
+											<rich:message for="VOrdAgrup" ajaxRendered="true"
+												errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+	
+											<h:outputText value="" />
+											<h:panelGroup>
+												<a4j:commandButton value="#{text['button.save']}"
+													actionListener="#{agrupacionMBean.modificarAgrupacion}"
+													reRender=" tablaAgrupacion, sc_agrupaciones, modifAgrupacion"></a4j:commandButton>
+												<a4j:commandButton value="#{text['button.cancel']}"
+													immediate="true"
+													actionListener="#{agrupacionMBean.cancelarModificarAgrupacion}"
+													reRender="tablaAgrupacion, modifAgrupacion"></a4j:commandButton>
+											</h:panelGroup>
+	
+										</h:panelGrid></td>
+									</tr>
+								</table>
+							</rich:panel>
+						</a4j:outputPanel>
+					
+					</h:panelGroup>
+				
+					<h:panelGroup>
+					<a4j:outputPanel id="ap_agregarAgrupacion" ajaxRendered="true">
+						<rich:panel header="#{text['formulario.groups.create.title']}" bodyClass="formulario"
+							headerClass="formularioCabezal"
+							rendered="#{sessionMBean.mostrarAgregarAgrupacion}"
+							id="agregarAgrupacion">
+							<table style="border: none;" cellpadding="0" cellspacing="0"
+								align="center">
+								<tr>
+									<td ><h:panelGrid columns="2"
+										style="padding-top: 0px;" styleClass="Texto"
+										columnClasses="formularioEtiqueta, formularioCampo">
+	
+										<h:outputText value="#{text['entity.formulario.groups.name']}:"></h:outputText>
+										<h:inputText
+											value="#{agrupacionMBean.agrupacionDatoNuevo.nombre}"
+											maxlength="50" style="width: 200px"></h:inputText>
+										<h:outputText value="#{text['entity.formulario.groups.order']}:"></h:outputText>
+										<h:inputText id="VOrdUpd"
+											value="#{agrupacionMBean.agrupacionDatoNuevo.orden}"
+											maxlength="5" style="width: 50px"></h:inputText>
+										<h:outputText value=" "></h:outputText>
+										<rich:message for="VOrdUpd" ajaxRendered="true"
+											errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+	
+										<h:outputText value="" />
+	
+										<h:panelGroup>
+											<a4j:commandButton value="#{text['button.save']}"
+												actionListener="#{agrupacionMBean.crearAgrupacion}"
+												reRender="tablaAgrupacion, sc_agrupaciones, agregarAgrupacion"></a4j:commandButton>
+											<a4j:commandButton value="#{text['button.cancel']}"
+												immediate="true"
+												actionListener="#{agrupacionMBean.cancelarCrearAgrupacion}"
+												reRender="tablaAgrupacion, sc_agrupaciones, agregarAgrupacion"></a4j:commandButton>
+										</h:panelGroup>
+									</h:panelGrid></td>
+								</tr>
+							</table>
+						</rich:panel>
+					</a4j:outputPanel>
+				</h:panelGroup>
+			</td>
+			</tr>
+		</table>
+	</h:form>
+</f:view>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{autocompletadoMantenimientoMBean.beforePhase}"
+	beforePhaseListener="#{autocompletadoMantenimientoMBean.beforePhase}">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+	<ui:include src="/WEB-INF/templates/acciones/mantenimiento.xhtml">
+		<ui:param name="accionesTitle" value="Acciones de Autocompletar" />
+		<ui:param name="acciones" value="#{autocompletadoMantenimientoMBean.autocompletados}" />
+		<ui:param name="accionesTable" value="#{autocompletadoMantenimientoMBean.autocompletadosTable}" />
+		<ui:param name="bean" value="#{autocompletadoMantenimientoMBean}" />
+		<ui:param name="editar" value="editar" />
+		<ui:param name="eliminarAccion" value="eliminarAutocompletado" />
+		<ui:param name="accionesTablePageIndex" value="#{autocompletadoMantenimientoSessionMBean.autocompletadosTablePageIndex}" />
+		<ui:param name="crear" value="crear" />
+		<ui:param name="modoEdicion" value="#{autocompletadoMantenimientoSessionMBean.modoEdicion}" />
+		<ui:param name="modoCreacion" value="#{autocompletadoMantenimientoSessionMBean.modoCreacion}" />
+		<ui:param name="accion" value="#{autocompletadoMantenimientoSessionMBean.autocompletado}" />
+		<ui:param name="parametros" value="#{autocompletadoMantenimientoSessionMBean.autocompletado.parametrosAutocompletados}" />
+		<ui:param name="parametrosTable" value="#{autocompletadoMantenimientoMBean.parametrosTable}" />
+		<ui:param name="tiposDeDato" value="#{autocompletadoMantenimientoMBean.tiposDeDato}" />
+		<ui:param name="modos" value="#{autocompletadoMantenimientoMBean.modo}" />
+		<ui:param name="eliminarParametro" value="eliminarParametro" />
+		<ui:param name="crearParametro" value="crearParametro" />
+		<ui:param name="guardarEdicion" value="guardarEdicion" />
+		<ui:param name="cancelarEdicion" value="cancelarEdicion" />
+		<ui:param name="guardarCreacion" value="guardarCreacion" />
+		<ui:param name="cancelarCreacion" value="cancelarCreacion" />
+		<ui:param name="parametrosTablePageIndex" value="#{autocompletadoMantenimientoSessionMBean.parametrosTablePageIndex}" />
+		<ui:param name="parametrosDataScroller" value="#{autocompletadoMantenimientoMBean.parametrosDataScroller}" />
+	</ui:include>
+
+</f:view>

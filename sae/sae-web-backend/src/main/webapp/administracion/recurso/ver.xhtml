@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+
+<!-- Se definen estilos para etiquetas y valores alineados a la izquierda -->
+<style>
+.etiqueta_l{
+text-align: left;
+}
+.valor_l{
+text-align: left;
+}
+</style>
+<h:form>
+<!-- style="text-align: center;" -->
+<rich:panel  bodyClass="formulario" headerClass="formularioCabezal">
+<f:facet name="header">
+	<h:outputText value="#{text['entity.recurso']}"></h:outputText>
+</f:facet>
+ <h:panelGrid columns="2" >
+	 	 <h:panelGrid columns="2" styleClass="Texto" columnClasses="formularioEtiqueta, formularioCampo">
+	 	 
+			<h:outputLabel value="#{text['entity.recurso.name']}:" for="nom"></h:outputLabel>
+			<h:inputText id="nom" value="#{sessionMBean.recursoSeleccionado.nombre}" readonly="true"></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.description']}:" for="desc"></h:outputLabel>
+			<h:inputText id="desc" value="#{sessionMBean.recursoSeleccionado.descripcion}" readonly="true"></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.fecha_inicio']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.fechaInicio}" readonly="true"><f:convertDateTime type="both" pattern="dd/MM/yyyy" timeZone="#{coreMBean.timeZone}"/></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.fecha_fin']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.fechaFin}" readonly="true"><f:convertDateTime type="both" pattern="dd/MM/yyyy" timeZone="#{coreMBean.timeZone}"/></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.fecha_inicio_disponibilidad']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.fechaInicioDisp}" readonly="true"><f:convertDateTime type="both" pattern="dd/MM/yyyy" timeZone="#{coreMBean.timeZone}"/></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.fecha_fin_disponibilidad']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.fechaFinDisp}" readonly="true"><f:convertDateTime type="both" pattern="dd/MM/yyyy" timeZone="#{coreMBean.timeZone}"/></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.inicio_ventana_intranet']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.diasInicioVentanaIntranet}" readonly="true"></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.ventana_intranet']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.diasVentanaIntranet}" readonly="true"></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.inicio_ventana_internet']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.diasInicioVentanaInternet}" readonly="true"></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.ventana_internet']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.diasVentanaInternet}" readonly="true"></h:inputText>
+   </h:panelGrid>
+   <h:panelGrid columns="2" styleClass="Texto" columnClasses="formularioEtiqueta, formularioCampo">
+   			<h:outputLabel value="#{text['entity.recurso.cupos_minimos']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.ventanaCuposMinimos}" readonly="true"></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.max_dias_a_generar']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.cantDiasAGenerar}" readonly="true"></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.largo_lista_de_espera']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.largoListaEspera}" readonly="true"></h:inputText>
+			<h:outputLabel value="#{text['entity.recurso.serie']}"></h:outputLabel>
+			<h:inputText value="#{sessionMBean.recursoSeleccionado.serie}" readonly="true"></h:inputText>
+						
+			<h:outputLabel value="#{text['entity.recurso.visible_en_internet']}"></h:outputLabel>
+			<h:selectBooleanCheckbox value="#{sessionMBean.recursoSeleccionado.visibleInternet}" disabled="true" readonly="true"></h:selectBooleanCheckbox>
+			<h:outputLabel value="#{text['entity.recurso.reserva_multiple']}"></h:outputLabel>
+			<h:selectBooleanCheckbox value="#{sessionMBean.recursoSeleccionado.reservaMultiple}" disabled="true" readonly="true"></h:selectBooleanCheckbox>
+			<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_llamador']}:"></h:outputText>
+			<h:selectBooleanCheckbox value="#{sessionMBean.recursoSeleccionado.mostrarNumeroEnLlamador}" disabled="true" readonly="true">
+			<rich:toolTip>
+				<h:panelGrid columns="1">
+				<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_llamador.tooltip']}" />
+				</h:panelGrid>
+			</rich:toolTip>
+			</h:selectBooleanCheckbox>
+			<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_ticket']}:"></h:outputText>
+			<h:selectBooleanCheckbox value="#{sessionMBean.recursoSeleccionado.mostrarNumeroEnTicket}" disabled="true" readonly="true">
+			<rich:toolTip>
+				<h:panelGrid columns="1">
+				<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_ticket.tooltip']}" />
+				</h:panelGrid>
+			</rich:toolTip>
+			</h:selectBooleanCheckbox>
+
+			<h:outputText value="#{text['entity.recurso.sabado_es_habil']}:"></h:outputText>
+			<h:selectBooleanCheckbox value="#{sessionMBean.recursoSeleccionado.sabadoEsHabil}" disabled="true" readonly="true">
+			<rich:toolTip>
+				<h:panelGrid columns="1">
+				<h:outputText value="#{text['entity.recurso.sabado_es_habil.tooltip']}" />
+				</h:panelGrid>
+			</rich:toolTip>
+			</h:selectBooleanCheckbox>
+		
+			
+ </h:panelGrid>
+ </h:panelGrid>
+ 
+ <h:panelGrid>
+ <h:panelGroup>
+	<rich:dataTable value="#{sessionMBean.recursoSeleccionado.datoDelRecurso}" var="row" columns="3" 
+	id="tablaDatos" rows="3">
+		<f:facet name="header">
+			<h:outputText value="#{text['entity.recurso.info']}"></h:outputText>
+		</f:facet>
+		<rich:column width="10">
+			<f:facet name="header">
+				<h:outputText value="#{text['entity.recurso.info.order']}"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{row.orden}"></h:outputText>
+		</rich:column>
+
+		<rich:column>
+			<f:facet name="header">
+				<h:outputText value="#{text['entity.recurso.info.label']}"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{row.etiqueta}"></h:outputText>
+		</rich:column>
+		<rich:column>
+			<f:facet name="header">
+				<h:outputText value="#{text['entity.recurso.info.value']}"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{row.valor}"><f:convertDateTime type="both" pattern="dd/MM/yyyy" timeZone="#{coreMBean.timeZone}"/></h:outputText>
+		</rich:column>
+		<f:facet name="footer">
+			<rich:datascroller align="left" maxPages="5" 
+			id="sc2" for="tablaDatos" 
+			page="#{recursoSessionMBean.pagDatoRCons}"/>
+		</f:facet>
+	</rich:dataTable>
+	</h:panelGroup>		
+	</h:panelGrid>
+	</rich:panel>
+</h:form>
+</f:view>

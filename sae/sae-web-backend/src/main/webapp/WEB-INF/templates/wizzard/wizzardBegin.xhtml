@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<ui:component>
+
+	<h:panelGroup layout="block" rendered="#{wizzard.state.isBegin}">
+		<div class="jumbotron">
+		  <h3>#{text['wizzard.begin.title']}</h3>
+		  <p>#{text['wizzard.begin.description']}</p>
+		  <p>
+				<a4j:commandLink type="button" styleClass="btn btn-primary" style="padding: 10px; text-decoration: none;"
+					rendered="#{!wizzard.state.isEnd}" actionListener="#{wizzard.next}" reRender="wizzardContent"
+	  				onclick="buttonDisabled(this, this.childNodes[0], '#{text['button.clicked']}')"
+					oncomplete="buttonEnabled(this, this.childNodes[0], '#{text['wizzard.button.begin']}');">
+					#{text['wizzard.button.begin']} <span class="glyphicon glyphicon-chevron-right"></span>
+				</a4j:commandLink>
+		  </p>
+		</div>
+	</h:panelGroup>
+
+</ui:component>
+
+</html>

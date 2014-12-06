@@ -1,0 +1,32 @@
+# This are the necesary jboss configuration settings to run SAME on Jboss 7.1
+# Assuming Jboss server instance running on locolhost, 
+# this script can be executed form the console with the following command:
+# <JBOSS_HOME>/bin/jboss-cli.sh --file=setup-jboss-7.1.cli
+
+connect
+batch
+ 
+# Add postgresql JDBC driver
+# Requisito copiar crear el modudlo jboss con el .jar
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql.jdbc,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+# Configure HTTPS connection
+# Crear y copiar el keysotre al directorio de configuracion del jboss
+/subsystem=web/connector=https:add(protocol="HTTP/1.1",scheme=https,socket-binding=https,secure=true)
+/subsystem=web/connector=https/ssl=configuration:add(password="changeit",certificate-key-file="${jboss.server.config.dir}/.keystore")
+
+# Add XA datasource for SAME database
+xa-data-source add --name=same-ds --driver-name=postgresql --jndi-name="java:/same-ds" --user-name="postgres" --password="postgres" --recovery-username="postgres" --recovery-password="postgres" --use-ccm=false --max-pool-size=25 --use-java-context=true --blocking-timeout-wait-millis=5000
+/subsystem=datasources/xa-data-source=same-ds/xa-datasource-properties=ServerName:add(value=localhost)
+/subsystem=datasources/xa-data-source=same-ds/xa-datasource-properties=PortNumber:add(value=5432)
+/subsystem=datasources/xa-data-source=same-ds/xa-datasource-properties=DatabaseName:add(value=same)
+xa-data-source enable --name=same-ds
+
+# Create Security Domain for SAME
+# Copiar los archivos de propiedades al directorio de configuracion del jboss
+/subsystem=security/security-domain=SD-SAME:add
+/subsystem=security/security-domain=SD-SAME/authentication=classic:add(login-modules=[{"code"=>"UsersRoles","flag"=>"required","module-options"=>[("password-stacking"=>"userFirstPass"),("usersProperties"=>"${jboss.server.config.dir}/same-users.properties"),("rolesProperties"=>"${jboss.server.config.dir}/same-roles.properties")]}])
+
+# Execute and reload
+run-batch
+:reload

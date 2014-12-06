@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<ui:composition template="/agendarReserva/Paso.template.xhtml">
+
+	<ui:param name="soloCuerpo" value="#{sesionMBean.soloCuerpo}" />
+	<ui:param name="parametroBean" value="#{pasoFinalMBean}" />
+	<ui:param name="bodyId" value="pasoFinal" />	
+	
+	<ui:param name="agenda_nombre" value="#{pasoFinalMBean.recursoDescripcion}" />
+	<ui:param name="paso_texto" value="#{text['reservaweb.step.final.title']}" />
+
+	<ui:define name="descripcion">	
+
+		<div class="pasoTexto">
+			<h:outputFormat escape="false" value="#{pasoFinalMBean.descripcion}" />
+		</div>
+		
+		<div align="center">
+			<ul>
+				<li class="save">
+					<h:commandLink
+						value="Guardar ticket"
+						style="font-size:14px"
+						action="#{pasoFinalMBean.guardarTicket}"
+						rendered="#{!utilMBean.esIntranet}"/>
+				</li>
+			</ul>
+			<ul>
+				<li class="print">
+					<h:commandLink
+						value="Imprimir ticket"
+						style="font-size:14px"
+						target="_blank"
+						action="#{pasoFinalMBean.imprimirTicket}"/>
+				</li>
+			</ul>
+		</div>		
+	</ui:define>
+
+	<ui:define name="contenido">
+
+		<h:panelGrid columns="1" cellpadding="0" cellspacing="0" width="100%">
+
+			<rich:panel 
+					header="Reserva" 
+					styleClass="formulario" headerClass="formularioCabezal" bodyClass="formularioCuerpo">
+				
+				<h:panelGrid columns="2" cellpadding="0" cellspacing="0"
+					columnClasses="formularioEtiqueta formularioEtiquetaAncho arriba izquierda, formularioCampo arriba" width="400px">
+
+					<h:outputText value="Día y hora:" />
+					<h:panelGroup>
+						<h:outputText value="#{sesionMBean.disponibilidad.fecha}"  styleClass="negrita" >
+							<f:convertDateTime type="date" pattern="EEEEE dd 'de' MMMMM 'de' yyyy" timeZone="#{coreMBean.timeZone}" locale="es"/>
+						</h:outputText>
+						<rich:spacer width="4px"></rich:spacer>
+						<h:outputText value="#{sesionMBean.disponibilidad.horaInicio}"  styleClass="negrita" >
+							<f:convertDateTime type="time" pattern="HH:mm"   timeZone="#{coreMBean.timeZone}"/>
+						</h:outputText>
+					</h:panelGroup>
+					
+					<h:outputText value="Serie:" rendered="#{sesionMBean.recurso.serie != null}"/>
+					<h:outputText value="#{sesionMBean.recurso.serie}" rendered="#{sesionMBean.recurso.serie != null}" styleClass="negrita"/>
+					
+					<h:outputText value="Número de reserva:"/>
+					<h:outputText value="#{sesionMBean.reservaConfirmada.numero}" styleClass="negrita"/>
+
+					<h:outputText value="#{pasoFinalMBean.etiquetaDelRecurso}:"/>
+					<h:outputText value="#{sesionMBean.recurso.descripcion}"/>
+
+				</h:panelGrid>
+
+			</rich:panel>
+
+			<rich:panel 
+					header="Información adicional"
+					rendered="#{pasoFinalMBean.infoRecurso != null}" 
+					styleClass="formulario" headerClass="formularioCabezal" bodyClass="formularioCuerpo">
+				
+				<rich:dataGrid columns="1"
+					value="#{pasoFinalMBean.infoRecurso}"
+					var="row" 
+					styleClass="izquierda"
+					cellpadding="0" cellspacing="0"
+					style="border: none;"
+					columnClasses="sinBorde"
+					width="100%"
+				>
+					
+					<h:panelGrid columns="2" cellpadding="0" cellspacing="0"
+						columnClasses="formularioEtiqueta formularioEtiquetaAncho formularioEtiquetaAlineacionLectura, formularioCampo formularioCampoAlineacionLectura"
+					>
+						<h:outputText value="#{row.etiqueta}: " />
+						<h:outputText value="#{row.valor}"/>	
+					</h:panelGrid>
+				</rich:dataGrid>
+								
+
+			</rich:panel>
+
+			<h:panelGroup binding="#{pasoFinalMBean.campos}" />
+			
+		</h:panelGrid>
+	</ui:define>
+</ui:composition>
+</body>
+</html>      

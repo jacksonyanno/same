@@ -1,0 +1,78 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      
+      beforePhase="#{textoAgendaMBean.beforePhaseModifTexto}"
+      beforePhaseListener="#{textoAgendaMBean.beforePhaseModifTexto}"
+      >
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+<h:form >
+
+	<rich:tabPanel switchType="client" selectedTab="tipoRecurso"  contentClass="immTabPanelContent">
+
+
+		<rich:tab label="#{text['entity.agenda.textos.etiqueta_recurso']}" style="height: 330px" id="tipoRecurso">
+			
+				<h:panelGrid columns="3" columnClasses="formularioEtiqueta, formularioCampo">
+					<h:outputText value="#{text['entity.agenda.textos.etiqueta_recurso']}:"></h:outputText>
+					<h:inputText id="textoSeleccionRecurso" value="#{textoAgendaMBean.textoAux.textoSelecRecurso}" maxlength="30" size="40">
+						<f:validator validatorId="xmlValidator"/>
+					</h:inputText>
+					<rich:message for="textoSeleccionRecurso" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>	
+				</h:panelGrid>
+				
+						
+		</rich:tab>
+		
+		<rich:tab label="#{text['entity.agenda.textos.paso1']}" style="text-align: center;" id="paso1">
+			<rich:editor 
+	   			width="590" height="300" 
+	   			viewMode="visual"
+	   			theme="advanced" 
+	   			value="#{textoAgendaMBean.textoAux.textoPaso1}"
+	       	></rich:editor> 
+		</rich:tab>
+
+		<rich:tab label="#{text['entity.agenda.textos.paso2']}" style="text-align: center;" id="paso2">
+			<rich:editor 
+	   			width="590" height="300" 
+	   			viewMode="visual"
+	   			theme="advanced" 
+	   			value="#{textoAgendaMBean.textoAux.textoPaso2}"
+	       	></rich:editor> 
+		</rich:tab>
+
+		<rich:tab label="#{text['entity.agenda.textos.paso3']}" style="text-align: center;" id="paso3">
+			<rich:editor 
+	   			width="590" height="300" 
+	   			viewMode="visual"
+	   			theme="advanced" 
+	   			value="#{textoAgendaMBean.textoAux.textoPaso3}"
+	       	></rich:editor> 
+		</rich:tab>
+
+		<rich:tab label="#{text['entity.agenda.textos.paso_final']}" style="text-align: center;" id="ticketConfirmacion">
+			<rich:editor 
+	   			width="590" height="300" 
+	   			viewMode="visual"
+	   			theme="advanced" 
+	   			value="#{textoAgendaMBean.textoAux.textoTicketConf}"
+	       	></rich:editor> 
+		</rich:tab>
+		
+	</rich:tabPanel>
+	
+			<a4j:commandButton value="#{text['button.save']}"
+				actionListener="#{textoAgendaMBean.guardar}"  reRender="pantalla">
+			</a4j:commandButton>
+			<a4j:commandButton value="#{text['button.cancel']}" 
+				actionListener="#{textoAgendaMBean.cancelar}" reRender="pantalla">
+			</a4j:commandButton>
+
+	</h:form>
+</f:view>

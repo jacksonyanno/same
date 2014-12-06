@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{agendaMBean.beforePhaseCopiar}"
+	beforePhaseListener="#{agendaMBean.beforePhaseCopiar}">
+
+	<h:form style="margin: 0px;">
+
+		<table style="border: none;" cellpadding="0" cellspacing="10"
+			align="center">
+			<tr>
+				<td nowrap="nowrap" valign="top" ><rich:panel header="Copiar agenda:"
+					bodyClass="formulario" headerClass="formularioCabezal">
+					<table style="border: none;" cellpadding="0" cellspacing="0"
+						align="center">
+						<tr>
+							<td nowrap="nowrap"><h:panelGrid columns="2"
+								style="padding-top: 0px;" styleClass="Texto"
+								columnClasses="formularioEtiqueta, formularioCampo">
+
+								<h:outputText value="Nombre:"></h:outputText>
+								<h:inputText id="nombreAgendaAcopiar" required="true"
+									value="#{agendaMBean.agendaSeleccionada.nombre}" maxlength="32" disabled="true" readonly="true">
+									<f:validator validatorId="agendaNombreValidator" />
+								</h:inputText>
+								<h:outputText value="Descripcion:"></h:outputText>
+								<h:inputText
+									value="#{agendaMBean.agendaSeleccionada.descripcion}"
+									maxlength="50" disabled="true" readonly="true">
+								</h:inputText>
+								
+							</h:panelGrid></td>
+							
+							
+						</tr>
+					
+					</table>
+					
+					
+				</rich:panel></td>
+		</tr>
+		<tr><td><br></br></td></tr>
+		<tr>
+			
+			<td nowrap="nowrap" valign="top" >
+		<rich:panel header="Nueva agenda:" bodyClass="formulario" headerClass="formularioCabezal">
+			<table style="border: none;" cellpadding="0" cellspacing="0" align="center">
+			<tr><td nowrap="nowrap">
+				<h:panelGrid columns="2" style="padding-top: 0px;" styleClass="Texto" columnClasses="formularioEtiqueta, formularioCampo">
+					<h:outputText value="Nombre:"></h:outputText>
+					<h:inputText id="nombreAgenda" value="#{agendaMBean.agendaNueva.nombre}" required="true" maxlength="8" >
+						<f:validator validatorId="agendaNombreValidator" />
+					</h:inputText>
+					<h:outputText value="Descripcion:"></h:outputText>
+					<h:inputText value="#{agendaMBean.agendaNueva.descripcion}" maxlength="50"></h:inputText>
+					
+				</h:panelGrid>
+			</td></tr>
+			<tr><td align="center">
+				<a4j:commandButton 
+					value="Copiar" 
+					actionListener="#{agendaMBean.copiar}"
+					reRender="pantalla,mostrarAgendaRecurso"
+				></a4j:commandButton>
+				<a4j:commandButton ajaxSingle="true" 
+					value="Cancelar"
+					action="cancelar"
+					reRender="pantalla"
+				></a4j:commandButton>
+			</td></tr>
+			</table></rich:panel>
+			
+		</td></tr>
+			
+			
+		</table>
+		<h:panelGrid columns="1" width="100%">
+			<h:message id="mensajeError" for="nombreAgenda"
+				styleClass="mensajeError"></h:message>
+		</h:panelGrid>
+	</h:form>
+</f:view>

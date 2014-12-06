@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"      
+      beforePhase="#{llamadorMBean.beforePhaseConfiguracionLlamador}"
+	  beforePhaseListener="#{llamadorMBean.beforePhaseConfiguracionLlamador}"
+      >
+	<h:form style="margin: 0px;">
+	<table>
+	<tr>
+	<td>
+		<h:panelGrid columns="3" id="mpTablas" columnClasses="arriba">
+							
+			<rich:dataTable value="#{sessionMBean.recursosMultipleSelect}" var="row" columns="3" width="290px" id="tablaRecursos">
+				<f:facet name="header">
+					<h:outputText value="#{text['entity.recurso.plural']}"></h:outputText>
+				</f:facet>
+				
+				<rich:column>
+					<h:selectBooleanCheckbox value="#{row.selected}" disabled="#{row.data.id == sessionMBean.recursoMarcado.id}">
+						<a4j:support event="onclick" />
+					</h:selectBooleanCheckbox>
+				</rich:column>
+				
+				<rich:column style="text-align:left;" width="150">
+					<f:facet name="header">
+						<h:panelGroup>
+						<table align="left"><tr><td>
+							<h:outputText value="#{text['entity.recurso.name']}"></h:outputText>
+						</td></tr></table>
+						</h:panelGroup>
+					</f:facet>
+					<h:outputText value="#{row.data.nombre}"></h:outputText>
+				</rich:column>
+				
+				<rich:column style="text-align:left;" width="200">
+					<f:facet name="header">
+						<h:panelGroup>
+						<table align="left"><tr><td>
+							<h:outputText value="#{text['entity.recurso.description']}"></h:outputText>
+						</td></tr></table>
+						</h:panelGroup>
+					</f:facet>
+					<h:outputText value="#{row.data.descripcion}"></h:outputText>
+				</rich:column>
+				
+			</rich:dataTable>			
+		</h:panelGrid>
+	</td>
+	<td>
+		<table style="border: none;" cellpadding="0" cellspacing="0">
+			<tr>
+				<td nowrap="nowrap">
+					<rich:panel header="Pantalla:" style=" width : 220px;text-align: left;" 
+						bodyClass="formulario" headerClass="formularioCabezal">
+						<h:panelGrid columns="3" styleClass="Texto" columnClasses="formularioEtiqueta, formularioCampo">
+							<h:outputText value="#{text['llamador.view_size']}:" styleClass="headerText"></h:outputText>
+							<h:selectOneMenu valueChangeListener="#{llamadorMBean.cambioTipoMonitor}">
+								<f:selectItems value="#{llamadorMBean.tiposDeMonitores}"/>
+						    </h:selectOneMenu>
+						</h:panelGrid>												
+					</rich:panel>
+				</td>
+			</tr>		
+		</table>
+	</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<rich:spacer height="5" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<h:commandButton 
+							value="#{text['llamador.open_llamador']}" 
+							action="#{llamadorMBean.abrirLlamador}"		
+							rendered="#{sessionMBean.agendaMarcada != null}"											
+						>
+			</h:commandButton>
+		</td>
+	</tr>
+	</table>
+</h:form>
+</f:view>
+</html>

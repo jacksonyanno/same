@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.5"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- context-param>
+		<param-name>org.jboss.jbossfaces.JSF_CONFIG_NAME</param-name>
+		<param-value>Mojarra-1.2</param-value>
+	</context-param-->
+	
+	<context-param>  
+    	<param-name>javax.faces.DISABLE_FACELET_JSF_VIEWHANDLER</param-name>  
+     	<param-value>true</param-value>  
+	</context-param> 
+
+    <context-param>
+        <param-name>org.ajax4jsf.VIEW_HANDLERS</param-name>
+        <param-value>com.sun.facelets.FaceletViewHandler</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+
+
+	<context-param>
+		<param-name>facelets.LIBRARIES</param-name>
+		<param-value>/WEB-INF/sae.taglib.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>facelets.DEVELOPMENT</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>com.sun.faces.validateXml</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+    <!--Configuration for Facelets-->
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.xhtml</param-value>
+	</context-param>
+    <context-param>
+        <param-name>facelets.RECREATE_VALUE_EXPRESSION_ON_BUILD_BEFORE_RESTORE</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>facelets.VIEW_MAPPINGS</param-name>
+        <param-value>*.xhtml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>facelets.SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <!--End of the configuration part for Facelets-->
+	<context-param>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
+		<param-value>/WEB-INF/faces-config-reserva.xml</param-value>
+	</context-param>
+
+	<!-- Requerido si da error el reRender de la imagen en Firefox -->
+	<filter>
+		<filter-name>RichfacesFirefoxFilter</filter-name>
+		<filter-class>uy.gub.imm.sae.web.filter.RichfacesFirefoxFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>RichfacesFirefoxFilter</filter-name>
+		<!-- El pattern depende del Faces Servlet pattern definido. -->
+		<!-- <url-pattern>/faces/a4j/*</url-pattern> -->
+		<url-pattern>/a4j/*</url-pattern>
+
+	</filter-mapping>
+
+	<filter>
+		<display-name>RichFaces Filter</display-name>
+		<filter-name>richfaces</filter-name>
+		<filter-class>org.ajax4jsf.Filter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>richfaces</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Kaptcha</servlet-name>
+		<servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Kaptcha</servlet-name>
+		<url-pattern>/kaptcha.jpg</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>agendarReserva/Paso1.xhtml</welcome-file>
+	</welcome-file-list>
+	
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/error/sesionExpiradaRedirect.xhtml</location>
+	</error-page>
+	<!-- Si quito esto en SAE-WEB da: Estado HTTP 403 - The request body was 
+		too large to be cached during the authentication process -->
+		<!-- 
+	<error-page>
+		<error-code>403</error-code>
+		<location>/error/sesionExpirada.html</location>
+	</error-page>
+	 -->
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/errorRedirect.xhtml</location>
+	</error-page>
+</web-app>

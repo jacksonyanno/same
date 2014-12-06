@@ -1,0 +1,508 @@
+@charset "UTF-8";
+
+
+@font-face {
+  font-family: 'Duru Sans';
+  font-weight: normal;
+  src: local('Duru Sans'), url('../fonts/Duru_Sans/DuruSans-Regular.ttf') format('truetype');
+}
+
+
+/*a {
+	color:#666;
+	text-decoration:underline;
+}*/
+img {
+	border:none;
+}
+
+/*CABEZAL*/
+
+header {
+	height: 69px;
+	width: 900px;
+	margin: auto;
+	padding-left: 22px; /*padding-left: 45px;*/
+}
+header nav {
+	float:right;
+	margin-top:22px;
+}
+header nav ul {
+	list-style:none;
+	float:right;
+	margin-top: 16px;
+}
+header nav ul li {
+	display:inline;
+	margin-right:20px;
+}
+header nav ul li a,
+header nav ul li button.btn-link,
+#cerrarSesion a, 
+#mostrarAgendaRecurso div,
+#mostrarAgendaRecurso a {
+	color:#fff;
+	font-size:0.7em;
+	text-transform:uppercase;
+	text-decoration:none !important;
+	padding: 0px;
+}
+#menuTitulo {
+	margin-top: 16px;
+}
+
+header nav ul li a:hover,
+header nav ul li button.btn-link:hover  {
+	text-decoration:underline !important;
+}
+
+/*CONTENIDOS PORTADA*/
+
+/*BUSCADOR*/
+
+article#buscador {
+	height: 250px; /*height: 160px;*/
+	width: 900px;
+	margin: auto;
+	background-image: url(../img/img_portada/futbol.jpg);
+	background-repeat: no-repeat;
+	padding-top:90px;
+}
+article#buscador section.franja-campo-busqueda {
+	height: 70px;
+	background: rgba(0, 0, 0, 0.7);
+}
+article#buscador section.franja-campo-busqueda form input.buscador {
+	height: 44px;
+	width: 302px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius:20px;
+	-moz-border-radius:20px;
+	-webkit-border-radius:20px;
+	margin:13px 0 0 295px;
+	padding-left: 20px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:1.15em;
+	color:#68B1DE;
+	background-image: url(../img/lupa.png);
+	background-repeat: no-repeat;
+	background-position: 257px center;
+}
+
+/*AGENDAS DESTACADAS*/
+
+article#destacados {
+    background-color: #F6F6F6;
+    height: 180px;
+    margin-top: 20px;
+    padding-top: 25px;
+}
+article#destacados section.agendas-destacadas {
+	width:950px;
+	margin: auto;
+}
+article#destacados section.agendas-destacadas h1 {
+    font-size: 1.48em;
+    font-weight: normal;
+    line-height: 1.3;
+    margin: 0 0 15px 25px;
+	width:100%;
+}
+article#destacados section.agendas-destacadas img {
+    float: right;
+    height: 80px;
+    margin-right: 25px;
+    width: 160px;
+}
+
+/*FRANJA SECUNDARIA*/
+
+article#secundarios {
+    height: 280px;
+	width:900px;
+    margin: 50px auto 30px;
+}
+article#secundarios h1 {
+    font-size: 1.6em;
+    font-weight: normal;
+    margin: 0 0 20px 0;
+	width:100%;
+}
+article#secundarios section.izquierda {
+	width:40%;
+	float:left;
+}
+article#secundarios section.izquierda ul {
+	margin:0;
+	padding:0;
+	list-style-position: inside;
+	list-style-image: url(../img/vineta_mas-utilizadas.png);
+	list-style-type: none;
+}
+article#secundarios section.izquierda ul li a {
+	line-height: 1.8em;
+	font-size:1.02em;
+}
+article#secundarios section.derecha {
+	width:58%;
+	float:right;
+}
+article#secundarios section.derecha button {
+	background-color: #008BD0;
+	height: 36px;
+	width: 136px;
+	border: 1px solid #008BD0;
+	border-radius:5px;
+	font-size: 1em;
+	color: #FFF;
+	margin:20px 0 0 195px;
+	cursor:pointer;
+}
+
+
+
+
+/*PAGINADO*/
+
+section#paginado {
+	margin:50px 0 0;
+	font-size:0.9em;
+	text-align:center;
+	height:30px;
+}
+section#paginado .activo {
+	color:#666;
+	margin:0 30px;
+}
+section#paginado .inactivo {
+	color:#CBCBCB;
+	margin:0 30px;
+}
+section#paginado .pagina-vista {
+    background-color: #008BD0;
+    border: 1px solid #008BD0;
+    border-radius: 10px;
+    color: #FFFFFF;
+    display: inline-block;
+    height: 27px;
+	margin: 0 3px;
+    padding-top: 5px;
+    width: 22px;
+}
+section#paginado .pagina-otras a {
+    background-color: #DCDBDA;
+    border: 1px solid #DCDBDA;
+    border-radius: 10px;
+    color: #666;
+    display: inline-block;
+    height: 27px;
+	margin: 0 3px;
+    padding-top: 5px;
+    width: 22px;
+	text-decoration:none;
+}
+section#paginado .pagina-otras a:hover {
+	text-decoration:underline;
+}
+
+
+
+/* MENU */
+.miPanelBar .panel-header {
+	color: #F6F6F6;
+	background-color:#008BD0;
+	background-image: none;
+	border-radius: 3px; 
+	font-family: 'Duru Sans',sans-serif;
+	text-align: left;
+}
+
+/* PANTALLA */
+.pantallaLegend {
+	font-family: 'Duru Sans',sans-serif;
+}
+
+.rich-table-header {
+	color: #F6F6F6;
+	background-color: #008BD0;
+}
+.rich-table-footer {
+	background-color: #F1EEE9;
+}
+
+
+/* PASOS DE LA RESERVA */
+
+/* language */
+#reservaweb-lang {
+	margin-top: 18px;
+	float: left;
+}
+#reservaweb-lang select {
+	border-radius:20px;
+	height: 20px;
+	width: 80px;
+	padding-top: 0;
+	padding-bottom: 0;
+	font-size: 11px;
+}
+
+/* search */
+#reservaweb-search {
+	margin-top: 18px;
+    float: right;
+    margin-left: 20px;
+    margin-right: 50px;
+}
+#reservaweb-search input {
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+	color: #68B1DE;
+	height: 20px;
+	width: 110px;
+	padding-top: 0;
+	padding-bottom: 0;
+	font-size: 11px;
+}
+#reservaweb-search button {
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+	color: #68B1DE;
+	height: 20px;
+	width: 30px;
+	padding-top: 0;
+	padding-bottom: 0;
+	font-size: 11px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.step-breadcrumbs {
+	position: relative;
+	height: 120px;
+	width: 760px;
+	margin: 40px;
+	margin-top: 20px;
+	margin-bottom: 20px;	
+}
+
+.step-breadcrumbs .step-1 {
+	position: absolute;
+	top: 30px;
+	left: 0;
+}
+
+.step-breadcrumbs .step-2 {
+	position: absolute;
+	top: 30px;
+	left: 200px;
+}
+
+.step-breadcrumbs .step-3 {
+	position: absolute;
+	top: 30px;
+	left: 400px;
+}
+.step-breadcrumbs .step-4 {
+	position: absolute;
+	top: 0px;
+	left: 600px;
+}
+
+.step-breadcrumbs .line {
+	position: absolute;
+	left: 0px;
+	top: 58px;
+	height: 4px;
+	width: 604px;
+	border-bottom: 4px solid #CCCCCC;
+}
+
+.step-breadcrumbs .btn-circle {
+	width: 60px;
+	height: 60px;
+	text-align: center;
+	line-height: 1.42;
+	padding: 6px 0;
+	font-size: 30px;
+	font-weight: bold;
+	color: #CCCCCC;
+	background-color: white;
+	border-radius: 30px;
+	border: 4px solid #CCCCCC;
+}
+
+
+.step-breadcrumbs .step-final {
+	width: 120px;
+	height: 120px;
+	border-radius: 25px;
+	border: 4px solid #CCCCCC;
+	background-color: #eeeeee;
+	background-repeat:no-repeat;
+	background-position:center;
+	overflow:hidden;
+}
+
+.step-breadcrumbs .step-final-label {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 120px;
+	text-align: center;
+	font-size: 12px;
+	font-weight: bold;
+	color: #CCCCCC;
+	background-color: white;
+	border-top: 4px solid #CCCCCC;
+}
+.step-breadcrumbs .step-act {
+	font-weight: bolder;
+	color: #00679d;	
+    border-color: rgba(0, 103, 157, 0.8);
+    box-shadow: 0 0 10px rgba(0, 103, 157, 0.6);
+    outline: 0 none;	
+	
+}
+.step-title h1 {
+    font-size: 30px;
+    margin-left: 40px;
+    margin-top: 0;
+}
+
+.columnaIzquierda {
+	border: none;
+	width: 50%;
+}
+.columnaDerecha {
+	padding-top: 40px;
+	width: 50%;
+	font-family: 'Duru Sans',sans-serif;
+}
+
+
+/* PASO 1 */
+#recurso {
+}
+#recurso-select-label {
+	font-size: 20px;
+	float: left;
+}
+#recurso-select {
+	color: green;
+	font-size: 20px;
+	margin-left: 20px;
+	min-width: 245px;
+}
+/* CALENDARIO */
+#calendario-container {
+	border-radius:8px; 
+	overflow: hidden;
+}
+#calendario .rich-calendar-cell {
+	width: 50px;
+	height: 50px;
+	font-size: 13pt;
+	color: #00679d;
+}
+#calendario .rich-calendar-holly {
+    color: #83BBD2;
+}
+#calendario .rich-calendar-today {
+	background: #00679d;
+	color: #FFFFFF;
+}
+#calendario .rich-calendar-days
+{
+	font-size: 12pt;
+}
+#calendario .rich-calendar-month {
+	font-size: 12pt;
+}
+#calendario .rich-calendar-tool {
+	font-size: 12pt;
+}
+#calendario .rich-calendar-boundary-dates {
+    color: #A0A0A0;
+}
+#calendario .diaConCupo {
+	color: #FFFFFF;
+}
+#calendario .rich-calendar-hover {
+    color: #00679d;
+}
+
+/* PASO 2 */
+#step-selected-data {
+	color: green;
+	font-size: 20px;
+	margin-left: 20px;
+	white-space: nowrap;
+}
+#horas-matutina-container,
+#horas-vespertina-container {
+	border: 1px solid #CCCCCC;
+	border-radius:8px; 
+	overflow: hidden;
+}
+#horas-matutina-container .rich-table,
+#horas-matutina-container .tablaBorde,
+#horas-vespertina-container .rich-table,
+#horas-vespertina-container .tablaBorde {
+	border: none;
+}
+#horas-matutina-container .rich-table-header,
+#horas-vespertina-container .rich-table-header {
+	background-color: white;
+}
+#horas-matutina-container .rich-table-headercell,
+#horas-vespertina-container .rich-table-headercell {
+	border-right: none;	
+}
+
+#horas-matutina-container .rich-table-cell,
+#tablaVespertina .rich-table-cell {
+	font-family: 'Duru Sans',sans-serif;
+}
+#horas-matutina-container td:last-child.rich-table-cell,
+#horas-vespertina-container td:last-child.rich-table-cell {
+	border-right: none;
+}
+#horas-matutina-container tr:last-child .rich-table-cell,
+#horas-vespertina-container tr:last-child .rich-table-cell {
+	border-bottom: none;
+}
+
+/* PASO 3 */
+.formularioCabezal,
+.formularioCuerpo,
+.formularioEtiqueta,
+.formularioCampo,
+.formularioCampo select,
+#secureText {
+	font-family: 'Duru Sans',sans-serif;
+	font-size: 14px;
+}
+.formularioCabezal {
+	margin-top: 20px;
+}
+#kaptcha a {
+	font-size:25px;
+	margin-bottom: 25px;
+	color: #333333;
+}
+
+#botonConfirmar {
+	background-color: #008BD0;
+	border: 1px solid #008BD0;
+	border-radius: 5px;
+	color: #FFFFFF;
+	cursor: pointer;
+	font-family: Duru Sans;
+	font-size: 16px;
+	font-weight: bold;
+	height: 36px;
+	margin: 20px 0 0 195px;
+	width: 200px;
+}

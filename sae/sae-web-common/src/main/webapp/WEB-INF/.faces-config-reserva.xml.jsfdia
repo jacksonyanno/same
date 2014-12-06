@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#agendarReserva#Paso1.xhtml"
+  PATH="/agendarReserva/Paso1.xhtml" SHAPE="288,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agendarReserva#Paso1.xhtml:0" NAME="item"
+   PATH="/agendarReserva/Paso1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="siguientePaso::#agendarReserva#Paso2.xhtml"
+    NAME="output" PATH="/agendarReserva/Paso2.xhtml"
+    TARGET="rules:#agendarReserva#Paso2.xhtml" TITLE="siguientePaso" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agendarReserva#Paso2.xhtml"
+  PATH="/agendarReserva/Paso2.xhtml" SHAPE="512,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agendarReserva#Paso2.xhtml:0" NAME="item"
+   PATH="/agendarReserva/Paso2.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="siguientePaso::#agendarReserva#Paso3.xhtml"
+    NAME="output" PATH="/agendarReserva/Paso3.xhtml"
+    TARGET="rules:#agendarReserva#Paso3.xhtml" TITLE="siguientePaso" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agendarReserva#Paso3.xhtml"
+  PATH="/agendarReserva/Paso3.xhtml" SHAPE="720,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agendarReserva#Paso3.xhtml:0" NAME="item"
+   PATH="/agendarReserva/Paso3.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="reservaConfirmada::#agendarReserva#PasoFinal.xhtml"
+    NAME="output" PATH="/agendarReserva/PasoFinal.xhtml"
+    TARGET="rules:#agendarReserva#PasoFinal.xhtml"
+    TITLE="reservaConfirmada" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pasoAnterior::#agendarReserva#Paso2.xhtml"
+    NAME="output1" PATH="/agendarReserva/Paso2.xhtml"
+    TARGET="rules:#agendarReserva#Paso2.xhtml" TITLE="pasoAnterior" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="inicio::#agendarReserva#Paso1.xhtml"
+    NAME="output" PATH="/agendarReserva/Paso1.xhtml"
+    TARGET="rules:#agendarReserva#Paso1.xhtml" TITLE="inicio" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="agendaInvalida::#error#agendaInvalida.xhtml"
+    NAME="output1" PATH="/error/agendaInvalida.xhtml"
+    TARGET="rules:#error#agendaInvalida.xhtml" TITLE="agendaInvalida" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="estadoInvalido::#error#estadoInvalido.xhtml"
+    NAME="output2" PATH="/error/estadoInvalido.xhtml"
+    TARGET="rules:#error#estadoInvalido.xhtml" TITLE="estadoInvalido" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="periodoInvalido::#error#periodoInvalido.xhtml" NAME="output3"
+    PATH="/error/periodoInvalido.xhtml"
+    TARGET="rules:#error#periodoInvalido.xhtml" TITLE="periodoInvalido" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#error#periodoInvalido.xhtml"
+  PATH="/error/periodoInvalido.xhtml" SHAPE="288,465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#error#agendaInvalida.xhtml"
+  PATH="/error/agendaInvalida.xhtml" SHAPE="288,241,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#agendarReserva#PasoFinal.xhtml"
+  PATH="/agendarReserva/PasoFinal.xhtml" SHAPE="944,17,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#error#estadoInvalido.xhtml"
+  PATH="/error/estadoInvalido.xhtml" SHAPE="288,353,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

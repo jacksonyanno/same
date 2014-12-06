@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE facelet-taglib PUBLIC "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+  "http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+<facelet-taglib>
+ 	<namespace>http://montevideo.gub.uy/sae</namespace>
+      
+	<function>
+		<function-name>propertyFormat</function-name>
+		<function-class>uy.gub.imm.sae.web.taglib.functions.MessageFormatFunction</function-class>
+		<function-signature>java.lang.String propertyFormat(java.lang.String, java.lang.String[])</function-signature>
+	</function>
+
+	<function>
+		<function-name>messageFormat1</function-name>
+		<function-class>uy.gub.imm.sae.web.taglib.functions.MessageFormatFunction</function-class>
+		<function-signature>java.lang.String messageFormat1(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<function-name>messageFormat2</function-name>
+		<function-class>uy.gub.imm.sae.web.taglib.functions.MessageFormatFunction</function-class>
+		<function-signature>java.lang.String messageFormat2(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<function-name>messageFormat3</function-name>
+		<function-class>uy.gub.imm.sae.web.taglib.functions.MessageFormatFunction</function-class>
+		<function-signature>java.lang.String messageFormat3(java.lang.String, java.lang.String, java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+</facelet-taglib>

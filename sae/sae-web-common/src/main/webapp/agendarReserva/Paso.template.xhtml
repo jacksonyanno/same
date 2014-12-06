@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/function"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:sae="http://montevideo.gub.uy/sae">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<ui:composition template="#{(soloCuerpo ? '/templates/baseSinCabezalPie.xhtml' : '/templates/base.xhtml')}">
+	
+	
+
+	
+	<ui:param name="onload" value="" />
+	
+	<ui:define name="css">	
+	</ui:define>
+
+	<ui:define name="script">
+	</ui:define>	
+	
+	<ui:define name="titulo">
+		<h:outputText value="#{agenda_nombre}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="menu">
+	
+		<h:form>
+	
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		  <div class="container">
+		   <!-- Brand and toggle get grouped for better mobile display -->
+		   <div class="navbar-header">
+		     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#same-navbar-collapse-1">
+		       <span class="sr-only">Toggle navigation</span>
+		       <span class="icon-bar"></span>
+		       <span class="icon-bar"></span>
+		       <span class="icon-bar"></span>
+		     </button>
+		     <a class="navbar-brand" href="#" style="height: 82px;">
+		     	<h:graphicImage value="/app/img/logo_same.png" alt="same"/>
+		     </a>
+		   </div>
+		
+		   <!-- Collect the nav links, forms, and other content for toggling -->
+		   <div class="collapse navbar-collapse" id="same-navbar-collapse-1" style="padding-top: 32px;">
+		     <ul class="nav navbar-nav navbar-right">
+	
+		       <li>
+		       
+		       		<a href="#{sesionMBean.paginaDeRetorno}" title="#{text['reservaweb.goback']}">
+		       			<span class="glyphicon glyphicon-th-large"></span>		
+		       		</a>
+		       		
+		       </li>
+		       <li>
+
+					<h:selectOneMenu 
+						value="#{i18n.language}" 
+						onchange="submit()" 
+						title="#{text['message.language_selection.tooltip']}"
+						styleClass="form-control">
+						<f:selectItems value="#{i18n.languages}" />
+					</h:selectOneMenu>
+	           
+	           </li>
+		     </ul>
+		   </div><!-- /.navbar-collapse -->
+		 </div><!-- /.container-fluid -->
+		</div>
+	
+		</h:form>
+	
+				
+			<!--div id="reservaweb-lang">
+				<ui:include src="/templates/languageSelection.xhtml" />
+			</div>
+	
+		    <div id="reservaweb-search" class="input-group">
+				<form id="formMenu" style="margin: 0px;" method="get" enctype="application/x-www-form-urlencoded" action="/same-provisioning#search">
+			      		<input id="search" name="q" type="text" class="form-control" placeholder="Buscar agenda"></input>
+			      		<span class="input-group-btn">	
+			        		<button class="btn btn-default" type="submit" title="Buscar agenda">
+			        			<span class="glyphicon glyphicon-search"></span>
+			        		</button>
+			      		</span>
+				</form>
+	    	</div-->
+			
+
+	</ui:define>
+	 
+	<ui:define name="cuerpo">
+	
+	<style lang="text/css">
+		.procesando {
+			text-align: center; 
+			vertical-align: middle; 
+			padding: 0;
+		}
+		.procesando .rich-mpnl-mask-div {
+			filter:alpha(opacity=20);
+			opacity:0.2;	
+		}
+	</style>
+
+	<rich:modalPanel 
+		id="procesando" 
+		styleClass="procesando"
+		width="300" 
+		height="110" 
+		shadowOpacity="0.5" moveable="false" autosized="false"
+		zindex="2000">
+
+		<table width="280" style="" cellpadding="10px">
+			<tr>
+				<td width="50%" height="90" style="vertical-align: middle; text-align: right;">
+					<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/loading.gif" alt="#{text['message.waiting_for_response']}" />
+				</td>
+				<td width="50%" height="90" valign="middle" style="vertical-align: middle; text-align: left;">
+					<h:outputFormat value="#{text['message.waiting_for_response']}" />
+				</td>
+			</tr>
+		</table>
+	</rich:modalPanel>
+	
+	<a4j:status onstart="Richfaces.showModalPanel('procesando');" 
+	   			onstop= "Richfaces.hideModalPanel('procesando');" >
+	</a4j:status>
+	
+	<h:form id="form" style="margin: 0px;" prependId="false">
+	<div style="text-align: center">
+
+	<h:outputText value="#{mensaje_error}" rendered="#{mensaje_error != null}" styleClass="mensajeError" />
+	
+	<h:panelGrid
+	    rendered="#{mensaje_error == null}" 
+		cellpadding="0" cellspacing="0" 
+		columns="1"		
+		id="contenedorPaso"
+		columnClasses="izquierda"
+		style="margin-left:auto; margin-right:auto;">
+		
+			<h:panelGrid 
+				cellpadding="0" cellspacing="0" 
+				columns="1" 
+				styleClass="" rowClasses="">
+				
+				<h:panelGroup>
+					<div class="step-breadcrumbs">	 
+						<div class="line"></div>         
+						<div class="btn btn-circle step-1 #{(paso_numero == 1 ? 'step-act' : '')}">1</div>	
+						<div class="btn btn-circle step-2 #{(paso_numero == 2 ? 'step-act' : '')}">2</div>	
+						<div class="btn btn-circle step-3 #{(paso_numero == 3 ? 'step-act' : '')}">3</div>
+						<div class="step-4 step-final #{(paso_numero == null ? 'step-act' : '')}" style="background-image: url('#{parametroBean.agendaLogo}');">
+							<div class="step-final-label #{(paso_numero == null ? 'step-act' : '')}">#{agenda_nombre}</div>							
+						</div>		
+					</div>		
+											
+				</h:panelGroup>
+				
+				<div class="step-title">
+					<h1>#{paso_texto}</h1>
+				</div>
+			</h:panelGrid>
+			
+			<h:panelGroup>
+				<rich:spacer height="10px" />
+				<rich:message 
+						ajaxRendered="true" 
+						for="form"  
+						errorClass="mensajeError"
+						infoClass="mensajeInfo"
+						warnClass="mensajeWarn"/>
+				
+			</h:panelGroup>
+					
+			<h:panelGrid 
+				cellpadding="0" cellspacing="0"
+				columns="2" 
+				columnClasses="columnaIzquierda, columnaDerecha">
+				
+				<h:panelGroup>
+					<ui:insert name="contenido">CONTENIDO DEL PASO</ui:insert>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<ui:insert name="descripcion"> DESCRIPCION DEL PASO </ui:insert>
+				</h:panelGroup>
+			</h:panelGrid>
+	</h:panelGrid>
+	</div>
+	</h:form>
+	</ui:define>
+</ui:composition>
+
+</body>
+</html>      

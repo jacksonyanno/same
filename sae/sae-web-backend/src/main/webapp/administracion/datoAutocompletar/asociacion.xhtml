@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{autocompletadoAsignacionMBean.beforePhase}"
+	beforePhaseListener="#{autocompletadoAsignacionMBean.beforePhase}">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+	<h:form>
+
+		<table style="border: none;" cellpadding="0" cellspacing="0"
+			align="left">
+			<tr>
+				<td align="center">
+					
+					<h:panelGrid columns="1">
+						
+						<rich:dataTable
+							value="#{autocompletadoAsignacionMBean.autocompletadosDelRecurso}" var="row" columns="3"
+							binding="#{autocompletadoAsignacionMBean.autocompletadosDelRecursoTable}"
+							id="tablaAutocompletadosDelRecurso" rows="5"
+						>
+		
+							<f:facet name="header">
+								<h:outputText value="#{text['acciones.autocompletar.asociadas.title']}" />
+							</f:facet>
+							
+							<rich:column style="text-align:left;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.action.name']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.autocompletado.nombre}"></h:outputText>
+								<rich:toolTip value="#{row.autocompletado.descripcion}"></rich:toolTip>
+							</rich:column>
+		 
+							<rich:column style="text-align:center;" width="40px">
+								<a4j:commandLink id="modificarLink" reRender="panelAsignacion"
+									ajaxSingle="true"
+									actionListener="#{autocompletadoAsignacionMBean.editar}"
+								>
+									<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/edit.gif"
+										style="border:0" height="16" width="16" />
+									<rich:toolTip value="#{text['acciones.asociacion.update.tooltip']}" />
+								</a4j:commandLink>
+								
+										
+								<rich:spacer width="5px"/>
+								
+								<a4j:commandLink reRender="pantalla"
+									ajaxSingle="true"
+									actionListener="#{autocompletadoAsignacionMBean.eliminar}"
+								>
+									<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/delete2.gif"
+										style="border:0" height="16" width="16" />
+									<rich:toolTip value="#{text['acciones.asociacion.delete.tooltip']}" />
+								</a4j:commandLink>
+								
+							</rich:column>
+							
+							<f:facet name="footer">
+								<h:panelGroup>
+									<table>
+										<tr>
+											<td width="400px"><rich:datascroller align="left"
+												maxPages="5" id="scTablaModDAS" for="tablaAutocompletadosDelRecurso"
+												page="#{autocompletadoAsignacionSessionMBean.autocompletadosDelRecursoTablePageIndex}" /></td>
+												
+											<td width="100px" align="right">
+												<a4j:commandLink reRender="panelAsignacion"
+													ajaxSingle="true"
+													actionListener="#{autocompletadoAsignacionMBean.crear}"
+												>
+													<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/create_doc.gif"
+														style="border:0" height="16" width="16" />
+													<rich:toolTip value="#{text['acciones.asociacion.create.tooltip']}" />
+												</a4j:commandLink>
+											</td>					
+										</tr>
+									</table>
+								</h:panelGroup>
+							</f:facet>
+						</rich:dataTable>
+						
+		
+						<rich:spacer height="5px"></rich:spacer>
+										
+						<h:panelGroup id="panelAsignacion">
+							<rich:panel rendered="#{autocompletadoAsignacionSessionMBean.modoEdicion || autocompletadoAsignacionSessionMBean.modoCreacion}">
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText value="Creando Asociación"  rendered="#{autocompletadoAsignacionSessionMBean.modoCreacion}"/>
+										<h:outputText value="Editando Asociación" rendered="#{autocompletadoAsignacionSessionMBean.modoEdicion}"/>
+									</h:panelGroup>
+								</f:facet>
+							
+								<h:panelGrid columns="2" columnClasses="derecha, izquierda">
+									<h:outputText value="#{text['entity.action.autocomplete']}:" />
+									<h:selectOneMenu value="#{autocompletadoAsignacionSessionMBean.autocompletadoDelRecurso.autocompletado}" disabled="#{autocompletadoAsignacionMBean.hayAlgunaAutocompletadoPorDato}">
+										<a4j:support event="onchange" ajaxSingle="true" reRender="tablaAutocompletadosPorDato" actionListener="#{autocompletadoAsignacionMBean.cambioAutocompletadoDelRecurso}" />
+										<f:selectItem itemLabel="#{text['acciones.select.title']}"/>
+										<f:selectItems value="#{autocompletadoAsignacionMBean.autocompletadosItems}" />
+									</h:selectOneMenu>									
+									
+									<h:outputText value="#{text['entity.action.parameters']}:" />
+											
+									<rich:dataTable
+									value="#{autocompletadoAsignacionSessionMBean.autocompletadoDelRecurso.autocompletadosPorDato}" var="row" columns="3"
+									binding="#{autocompletadoAsignacionMBean.autocompletadosPorDatoTable}"
+									id="tablaAutocompletadosPorDato" rows="4" width="404px"
+									>
+				
+										<rich:column style="text-align:left;" width="194px">
+											<f:facet name="header">
+												<h:outputText value="#{text['entity.formulario.field']}"></h:outputText>
+											</f:facet>
+											<h:selectOneMenu value="#{row.datoASolicitar}">
+												<a4j:support event="onchange" ajaxSingle="true" reRender="tablaAutocompletadosPorDato" actionListener="#{autocompletadoAsignacionMBean.refrescarListaDatosASolicitar}" />
+												<f:selectItem itemLabel="#{row.datoASolicitar.nombre}" itemValue="#{row.datoASolicitar}"/>
+												<f:selectItems value="#{autocompletadoAsignacionMBean.datosASolicitarItems}"/>
+											</h:selectOneMenu>
+										</rich:column>
+					
+										<rich:column style="text-align:left;" width="194px">
+											<f:facet name="header">
+												<h:outputText value="#{text['entity.action.parameter']}"></h:outputText>
+											</f:facet>
+				
+											<h:selectOneMenu value="#{row.nombreParametro}" style="width: 150px">
+
+												<a4j:support event="onchange" ajaxSingle="true" reRender="tablaAutocompletadosPorDato" actionListener="#{autocompletadoAsignacionMBean.refrescarListaParametros}" />
+												<f:selectItem itemLabel="#{row.nombreParametro}" itemValue="#{row.nombreParametro}"/>
+												<f:selectItems value="#{autocompletadoAsignacionMBean.parametrosDeLaAutocompletadoItems}"/>
+											</h:selectOneMenu>
+										</rich:column>																	
+					
+										<rich:column style="text-align:center;" width="20px">
+											<a4j:commandLink reRender="tablaAutocompletadosPorDato"
+												ajaxSingle="true"
+												actionListener="#{autocompletadoAsignacionMBean.eliminarAutocompletadoPorDato}"
+											>
+												<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/delete2.gif"
+													style="border:0" height="16" width="16" />
+												<rich:toolTip value="#{text['acciones.asociacion.parameter.delete.tooltip']}" />
+											</a4j:commandLink>
+											
+										</rich:column>
+					
+					
+										
+										<f:facet name="footer">
+											<h:panelGroup>
+												<table width="100%">
+													<tr>
+														<td width="80%"><rich:datascroller align="left"
+															maxPages="5" id="scrollerTablaAutocompletadosPorDato" for="tablaAutocompletadosPorDato"
+															page="#{autocompletadoAsignacionSessionMBean.autocompletadosPorDatoTablePageIndex}" 
+														/></td>
+														<td width="20%" align="right">
+															<a4j:commandLink reRender="tablaAutocompletadosPorDato"
+																ajaxSingle="true"
+																actionListener="#{autocompletadoAsignacionMBean.crearAutocompletadoPorDato}"
+															>
+																<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/create_doc.gif"
+																	style="border:0" height="16" width="16" />
+																<rich:toolTip value="#{text['acciones.asociacion.parameter.create.tooltip']}" />
+															</a4j:commandLink>
+														</td>
+													</tr>
+												</table>
+											</h:panelGroup>
+										</f:facet>
+									</rich:dataTable>
+
+									<rich:spacer></rich:spacer>
+									
+									<h:panelGroup>
+										<a4j:commandButton 
+											value="#{text['button.save']}" 
+											actionListener="#{autocompletadoAsignacionMBean.guardarEdicion}"
+											reRender="pantalla"
+											rendered="#{autocompletadoAsignacionSessionMBean.modoEdicion}">
+										</a4j:commandButton>
+										<a4j:commandButton 
+											value="#{text['button.cancel']}" 
+											actionListener="#{autocompletadoAsignacionMBean.cancelarEdicion}"
+											immediate="true"
+											reRender="pantalla"
+											rendered="#{autocompletadoAsignacionSessionMBean.modoEdicion}">
+										</a4j:commandButton>
+										
+										<a4j:commandButton 
+											value="#{text['button.save']}" 
+											actionListener="#{autocompletadoAsignacionMBean.guardarCreacion}"
+											reRender="pantalla"
+											rendered="#{autocompletadoAsignacionSessionMBean.modoCreacion}">
+										</a4j:commandButton>
+										<a4j:commandButton 
+											value="#{text['button.cancel']}" 
+											actionListener="#{autocompletadoAsignacionMBean.cancelarCreacion}"
+											immediate="true"
+											reRender="pantalla"
+											rendered="#{autocompletadoAsignacionSessionMBean.modoCreacion}">
+										</a4j:commandButton>
+									</h:panelGroup>
+
+
+								</h:panelGrid>
+											
+							</rich:panel>
+						</h:panelGroup>				
+					</h:panelGrid>
+				</td>
+			</tr>
+		</table>
+
+
+	</h:form>
+</f:view>

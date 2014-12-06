@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#administracion#agenda#modificar.xhtml"
+  PATH="/administracion/agenda/modificar.xhtml" SHAPE="368,40,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#administracion#agenda#modificar.xhtml:0"
+   NAME="item" PATH="/administracion/agenda/modificar.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="guardar::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="guardar" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cancelar::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output1" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="cancelar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#administracion#agenda#crear.xhtml"
+  PATH="/administracion/agenda/crear.xhtml" SHAPE="224,296,50,41" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#administracion#agenda#crear.xhtml:0"
+   NAME="item" PATH="/administracion/agenda/crear.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="cancelar::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output1" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="cancelar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#administracion#recurso#crear.xhtml"
+  PATH="/administracion/recurso/crear.xhtml" SHAPE="424,320,50,41" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#administracion#recurso#crear.xhtml:0"
+   NAME="item" PATH="/administracion/recurso/crear.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="cancelar::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="cancelar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#administracion#recurso#modificar.xhtml"
+  PATH="/administracion/recurso/modificar.xhtml" SHAPE="240,168,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#administracion#recurso#modificar.xhtml:0"
+   NAME="item" PATH="/administracion/recurso/modificar.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="guardar::#administracion#recurso#modificar.xhtml" NAME="output"
+    PATH="/administracion/recurso/modificar.xhtml"
+    SHAPE="289,200,296,200,296,232,24,232,24,176,239,176"
+    TARGET="rules:#administracion#recurso#modificar.xhtml"
+    TITLE="guardar" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cancelar::#administracion#recurso#modificar.xhtml"
+    NAME="output1" PATH="/administracion/recurso/modificar.xhtml"
+    SHAPE="289,216,304,216,304,240,16,240,16,176,239,176"
+    TARGET="rules:#administracion#recurso#modificar.xhtml"
+    TITLE="cancelar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#administracion#datoASolicitar#crear.xhtml"
+  PATH="/administracion/datoASolicitar/crear.xhtml" SHAPE="96,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#administracion#datoASolicitar#crear.xhtml:0"
+   NAME="item" PATH="/administracion/datoASolicitar/crear.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#datoASolicitar#modificarAgrupaciones.xhtml"
+  PATH="/administracion/datoASolicitar/modificarAgrupaciones.xhtml"
+  SHAPE="64,673,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#datoASolicitar#modificarAgrupaciones.xhtml:0"
+   NAME="item"
+   PATH="/administracion/datoASolicitar/modificarAgrupaciones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#disponibilidad#consultar.xhtml"
+  PATH="/administracion/disponibilidad/consultar.xhtml"
+  SHAPE="80,673,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#disponibilidad#consultar.xhtml:0"
+   NAME="item" PATH="/administracion/disponibilidad/consultar.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="consultarPorDia::#administracion#disponibilidad#consultarPorDia.xhtml"
+    NAME="output1"
+    PATH="/administracion/disponibilidad/consultarPorDia.xhtml"
+    TARGET="rules:#administracion#disponibilidad#consultarPorDia.xhtml"
+    TITLE="consultarPorDia" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#disponibilidad#consultarPorDia.xhtml"
+  PATH="/administracion/disponibilidad/consultarPorDia.xhtml"
+  SHAPE="304,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#disponibilidad#consultarPorDia.xhtml:0"
+   NAME="item"
+   PATH="/administracion/disponibilidad/consultarPorDia.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#disponibilidad#consultar.xhtml"
+    NAME="output" PATH="/administracion/disponibilidad/consultar.xhtml"
+    TARGET="rules:#administracion#disponibilidad#consultar.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#consulta#consultarReservaId.xhtml"
+  PATH="/administracion/consulta/consultarReservaId.xhtml"
+  SHAPE="32,1169,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#consulta#consultarReservaId.xhtml:0"
+   NAME="item" PATH="/administracion/consulta/consultarReservaId.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#reserva#cancelarReservaId.xhtml"
+  PATH="/administracion/reserva/cancelarReservaId.xhtml"
+  SHAPE="96,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#reserva#cancelarReservaId.xhtml:0"
+   NAME="item" PATH="/administracion/reserva/cancelarReservaId.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="detalleReserva::#administracion#reserva#detalleReserva.xhtml"
+    NAME="output1" PATH="/administracion/reserva/detalleReserva.xhtml"
+    TARGET="rules:#administracion#reserva#detalleReserva.xhtml"
+    TITLE="detalleReserva" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#disponibilidad#modificarCupo.xhtml"
+  PATH="/administracion/disponibilidad/modificarCupo.xhtml"
+  SHAPE="96,1169,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#disponibilidad#modificarCupo.xhtml:0"
+   NAME="item" PATH="/administracion/disponibilidad/modificarCupo.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#administracion#agenda#modificarTextos.xhtml"
+  PATH="/administracion/agenda/modificarTextos.xhtml" SHAPE="96,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#agenda#modificarTextos.xhtml:0" NAME="item"
+   PATH="/administracion/agenda/modificarTextos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output2" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#recurso#modificarTextos.xhtml"
+  PATH="/administracion/recurso/modificarTextos.xhtml"
+  SHAPE="96,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#recurso#modificarTextos.xhtml:0"
+   NAME="item" PATH="/administracion/recurso/modificarTextos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM
+   ID="rules:#administracion#recurso#modificarTextos.xhtml:1"
+   NAME="item1" PATH="/administracion/recurso/modificarTextos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="refrescar::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="refrescar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#datoASolicitar#consultar.xhtml"
+  PATH="/administracion/datoASolicitar/consultar.xhtml"
+  SHAPE="96,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#datoASolicitar#consultar.xhtml:0"
+   NAME="item" PATH="/administracion/datoASolicitar/consultar.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="consultarDato::#administracion#datoASolicitar#consultarDatos.xhtml"
+    NAME="output1"
+    PATH="/administracion/datoASolicitar/consultarDatos.xhtml"
+    TARGET="rules:#administracion#datoASolicitar#consultarDatos.xhtml"
+    TITLE="consultarDato" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#datoASolicitar#modificarConsultar.xhtml"
+  PATH="/administracion/datoASolicitar/modificarConsultar.xhtml"
+  SHAPE="96,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#datoASolicitar#modificarConsultar.xhtml:0"
+   NAME="item"
+   PATH="/administracion/datoASolicitar/modificarConsultar.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="modificar::#administracion#datoASolicitar#modificar.xhtml"
+    NAME="output1" PATH="/administracion/datoASolicitar/modificar.xhtml"
+    TARGET="rules:#administracion#datoASolicitar#modificar.xhtml"
+    TITLE="modificar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#datoASolicitar#eliminar.xhtml"
+  PATH="/administracion/datoASolicitar/eliminar.xhtml"
+  SHAPE="96,1201,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#datoASolicitar#eliminar.xhtml:0"
+   NAME="item" PATH="/administracion/datoASolicitar/eliminar.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#datoASolicitar#consultarDatos.xhtml"
+  PATH="/administracion/datoASolicitar/consultarDatos.xhtml"
+  SHAPE="336,1217,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#datoASolicitar#consultarDatos.xhtml:0"
+   NAME="item"
+   PATH="/administracion/datoASolicitar/consultarDatos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volverConsultar::#administracion#datoASolicitar#consultar.xhtml"
+    NAME="output" PATH="/administracion/datoASolicitar/consultar.xhtml"
+    TARGET="rules:#administracion#datoASolicitar#consultar.xhtml"
+    TITLE="volverConsultar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,1537,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="iniciar::#administracion#index.xhtml"
+    NAME="output" PATH="/administracion/index.xhtml"
+    TARGET="rules:#administracion#index.xhtml" TITLE="iniciar" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="mostrarListaDeLlamadas::#administracion#llamador#listaDeLlamadas.xhtml"
+    NAME="output1" PATH="/administracion/llamador/listaDeLlamadas.xhtml"
+    TARGET="rules:#administracion#llamador#listaDeLlamadas.xhtml"
+    TITLE="mostrarListaDeLlamadas" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#datoASolicitar#modificar.xhtml"
+  PATH="/administracion/datoASolicitar/modificar.xhtml"
+  SHAPE="96,1201,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#datoASolicitar#modificar.xhtml:0"
+   NAME="item" PATH="/administracion/datoASolicitar/modificar.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#datoASolicitar#modificarConsultar.xhtml"
+    NAME="output"
+    PATH="/administracion/datoASolicitar/modificarConsultar.xhtml"
+    TARGET="rules:#administracion#datoASolicitar#modificarConsultar.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#disponibilidad#generarPatronDia.xhtml"
+  PATH="/administracion/disponibilidad/generarPatronDia.xhtml"
+  SHAPE="96,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#disponibilidad#generarPatronDia.xhtml:0"
+   NAME="item"
+   PATH="/administracion/disponibilidad/generarPatronDia.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#administracion#index.xhtml"
+  PATH="/administracion/index.xhtml" SHAPE="240,1777,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#disponibilidad#crearDisponibilidades.xhtml"
+  PATH="/administracion/disponibilidad/crearDisponibilidades.xhtml"
+  SHAPE="96,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#disponibilidad#crearDisponibilidades.xhtml:0"
+   NAME="item"
+   PATH="/administracion/disponibilidad/crearDisponibilidades.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#consulta#consultarReservaDatos.xhtml"
+  PATH="/administracion/consulta/consultarReservaDatos.xhtml"
+  SHAPE="32,2097,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#consulta#consultarReservaDatos.xhtml:0"
+   NAME="item"
+   PATH="/administracion/consulta/consultarReservaDatos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="detalleReserva::#administracion#consulta#detalleReserva.xhtml"
+    NAME="output" PATH="/administracion/consulta/detalleReserva.xhtml"
+    TARGET="rules:#administracion#consulta#detalleReserva.xhtml"
+    TITLE="detalleReserva" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="volver::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output1" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#consulta#detalleReserva.xhtml"
+  PATH="/administracion/consulta/detalleReserva.xhtml"
+  SHAPE="240,2337,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#consulta#detalleReserva.xhtml:0"
+   NAME="item" PATH="/administracion/consulta/detalleReserva.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="atras::#administracion#consulta#consultarReservaDatos.xhtml"
+    NAME="output"
+    PATH="/administracion/consulta/consultarReservaDatos.xhtml"
+    TARGET="rules:#administracion#consulta#consultarReservaDatos.xhtml"
+    TITLE="atras" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#administracion#reserva#detalleReserva.xhtml"
+  PATH="/administracion/reserva/detalleReserva.xhtml"
+  SHAPE="32,2977,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#administracion#reserva#detalleReserva.xhtml:0" NAME="item"
+   PATH="/administracion/reserva/detalleReserva.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="atras::#administracion#reserva#cancelarReservaId.xhtml"
+    NAME="output" PATH="/administracion/reserva/cancelarReservaId.xhtml"
+    TARGET="rules:#administracion#reserva#cancelarReservaId.xhtml"
+    TITLE="atras" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#administracion#llamador#listaDeLlamadas.xhtml"
+  PATH="/administracion/llamador/listaDeLlamadas.xhtml"
+  SHAPE="288,3473,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#administracion#agenda#copiar.xhtml"
+  PATH="/administracion/agenda/copiar.xhtml" SHAPE="96,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#administracion#agenda#copiar.xhtml:0"
+   NAME="item" PATH="/administracion/agenda/copiar.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="copiar::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="copiar" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cancelar::#administracion#seleccionAgendaRecurso.xhtml"
+    NAME="output1" PATH="/administracion/seleccionAgendaRecurso.xhtml"
+    TARGET="rules:#administracion#seleccionAgendaRecurso.xhtml"
+    TITLE="cancelar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#administracion#recurso#ver.xhtml"
+  PATH="/administracion/recurso/ver.xhtml" SHAPE="96,1201,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#administracion#recurso#ver.xhtml:0"
+   NAME="item" PATH="/administracion/recurso/ver.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="volverConsultar::#administracion#datoASolicitar#consultar.xhtml"
+    NAME="output" PATH="/administracion/datoASolicitar/consultar.xhtml"
+    TARGET="rules:#administracion#datoASolicitar#consultar.xhtml"
+    TITLE="volverConsultar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#administracion#seleccionAgendaRecurso.xhtml"
+  PATH="/administracion/seleccionAgendaRecurso.xhtml"
+  SHAPE="272,801,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

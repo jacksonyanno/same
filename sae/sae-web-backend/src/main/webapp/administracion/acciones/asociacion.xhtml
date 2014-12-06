@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{accionAsignacionMBean.beforePhase}"
+	beforePhaseListener="#{accionAsignacionMBean.beforePhase}">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+	<h:form>
+
+		<table style="border: none;" cellpadding="0" cellspacing="0"
+			align="left">
+			<tr>
+				<td align="center">
+					
+					<h:panelGrid columns="1">
+						
+						<rich:dataTable
+							value="#{accionAsignacionMBean.accionesDelRecurso}" var="row" columns="3"
+							binding="#{accionAsignacionMBean.accionesDelRecursoTable}"
+							id="tablaAccionesDelRecurso" rows="5"
+						>
+		
+							<f:facet name="header">
+								<h:outputText value="#{text['acciones.notificar.asociadas.title']}" />
+							</f:facet>
+							
+							<rich:column style="text-align:left;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.action.name']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.accion.nombre}"></h:outputText>
+								<rich:toolTip value="#{row.accion.descripcion}"></rich:toolTip>
+							</rich:column>
+		
+							<rich:column style="text-align:center;">
+								<f:facet name="header">
+									<h:outputText value="#{text['entity.action.association.execution_order']}"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{row.ordenEjecucion}"></h:outputText>
+							</rich:column>
+		
+							<rich:column style="text-align:center;" width="40px">
+								<a4j:commandLink id="modificarLink" reRender="panelAsignacion"
+									ajaxSingle="true"
+									actionListener="#{accionAsignacionMBean.editar}"
+								>
+									<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/edit.gif"
+										style="border:0" height="16" width="16" />
+									<rich:toolTip value="#{text['acciones.asociacion.update.tooltip']}" />
+								</a4j:commandLink>
+								
+										
+								<rich:spacer width="5px"/>
+								
+								<a4j:commandLink reRender="pantalla"
+									ajaxSingle="true"
+									actionListener="#{accionAsignacionMBean.eliminar}"
+								>
+									<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/delete2.gif"
+										style="border:0" height="16" width="16" />
+									<rich:toolTip value="#{text['acciones.asociacion.delete.tooltip']}" />
+								</a4j:commandLink>
+								
+							</rich:column>
+							
+							<f:facet name="footer">
+								<h:panelGroup>
+									<table>
+										<tr>
+											<td width="400px"><rich:datascroller align="left"
+												maxPages="5" id="scTablaModDAS" for="tablaAccionesDelRecurso"
+												page="#{accionAsignacionSessionMBean.accionesDelRecursoTablePageIndex}" /></td>
+												
+											<td width="100px" align="right">
+												<a4j:commandLink reRender="panelAsignacion"
+													ajaxSingle="true"
+													actionListener="#{accionAsignacionMBean.crear}"
+												>
+													<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/create_doc.gif"
+														style="border:0" height="16" width="16" />
+													<rich:toolTip value="#{text['acciones.asociacion.create.tooltip']}" />
+												</a4j:commandLink>
+											</td>					
+										</tr>
+									</table>
+								</h:panelGroup>
+							</f:facet>
+						</rich:dataTable>
+						
+		
+						<rich:spacer height="5px"></rich:spacer>
+										
+						<h:panelGroup id="panelAsignacion">
+							<rich:panel rendered="#{accionAsignacionSessionMBean.modoEdicion || accionAsignacionSessionMBean.modoCreacion}">
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText value="#{text['acciones.asociacion.create.tooltip']}"  rendered="#{accionAsignacionSessionMBean.modoCreacion}"/>
+										<h:outputText value="#{text['acciones.asociacion.update.tooltip']}" rendered="#{accionAsignacionSessionMBean.modoEdicion}"/>
+									</h:panelGroup>
+								</f:facet>
+							
+								<h:panelGrid columns="2" columnClasses="derecha, izquierda">
+									<h:outputText value="#{text['entity.action.notify']}:" />
+									<h:selectOneMenu value="#{accionAsignacionSessionMBean.accionDelRecurso.accion}" disabled="#{accionAsignacionMBean.hayAlgunaAccionPorDato}">
+										<a4j:support event="onchange" ajaxSingle="true" reRender="tablaAccionesPorDato" actionListener="#{accionAsignacionMBean.cambioAccionDelRecurso}" />
+										<f:selectItem itemLabel="#{text['acciones.select.title']}"/>
+										<f:selectItems value="#{accionAsignacionMBean.accionesItems}" />
+									</h:selectOneMenu>
+									
+									
+									<h:outputText value="#{text['entity.action.association.execution_order']}:" />
+									<h:panelGroup>
+										<h:inputText value="#{accionAsignacionSessionMBean.accionDelRecurso.ordenEjecucion}" id="ordenEjecucion"
+											size="3">
+										</h:inputText>
+										<rich:message for="ordenEjecucion"/>
+									</h:panelGroup>
+									<h:outputText value="#{text['entity.action.association.event']}:" />
+										<h:selectOneMenu value="#{accionAsignacionSessionMBean.accionDelRecurso.evento}" style="width:180px;">
+										<f:selectItems value="#{accionAsignacionMBean.itemsEvento}"/>
+									</h:selectOneMenu>
+
+									<h:outputText value="#{text['entity.action.parameters']}:" />
+									<rich:dataTable
+									value="#{accionAsignacionSessionMBean.accionDelRecurso.accionesPorDato}" var="row" columns="3"
+									binding="#{accionAsignacionMBean.accionesPorDatoTable}"
+									id="tablaAccionesPorDato" rows="4" width="404px"
+									>
+				
+										<rich:column style="text-align:left;" width="194px">
+											<f:facet name="header">
+												<h:outputText value="#{text['entity.formulario.field']}"></h:outputText>
+											</f:facet>
+											<h:selectOneMenu value="#{row.datoASolicitar}">
+												<a4j:support event="onchange" ajaxSingle="true" reRender="tablaAccionesPorDato" actionListener="#{accionAsignacionMBean.refrescarListaDatosASolicitar}" />
+												<f:selectItem itemLabel="#{row.datoASolicitar.nombre}" itemValue="#{row.datoASolicitar}"/>
+												<f:selectItems value="#{accionAsignacionMBean.datosASolicitarItems}"/>
+											</h:selectOneMenu>
+										</rich:column>
+					
+										<rich:column style="text-align:left;" width="194px">
+											<f:facet name="header">
+												<h:outputText value="#{text['entity.action.parameter']}"></h:outputText>
+											</f:facet>
+				
+											<h:selectOneMenu value="#{row.nombreParametro}" style="width: 150px">
+
+												<a4j:support event="onchange" ajaxSingle="true" reRender="tablaAccionesPorDato" actionListener="#{accionAsignacionMBean.refrescarListaParametros}" />
+												<f:selectItem itemLabel="#{row.nombreParametro}" itemValue="#{row.nombreParametro}"/>
+												<f:selectItems value="#{accionAsignacionMBean.parametrosDeLaAccionItems}"/>
+											</h:selectOneMenu>
+										</rich:column>
+					
+										<rich:column style="text-align:center;" width="20px">
+											<a4j:commandLink reRender="tablaAccionesPorDato"
+												ajaxSingle="true"
+												actionListener="#{accionAsignacionMBean.eliminarAccionPorDato}"
+											>
+												<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/delete2.gif"
+													style="border:0" height="16" width="16" />
+												<rich:toolTip value="#{text['acciones.asociacion.parameter.delete.tooltip']}" />
+											</a4j:commandLink>
+											
+										</rich:column>
+					
+					
+										
+										<f:facet name="footer">
+											<h:panelGroup>
+												<table width="100%">
+													<tr>
+														<td width="80%"><rich:datascroller align="left"
+															maxPages="5" id="scrollerTablaAccionesPorDato" for="tablaAccionesPorDato"
+															page="#{accionAsignacionSessionMBean.accionesPorDatoTablePageIndex}" 
+														/></td>
+														<td width="20%" align="right">
+															<a4j:commandLink reRender="tablaAccionesPorDato"
+																ajaxSingle="true"
+																actionListener="#{accionAsignacionMBean.crearAccionPorDato}"
+															>
+																<h:graphicImage value="#{saeProperties['ui.resource.base.url']}/recursos/images/create_doc.gif"
+																	style="border:0" height="16" width="16" />
+																<rich:toolTip value="#{text['acciones.asociacion.parameter.create.tooltip']}" />
+															</a4j:commandLink>
+														</td>
+													</tr>
+												</table>
+											</h:panelGroup>
+										</f:facet>
+									</rich:dataTable>
+
+									<rich:spacer></rich:spacer>
+									
+									<h:panelGroup>
+										<a4j:commandButton 
+											value="#{text['button.save']}" 
+											actionListener="#{accionAsignacionMBean.guardarEdicion}"
+											reRender="pantalla"
+											rendered="#{accionAsignacionSessionMBean.modoEdicion}">
+										</a4j:commandButton>
+										<a4j:commandButton 
+											value="#{text['button.cancel']}" 
+											actionListener="#{accionAsignacionMBean.cancelarEdicion}"
+											immediate="true"
+											reRender="pantalla"
+											rendered="#{accionAsignacionSessionMBean.modoEdicion}">
+										</a4j:commandButton>
+										
+										<a4j:commandButton 
+											value="#{text['button.save']}" 
+											actionListener="#{accionAsignacionMBean.guardarCreacion}"
+											reRender="pantalla"
+											rendered="#{accionAsignacionSessionMBean.modoCreacion}">
+										</a4j:commandButton>
+										<a4j:commandButton 
+											value="#{text['button.cancel']}" 
+											actionListener="#{accionAsignacionMBean.cancelarCreacion}"
+											immediate="true"
+											reRender="pantalla"
+											rendered="#{accionAsignacionSessionMBean.modoCreacion}">
+										</a4j:commandButton>
+									</h:panelGroup>
+
+
+								</h:panelGrid>
+											
+							</rich:panel>
+						</h:panelGroup>				
+					</h:panelGrid>
+				</td>
+			</tr>
+		</table>
+
+
+	</h:form>
+</f:view>

@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      beforePhase="#{disponibilidadMBean.beforePhaseConsultar}"
+      beforePhaseListener="#{disponibilidadMBean.beforePhaseConsultar}"
+      >
+
+<h:form style="margin: 0px;">
+	<table style="border: none;" cellpadding="0" cellspacing="0" align="center">
+	
+
+	<tr><td nowrap="nowrap">
+	<rich:panel header="#{text['disponibilidades.query.result.cupos_by_date.title']}" bodyClass="formulario" headerClass="formularioCabezal" 
+	style=" width : 515px;">
+	
+		<h:panelGrid columns="2">
+				<h:outputText value="#{text['entity.disponibilidad.date']}:"></h:outputText>
+				<h:inputText value="#{dispSessionMBean.fechaActual}" readonly="true">
+					<f:convertDateTime type="both" pattern="dd/MM/yyyy"	timeZone="#{coreMBean.timeZone}" />
+				</h:inputText>
+		</h:panelGrid>
+			</rich:panel>
+	</td></tr>	
+	<tr align="center">
+	<td>
+	<rich:panel bodyClass="formulario" headerClass="formularioCabezal"	style=" width : 515px;">
+	
+	<h:panelGrid columns="2" columnClasses="arriba">
+	
+		<rich:dataTable id="tablaMatutina" 	binding="#{disponibilidadMBean.tablaDispMatutina}"
+			value="#{dispSessionMBean.disponibilidadesDelDiaMatutina}" 	var="row" 	width="185px"
+			columnClasses="colDisp" rowClasses="rowDisp" 	columns="3" >
+	
+			<f:facet name="header">
+				<h:panelGroup>
+					<h:outputText value="#{text['disponibilidades.morning']}"></h:outputText>
+				</h:panelGroup>
+			</f:facet>
+	
+			<rich:column width="60px">
+				<f:facet name="header">#{text['entity.disponibilidad.time_begin']}</f:facet>
+				<h:outputText value="#{row.data.horaInicio}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="#{coreMBean.timeZone}"/>
+				</h:outputText>
+			</rich:column>
+
+			<rich:column  width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['entity.disponibilidad.cupos']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{row.data.cupo}" rendered="#{(row.data.cupoDisponible > 0 ? true  : false)}" styleClass="verde"></h:outputText>
+				<h:outputText value="#{row.data.cupo}" rendered="#{(row.data.cupoDisponible > 0 ? false  : true)}" styleClass="rojo"></h:outputText>
+			</rich:column>
+
+			<rich:column  width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['disponibilidades.cant_reservas']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{row.data.cantReservas}" ></h:outputText>
+			</rich:column>
+			
+		</rich:dataTable>
+	
+		<rich:dataTable  id="tablaVespertina"  binding="#{disponibilidadMBean.tablaDispVespertina}" 	
+		value="#{dispSessionMBean.disponibilidadesDelDiaVespertina}"
+			var="row" width="185px" columnClasses="colDisp"	rowClasses="rowDisp"	columns="3">
+	
+			<f:facet name="header">
+				<h:panelGroup>
+					<h:outputText value="#{text['disponibilidades.morning']}"></h:outputText>
+				</h:panelGroup>
+			</f:facet>
+	
+			<rich:column width="60px">
+				<f:facet name="header">#{text['entity.disponibilidad.time_begin']}</f:facet>
+				<h:outputText value="#{row.data.horaInicio}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="#{coreMBean.timeZone}"/>
+				</h:outputText>
+			</rich:column>
+
+			<rich:column  width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['entity.disponibilidad.cupos']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{row.data.cupo}" rendered="#{(row.data.cupoDisponible > 0 ? true  : false)}" styleClass="verde"></h:outputText>
+				<h:outputText value="#{row.data.cupo}" rendered="#{(row.data.cupoDisponible > 0 ? false  : true)}" styleClass="rojo"></h:outputText>
+			</rich:column>
+
+			<rich:column  width="60px">
+				<f:facet name="header">
+					<h:outputText value="#{text['disponibilidades.cant_reservas']}"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{row.data.cantReservas}" ></h:outputText>
+			</rich:column>
+			
+		</rich:dataTable>
+	</h:panelGrid>
+		</rich:panel>
+	</td>
+	</tr>
+
+
+	</table>
+
+
+	<a4j:commandLink 
+		value="#{button.goback}" 
+		action="volver" 
+		reRender="pantalla"
+		ajaxSingle="true" 
+	></a4j:commandLink>
+
+</h:form>
+</f:view>

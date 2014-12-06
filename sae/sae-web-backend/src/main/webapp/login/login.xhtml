@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<ui:composition template="/templates/base.xhtml">
+		<ui:param name="parametroBean" value="#{dummyMBean}" />
+		<ui:define name="titulo">
+			<h:outputText value="#{saeLabels['aplicacion_nombre']}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="menu">
+		
+		
+			<h:form>
+		
+		
+			<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			  <div class="container">
+			   <!-- Brand and toggle get grouped for better mobile display -->
+			   <div class="navbar-header">
+			     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#same-navbar-collapse-1">
+			       <span class="sr-only">Toggle navigation</span>
+			       <span class="icon-bar"></span>
+			       <span class="icon-bar"></span>
+			       <span class="icon-bar"></span>
+			     </button>
+			     <a class="navbar-brand" href="#" style="height: 82px;">
+			     	<h:graphicImage value="/app/img/logo_same.png" alt="same"/>
+			     </a>
+			   </div>
+			
+			   <!-- Collect the nav links, forms, and other content for toggling -->
+			   <div class="collapse navbar-collapse" id="same-navbar-collapse-1" style="padding-top: 32px;">
+			     <ul class="nav navbar-nav navbar-right">
+		
+			       <li>
+	
+						<h:selectOneMenu 
+							value="#{i18n.language}" 
+							onchange="submit()" 
+							title="#{text['message.language_selection.tooltip']}"
+							styleClass="form-control">
+							<f:selectItems value="#{i18n.languages}" />
+						</h:selectOneMenu>
+		           
+		           </li>
+			     </ul>
+			   </div><!-- /.navbar-collapse -->
+			 </div><!-- /.container-fluid -->
+			</div>
+			
+			</h:form>		
+		
+		
+		</ui:define>
+		<ui:define name="css">
+		</ui:define>
+		<ui:define name="js">
+		</ui:define>
+		<ui:define name="script">
+		</ui:define>
+
+		<ui:define name="cuerpo">
+
+			<a4j:loadStyle src="#{saeProperties['ui.style.organizacion.url']}" />
+			<a4j:loadStyle
+				src="#{saeProperties['ui.style.organizacion.faces.url']}" />
+			<a4j:loadStyle src="#{saeProperties['ui.style.sae.url']}" />
+
+			<center>
+				<form method="post" action="j_security_check"
+					name="j_security_check">
+					<table id="idTablePwd" border="0" cellpadding='0' cellspacing='0'>
+						<tr>
+							<td><rich:panel style="width: 272px;">
+									<f:facet name="header">
+										<h:outputText value="#{text['login.form.title']}"></h:outputText>
+									</f:facet>
+									<table border="0" cellpadding='0' cellspacing='0'>
+										<tbody>
+											<tr>
+												<td class="TxtNormal">&#160;&#160;&#160;&#160;#{text['login.form.user']}:</td>
+												<td>&#160;</td>
+												<td align="left"><input type="text" name="j_username"
+													style="width: 167px;" /></td>
+											</tr>
+											<tr>
+												<td class="TxtNormal">&#160;&#160;&#160;&#160;#{text['login.form.password']}:</td>
+												<td>&#160;</td>
+												<td align="left">
+													<!-- <h:inputSecret id="j_password" styleClass="headerText" style="width: 167px;" autocomplete="off"/> -->
+													<input type="password" name="j_password"
+													style="width: 167px;" />
+												</td>
+											</tr>
+											<tr>
+												<td>&#160;&#160;&#160;&#160;&#160;</td>
+												<td>&#160;</td>
+												<td align="left"><input type="submit" value="#{text['login.form.button']}"
+													class="TxtBoton" style="width: 170px;" /></td>
+											</tr>
+										</tbody>
+									</table>
+								</rich:panel></td>
+						</tr>
+					</table>
+				</form>
+			</center>
+		</ui:define>
+	</ui:composition>
+</body>
+
+</html>

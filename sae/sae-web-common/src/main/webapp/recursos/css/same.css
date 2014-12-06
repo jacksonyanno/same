@@ -1,0 +1,84 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: 0px;
+	font-family: 'Duru Sans', sans-serif;
+	color:#666;
+}
+
+.wizzard-btn {
+	padding: 10px;
+	text-decoration: none;
+}
+
+.wizzard-btn-end {
+	padding: 10px;
+	text-decoration: none;
+	background-color: #3c763d;
+}
+
+.wizzard-btn-end:hover,.wizzard-btn-end:focus,.wizzard-btn-end:active {
+	background-color: #1c561d;
+}
+
+.wizzardCalendarCell {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	text-align: center;
+	padding: 0px;
+}
+
+.wizzardCalendarCellSelected {
+	background-color: gray;
+	color: white;
+}
+
+.wizzardCalendarCellClicked {
+	border-style: solid;
+	border-width: 2px;
+	border-color: black;
+}
+
+.wizzardCalendarRow {
+	padding: 0;
+}
+
+.wizzardCalendarMatrix {
+		
+}
+
+.same-btn-primary, .dropdown-menu > li > a.same-btn-primary {
+	text-decoration: none;
+	color: white;
+}
+.same-btn-primary:hover, .same-btn-primary:focus, .same-btn-primary:active,
+.dropdown-menu > li > a.same-btn-primary:hover, .dropdown-menu > li > a.same-btn-primary:focus, .dropdown-menu > li > a.same-btn-primary:active {
+	color: #333;
+}
+
+.same-agenda-options{
+  color: #c6c6c6;
+  background-color: #e7e7e7;
+}
+
+.same-agenda-options-selected{
+  color: #008BD0;
+  background-color: #97b9fc;
+}
+
+/* PRINCIPAL TEMPLATE: header, content and footer */
+
+.same-content {
+	margin-top: 100px;
+}
+
+.same-footer {
+	background-color: #9b9c9e;
+    padding: 25px;
+    margin: 0px; 
+    border-radius: 0px;
+}

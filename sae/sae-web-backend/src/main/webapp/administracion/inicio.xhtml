@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" beforePhase="#{sessionMBean.beforePhaseInicio}"
+	beforePhaseListener="#{sessionMBean.beforePhaseInicio}">
+	<h:panelGroup>
+
+		<h:form>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-5">
+					<a4j:commandLink
+						action="#{dashboard.show('WIZARD')}" reRender="pageBody"
+						styleClass="btn btn-primary" role="button" style="width: 100%; text-decoration: none;">
+						<span class="glyphicon glyphicon-cog" style="font-size: 5em; display: block;"></span>
+						<span style="font-weight: bold; display: block;">#{text['dashboard.button.wizzard.title']}</span>
+					</a4j:commandLink>
+				</div>
+				<div class="col-md-5">
+					<h:commandLink
+						action="#{sessionMBean.gotToBookingPage}"
+					 	styleClass="btn btn-primary" role="button" style="width: 100%; text-decoration: none;">
+						<span class="glyphicon glyphicon-time" style="font-size: 5em; display: block;"></span>
+						<span style="font-weight: bold; display: block;">#{text['dashboard.button.booking.title']}</span>
+					</h:commandLink>
+				</div>
+				<div class="col-md-1">
+				</div>
+			</div>
+		</div>
+
+		</h:form>
+
+	</h:panelGroup>
+</f:view>

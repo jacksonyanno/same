@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<ui:component>
+	<h:panelGroup layout="block" styleClass="" rendered="#{wizzard.state.isForm}" id="configurationForm">
+
+		<div class="panel panel-default">
+			
+			<div class="panel-heading ">
+				<label style="font-size: 1.5em">#{text['wizzard.form.conf.title']}</label>
+			</div>
+				
+			<div class="panel-body">
+
+				<p>#{text['wizzard.form.conf.detail']}</p>
+				
+				<div style="display: inline-flex; justify-content: space-around">
+					<a4j:commandLink 
+						type="button" styleClass="btn btn-primary" style="text-align: center; text-decoration: none; margin:50px" 
+						value="#{text['wizzard.form.conf.section.insert']}"
+						actionListener="#{wizzard.form.addSection}" reRender="configurationForm"
+						rendered="#{empty wizzard.form.sectionList}">
+					</a4j:commandLink>
+						
+						
+					<div class="panel panel-primary" style="margin-right: 40px">
+					
+						<div class="panel-heading ">
+							<span class="glyphicon glyphicon-cog" style="font-size: 3em; padding-right: 20px"/>
+						</div>
+						
+						<div class="panel-body">
+						<rich:dataTable
+							id="fieldDefinitionTable"
+							value="#{wizzard.form.sectionList}"
+							style="width:100%"
+							var="section">
+
+							<rich:column colspan="4">
+								<rich:inplaceInput value="#{section.nombre}" inputWidth="250px" width="250px">
+									<a4j:support event="onviewactivated" actionListener="#{wizzard.form.update}" ajaxSingle="true" eventsQueue="wizzard-form-queue" ignoreDupResponses="true" reRender="configurationForm" ></a4j:support>
+								</rich:inplaceInput> 
+							</rich:column>
+
+							<rich:column style="text-align:center;">
+
+								<div class="btn-group">
+									<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+									onclick="javascript:dropdownToggle('section-ddm-#{section.id}')">
+										<span class="glyphicon glyphicon-cog"/>
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu" style="container: 'body'; text-align: left;" id="section-ddm-#{section.id}">
+									  	<li>
+									  		<a4j:commandLink 
+											value="#{text['wizzard.form.conf.section.delete']}" style="text-decoration: none;"
+											action="#{wizzard.form.deleteSection(section)}" reRender="configurationForm">
+											</a4j:commandLink>
+										</li>
+									  	<li>
+									  		<a4j:commandLink 
+											value="#{text['wizzard.form.conf.section.insert.above']}" style="text-decoration: none;"
+											action="#{wizzard.form.addSectionAbove(section)}" reRender="configurationForm">
+											</a4j:commandLink>
+										</li>
+									  	<li>
+									  		<a4j:commandLink 
+											value="#{text['wizzard.form.conf.section.insert.below']}" style="text-decoration: none;"
+											action="#{wizzard.form.addSectionBelow(section)}" reRender="configurationForm">
+											</a4j:commandLink>
+										</li>
+									  	<li>
+									  		<a4j:commandLink 
+											value="#{text['wizzard.form.conf.section.insert.field']}" style="text-decoration: none;"
+											action="#{wizzard.form.addField(section)}" reRender="configurationForm"
+											rendered="#{empty section.datosASolicitar}">
+											</a4j:commandLink>
+										</li>
+									</ul>
+								</div>
+
+							</rich:column>
+
+							<rich:subTable value="#{section.datosASolicitar}" var="field" 	id="fieldDefinitionSubTable">
+
+								<rich:column style="text-align:left;">
+									<f:facet name="header">
+										<h:outputText value="#{text['entity.formulario.field.label']}"></h:outputText>
+									</f:facet>
+
+									<rich:inplaceInput value="#{field.etiqueta}" inputWidth="150px">
+										<a4j:support event="onviewactivated" actionListener="#{wizzard.form.update}" ajaxSingle="true" eventsQueue="wizzard-form-queue" ignoreDupResponses="true" reRender="configurationForm" ></a4j:support>
+									</rich:inplaceInput>
+
+								</rich:column>
+
+								<rich:column style="text-align:left;">
+									<f:facet name="header">
+										<h:outputText
+											value="#{text['entity.formulario.field.data_type']}"></h:outputText>
+									</f:facet>
+	
+									<h:selectOneMenu value="#{field.tipo}" style="width: 120px">
+										<f:selectItems value="#{wizzard.form.dataTypeItems}"/>
+										<a4j:support event="onchange" actionListener="#{wizzard.form.update}" ajaxSingle="true" eventsQueue="wizzard-form-queue" ignoreDupResponses="true" reRender="configurationForm" ></a4j:support>
+									</h:selectOneMenu>
+								</rich:column>
+
+								<rich:column style="text-align:left;">
+									<f:facet name="header">
+										<h:outputText
+											value="#{text['entity.formulario.field.length']}"></h:outputText>
+									</f:facet>
+
+									<rich:inplaceInput value="#{field.largo}" inputWidth="30px">
+										<a4j:support event="onviewactivated" actionListener="#{wizzard.form.update}" ajaxSingle="true" eventsQueue="wizzard-form-queue" ignoreDupResponses="true" reRender="configurationForm" ></a4j:support>
+									</rich:inplaceInput>
+
+								</rich:column>
+
+								<rich:column style="text-align:left;">
+									<f:facet name="header">
+										<h:outputText
+											value="#{text['entity.formulario.field.required']}"></h:outputText>
+									</f:facet>
+
+									<h:selectBooleanCheckbox value="#{field.requerido}">
+										<a4j:support event="onchange" actionListener="#{wizzard.form.update}" ajaxSingle="true" eventsQueue="wizzard-form-queue" ignoreDupResponses="true" reRender="configurationForm" ></a4j:support>
+									</h:selectBooleanCheckbox>
+
+								</rich:column>
+
+								<rich:column style="text-align:center;" width="40px">
+								
+									<div class="btn-group">
+										<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+										onclick="javascript:dropdownToggle('field-ddm-#{section.id}-#{field.id}')">
+											<span class="glyphicon glyphicon-cog"/>
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu" style="container: 'body'; text-align: left;" id="field-ddm-#{section.id}-#{field.id}">
+										  	<li>
+										  		<a4j:commandLink 
+												value="#{text['wizzard.form.conf.field.delete']}" style="text-decoration: none;"
+												action="#{wizzard.form.deleteField(field)}" reRender="configurationForm">
+												</a4j:commandLink>
+											</li>
+										  	<li>
+										  		<a4j:commandLink 
+												value="#{text['wizzard.form.conf.field.insert.above']}" style="text-decoration: none;"
+												action="#{wizzard.form.addFieldAbove(field)}" reRender="configurationForm">
+												</a4j:commandLink>
+											</li>
+										  	<li>
+										  		<a4j:commandLink 
+												value="#{text['wizzard.form.conf.field.insert.below']}" style="text-decoration: none;"
+												action="#{wizzard.form.addFieldBelow(field)}" reRender="configurationForm">
+												</a4j:commandLink>
+											</li>
+											</ul>
+									</div>
+							
+								</rich:column>
+
+							</rich:subTable>
+
+						</rich:dataTable>
+						</div>
+					</div>
+					
+					<f:subview id="preview">
+						<div class="panel panel-danger ">
+	
+							<div class="panel-heading">
+								<span class="glyphicon glyphicon-eye-open" style="font-size: 3em; padding-right: 20px"/>
+								<label style="font-size: 1.5em">#{text['wizzard.form.preview.title']}</label>
+							</div>
+							<div class="panel-body">
+								<h:panelGroup binding="#{wizzard.form.content}" id="fieldDefinitionPreview"/>
+							</div>
+						</div>
+					</f:subview>						
+				</div>
+			</div>
+		</div>
+	</h:panelGroup>
+</ui:component>
+
+</html>

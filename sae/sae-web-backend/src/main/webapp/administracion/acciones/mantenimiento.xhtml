@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	beforePhase="#{accionMantenimientoMBean.beforePhase}"
+	beforePhaseListener="#{accionMantenimientoMBean.beforePhase}">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+	<ui:include src="/WEB-INF/templates/acciones/mantenimiento.xhtml">
+		<ui:param name="accionesTitle" value="Acciones de Notificación" />
+		<ui:param name="acciones" value="#{accionMantenimientoMBean.acciones}" />
+		<ui:param name="accionesTable" value="#{accionMantenimientoMBean.accionesTable}" />
+		<ui:param name="bean" value="#{accionMantenimientoMBean}" />
+		<ui:param name="editar" value="editar" />
+		<ui:param name="eliminarAccion" value="eliminarAccion" />
+		<ui:param name="accionesTablePageIndex" value="#{accionMantenimientoSessionMBean.accionesTablePageIndex}" />
+		<ui:param name="crear" value="crear" />
+		<ui:param name="modoEdicion" value="#{accionMantenimientoSessionMBean.modoEdicion}" />
+		<ui:param name="modoCreacion" value="#{accionMantenimientoSessionMBean.modoCreacion}" />
+		<ui:param name="accion" value="#{accionMantenimientoSessionMBean.accion}" />
+		<ui:param name="parametros" value="#{accionMantenimientoSessionMBean.accion.parametrosAccion}" />
+		<ui:param name="parametrosTable" value="#{accionMantenimientoMBean.parametrosTable}" />
+		<ui:param name="tiposDeDato" value="#{accionMantenimientoMBean.tiposDeDato}" />
+		<ui:param name="eliminarParametro" value="eliminarParametro" />
+		<ui:param name="crearParametro" value="crearParametro" />
+		<ui:param name="guardarEdicion" value="guardarEdicion" />
+		<ui:param name="cancelarEdicion" value="cancelarEdicion" />
+		<ui:param name="guardarCreacion" value="guardarCreacion" />
+		<ui:param name="cancelarCreacion" value="cancelarCreacion" />
+		<ui:param name="parametrosTablePageIndex" value="#{accionMantenimientoSessionMBean.parametrosTablePageIndex}" />
+		<ui:param name="parametrosDataScroller" value="#{accionMantenimientoMBean.parametrosDataScroller}" />
+	</ui:include>
+
+</f:view>

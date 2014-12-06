@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+	<managed-bean>
+		<managed-bean-name>saeProfile</managed-bean-name>
+		<managed-bean-class>uy.gub.imm.sae.web.mbean.SAEProfileMBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>i18n</managed-bean-name>
+		<managed-bean-class>${build.same.i18n.web.mbean.class}</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+
+
+	<application>
+		<!-- view-handler>com.sun.facelets.FaceletViewHandler</view-handler-->
+		<view-handler>org.ajax4jsf.application.AjaxViewHandler</view-handler>
+
+
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>es</supported-locale>
+			<supported-locale>en</supported-locale>
+			<supported-locale>pt</supported-locale>
+		</locale-config>
+		
+		<resource-bundle>
+			<base-name>${build.same.i18n.text.class}</base-name>
+			<var>text</var>
+		</resource-bundle>
+
+		<message-bundle>uy.gub.imm.sae.common.profile.messages</message-bundle>
+
+		<resource-bundle>
+			<base-name>uy.gub.imm.sae.common.profile.profile</base-name>
+			<var>saeProperties</var>
+		</resource-bundle>
+
+		<resource-bundle>
+			<base-name>uy.gub.imm.sae.common.profile.labels</base-name>
+			<var>saeLabels</var>
+		</resource-bundle>
+
+	</application>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>sesion_expirada</from-outcome>
+			<to-view-id>/error/sesionExpirada.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/error/error.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>agenda_invalida</from-outcome>
+			<to-view-id>/error/agendaInvalida.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>estado_invalido</from-outcome>
+			<to-view-id>/error/estadoInvalido.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>periodo_invalido</from-outcome>
+			<to-view-id>/error/periodoInvalido.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+</faces-config>

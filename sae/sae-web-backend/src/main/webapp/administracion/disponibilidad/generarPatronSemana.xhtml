@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      beforePhase="#{dispSemanalMBean.beforePhase}"
+      beforePhaseListener="#{dispSemanalMBean.beforePhase}"
+      >
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<h:form style="margin: 0px;">
+
+	<rich:panel>
+	
+		<h:panelGrid columns="1">
+			<h:panelGrid columns="3">
+					<h:outputText value="#{text['disponibilidades.create.copy_week.week']}:"></h:outputText>
+					<rich:calendar value="#{dispSemanalMBean.semanaPatron}" locale="es" todayControlMode="hidden" datePattern="dd/MM/yyyy" showWeeksBar="false" />
+					<a4j:commandButton value="#{text['button.query']}" actionListener="#{dispSemanalMBean.consultarSemana}" ignoreDupResponses="true" eventsQueue="horarioSemanalQueue" reRender="horarioSemanal, grupoJqueries" />
+			</h:panelGrid>
+	
+			<rich:spacer height="5px"/>
+
+			<style>
+				.tdCeldaSinTop {
+				    border-top: none; 
+				}   		
+				.tdCeldaSinBottom {
+				    border-bottom: none; 
+				}   		
+				.tdCelda1 {
+				    background-color: #f6f6f6;
+				}   		
+				.tdCelda2 {
+				    background-color: #eaeaea;
+				}   		
+			</style>
+			<rich:dataTable id="horarioSemanal"  
+				value="#{dispSemanalMBean.horariosSemanales}" var="horario" 
+				columnClasses="colDisp" rowClasses="rowDisp" >
+		
+				<rich:column width="70px">
+					<h:outputText value="#{horario[0]}">
+						<f:convertDateTime type="time" pattern="HH:mm" timeZone="#{coreMBean.timeZone}"/>
+					</h:outputText>
+				</rich:column>
+				
+				<rich:columns value="#{dispSemanalMBean.diasDeLaSemana}" var="dia" index="ind" width="100px">
+					<f:facet name="header">
+						<h:outputText value="#{dia}">
+						</h:outputText>
+					</f:facet>
+					<h:panelGroup styleClass="celdaSinTop" rendered="#{horario[ind+1].esGrupo &amp;&amp; ! horario[ind+1].primera}"></h:panelGroup>
+					<h:panelGroup styleClass="celdaSinBottom" rendered="#{horario[ind+1].esGrupo &amp;&amp; ! horario[ind+1].ultima}"></h:panelGroup>
+					<h:panelGroup styleClass="celda1" rendered="#{horario[ind+1].esGrupo &amp;&amp; ! horario[ind+1].esGrupoPar}"></h:panelGroup>
+					<h:panelGroup styleClass="celda2" rendered="#{horario[ind+1].esGrupo &amp;&amp;   horario[ind+1].esGrupoPar}"></h:panelGroup>
+					<h:outputText value="#{horario[ind+1].contenido}"></h:outputText>
+					
+				</rich:columns>
+	
+				
+			</rich:dataTable>
+	
+			<h:panelGroup id="grupoJqueries">
+				<rich:jQuery selector="td .celdaSinTop" timing="immediate" 
+							 query='parent().addClass("tdCeldaSinTop")'></rich:jQuery>			
+				<rich:jQuery selector="td .celdaSinBottom" timing="immediate" 
+							 query='parent().addClass("tdCeldaSinBottom")'></rich:jQuery>			
+				<rich:jQuery selector="td .celda1" timing="immediate" 
+							 query='parent().addClass("tdCelda1")'></rich:jQuery>			
+				<rich:jQuery selector="td .celda2" timing="immediate" 
+							 query='parent().addClass("tdCelda2")'></rich:jQuery>			
+			</h:panelGroup>
+		</h:panelGrid>
+	</rich:panel>
+
+	<rich:spacer height="5px"/>
+
+	<rich:panel id="generarDisp" >
+
+		<h:panelGrid columns="5">
+			<h:outputText value="#{text['view.general.date_from']}:"></h:outputText>
+			<rich:calendar value="#{dispSemanalMBean.periodoDesde}" locale="es" todayControlMode="hidden"
+				datePattern="dd/MM/yyyy" showWeeksBar="false"></rich:calendar>
+			<h:outputText value="#{text['view.general.date_from']}:"></h:outputText>
+			<rich:calendar value="#{dispSemanalMBean.periodoHasta}" locale="es" todayControlMode="hidden"
+				datePattern="dd/MM/yyyy" showWeeksBar="false"></rich:calendar>
+			<a4j:commandButton value="#{text['disponibilidades.create.button_create']}" actionListener="#{dispSemanalMBean.generar}" reRender="pantalla"></a4j:commandButton> 
+		</h:panelGrid>
+	</rich:panel>
+	
+</h:form>
+
+</f:view>

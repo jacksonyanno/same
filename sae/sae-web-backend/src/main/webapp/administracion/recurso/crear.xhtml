@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      beforePhase="#{drecursoMBean.beforePhaseCrear}"
+      beforePhaseListener="#{recursoMBean.beforePhaseCrear}"
+      >
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	
+<h:form style="margin: 0px;">
+
+	<table style="border: none;" cellpadding="0" cellspacing="0" align="center">
+	<tr><td nowrap="nowrap">
+	<rich:panel header="#{text['recursos.create.title']}" bodyClass="formulario" headerClass="formularioCabezal">
+		<table style="border: none;" cellpadding="0" cellspacing="0" align="center">
+		<tr><td nowrap="nowrap">
+			<h:panelGrid columns="2" style="padding-top: 0px;" styleClass="Texto" columnClasses="formularioEtiqueta, formularioCampo">
+				<h:outputText value="#{text['entity.agenda']}:"></h:outputText>
+				<h:inputText value="#{sessionMBean.agendaSeleccionada.descripcion}" readonly="true">
+				</h:inputText>
+				<h:outputText value="#{text['entity.recurso.name']}:"></h:outputText>
+				<h:inputText value="#{recursoMBean.recursoNuevo.nombre}" maxlength="50" ></h:inputText>
+				<h:outputText value="#{text['entity.recurso.description']}:"></h:outputText>
+				<h:inputText value="#{recursoMBean.recursoNuevo.descripcion}" maxlength="50" ></h:inputText>
+				<h:outputText value="#{text['entity.recurso.fecha_inicio']}:"></h:outputText>
+				<rich:calendar value="#{recursoMBean.recursoNuevo.fechaInicio}" datePattern="dd/MM/yyyy" showWeeksBar="false" locale="es" todayControlMode="hidden"></rich:calendar>
+				<h:outputText value="#{text['entity.recurso.fecha_fin']}:"></h:outputText>
+				<rich:calendar value="#{recursoMBean.recursoNuevo.fechaFin}" datePattern="dd/MM/yyyy" showWeeksBar="false" locale="es" todayControlMode="hidden"></rich:calendar>
+				<h:outputText value="#{text['entity.recurso.fecha_inicio_disponibilidad']}:"></h:outputText>
+				<rich:calendar value="#{recursoMBean.recursoNuevo.fechaInicioDisp}" datePattern="dd/MM/yyyy" showWeeksBar="false" locale="es" todayControlMode="hidden"></rich:calendar>
+				<h:outputText value="#{text['entity.recurso.fecha_fin_disponibilidad']}:"></h:outputText>
+				<rich:calendar value="#{recursoMBean.recursoNuevo.fechaFinDisp}" datePattern="dd/MM/yyyy" showWeeksBar="false" locale="es"></rich:calendar>
+				
+				<h:outputText value="#{text['entity.recurso.inicio_ventana_intranet']}:"></h:outputText>
+				<h:inputText id="DiasInicioVIntranet" value="#{recursoMBean.recursoNuevo.diasInicioVentanaIntranet}" maxlength="5" immediate="true"></h:inputText>
+				<h:outputText value=" "></h:outputText>
+				<rich:message for="DiasInicioVIntranet" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+				
+				<h:outputText value="#{text['entity.recurso.ventana_intranet']}:"></h:outputText>
+				<h:inputText id="DiasVIntranet" value="#{recursoMBean.recursoNuevo.diasVentanaIntranet}" maxlength="5" immediate="true"></h:inputText>
+				<h:outputText value=" "></h:outputText>
+				<rich:message for="DiasVIntranet" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+				
+				<h:outputText value="#{text['entity.recurso.inicio_ventana_internet']}:"></h:outputText>
+				<h:inputText id="DiasInicioVInternet" value="#{recursoMBean.recursoNuevo.diasInicioVentanaInternet}" maxlength="5" immediate="true"></h:inputText>
+				<h:outputText value=" "></h:outputText>
+				<rich:message for="DiasInicioVInternet" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+				
+				<h:outputText value="#{text['entity.recurso.ventana_internet']}:"></h:outputText>
+				<h:inputText id="DiasVInternet" value="#{recursoMBean.recursoNuevo.diasVentanaInternet}" maxlength="5" immediate="true"></h:inputText>
+				<h:outputText value=" "></h:outputText>
+				<rich:message for="DiasVInternet" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+				
+				<h:outputText value="#{text['entity.recurso.cupos_minimos']}:"></h:outputText>
+				<h:inputText id="VCuposM" value="#{recursoMBean.recursoNuevo.ventanaCuposMinimos}" maxlength="5"></h:inputText>
+				<h:outputText value=" "></h:outputText>
+				<rich:message for="VCuposM" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+
+				<h:outputText value="#{text['entity.recurso.max_dias_a_generar']}:"></h:outputText>
+				<h:inputText id="CantDias" value="#{recursoMBean.recursoNuevo.cantDiasAGenerar}" maxlength="5"></h:inputText>
+				<h:outputText value=" "></h:outputText>
+				<rich:message for="CantDias" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+
+				<h:outputText value="#{text['entity.recurso.largo_lista_de_espera']}:"></h:outputText>
+				<h:inputText id="largoLista" value="#{recursoMBean.recursoNuevo.largoListaEspera}" maxlength="5"></h:inputText>
+				<h:outputText value=" "></h:outputText>
+				<rich:message for="largoLista" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+				
+				<h:outputText value="#{text['entity.recurso.serie']}:"></h:outputText>
+				<h:inputText id="idSerie" value="#{recursoMBean.recursoNuevo.serie}" maxlength="3"></h:inputText>
+				<h:outputText value=" "></h:outputText>
+				<rich:message for="idSerie" ajaxRendered="true" errorClass="mensajeError" infoClass="mensajeInfo"></rich:message>
+				
+				
+				<h:outputText value="#{text['entity.recurso.visible_en_internet']}:"></h:outputText>
+				<h:selectBooleanCheckbox value="#{recursoMBean.recursoNuevo.visibleInternet}" />
+				
+				<h:outputText value="#{text['entity.recurso.reserva_multiple']}:"></h:outputText>
+				<h:selectBooleanCheckbox value="#{recursoMBean.recursoNuevo.reservaMultiple}"></h:selectBooleanCheckbox>
+				
+				<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_llamador']}:"></h:outputText>
+				<h:selectBooleanCheckbox value="#{recursoMBean.recursoNuevo.mostrarNumeroEnLlamador}">
+				<rich:toolTip>
+					<h:panelGrid columns="1">
+					<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_llamador.tooltip']}" />
+					</h:panelGrid>
+				</rich:toolTip>
+				</h:selectBooleanCheckbox>
+				
+				<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_ticket']}:"></h:outputText>
+				<h:selectBooleanCheckbox value="#{recursoMBean.recursoNuevo.mostrarNumeroEnTicket}">
+				<rich:toolTip>
+					<h:panelGrid columns="1">
+					<h:outputText value="#{text['entity.recurso.mostrar_numero_reserva_en_ticket.tooltip']}" />
+					</h:panelGrid>
+				</rich:toolTip>
+				</h:selectBooleanCheckbox>
+
+
+				<h:outputText value="#{text['entity.recurso.sabado_es_habil']}:"></h:outputText>
+				<h:selectBooleanCheckbox value="#{recursoMBean.recursoNuevo.sabadoEsHabil}">
+				<rich:toolTip>
+					<h:panelGrid columns="1">
+					<h:outputText value="#{text['entity.recurso.sabado_es_habil.tooltip']}" />
+					</h:panelGrid>
+				</rich:toolTip>
+				</h:selectBooleanCheckbox>
+								
+			</h:panelGrid>
+		</td></tr>
+		<tr><td align="center">
+			<a4j:commandButton 
+				value="#{text['button.save']}" 
+				actionListener="#{recursoMBean.crear}"
+				reRender="mostrarAgendaRecurso,pantalla, mostrarAgendaRecurso"
+			></a4j:commandButton>
+			<a4j:commandButton 
+				value="#{text['button.cancel']}"
+				action="cancelar"
+				reRender="pantalla"
+			></a4j:commandButton>
+		</td></tr>
+		</table>
+	</rich:panel>
+	</td></tr>
+	</table>
+
+	<a4j:commandLink 
+		value="#{text['button.goback']}" 
+		action="volver" 
+		reRender="pantalla"
+		ajaxSingle="true" 
+	></a4j:commandLink>
+
+</h:form>
+
+</f:view>

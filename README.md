@@ -107,7 +107,7 @@ que contenga un certificado autofirmado.
 Dicho certificado autofirmado es a los solos efectos de poder probar la aplicación, 
 bajo ningun concepto debe ser utilizado en un ambiente de producción.
 
-	cd <JBOSS_HOME>;
+	cd [JBOSS_HOME];
 	mkdir certs;
 	cd certs;
 
